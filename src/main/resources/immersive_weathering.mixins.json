@@ -4,6 +4,27 @@
   "package": "com.ordana.immersive_weathering.mixins",
   "compatibilityLevel": "JAVA_25",
   "mixins": [
+    "BeeMixin",
+    "BlocksMixin",
+    "CampfireMixin",
+    "EatBlockGoalMixin",
+    "FireMixin",
+    "GrassBlockMixin",
+    "IceMixin",
+    "ItemsMixin",
+    "LeavesMixin",
+    "LiquidBlockMixin",
+    "MudBlockHitboxMixin",
+    "RabbitEatGoalMixin",
+    "RootedDirtBlockMixin",
+    "ServerLevelMixin",
+    "SnowLayerBlockMixin",
+    "SnowballMixin",
+    "SugarCaneBlockMixin",
+    "SweetBerryBushMixin",
+    "VegetationBlockMixin",
+    "accessors.IceInvoker",
+    "accessors.RandomBlockMatchTestAccessor"
   ],
   "injectors": {
     "defaultRequire": 1

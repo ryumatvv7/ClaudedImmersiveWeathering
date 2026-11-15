@@ -28,6 +28,14 @@ loom {
 
 	accessWidenerPath = file("src/main/resources/immersive_weathering.accesswidener")
 
+	runs {
+		server {
+			// fail fast on broken mixins in the dev server (see ImmersiveWeathering#setup)
+			property "iw.mixinAudit", "true"
+			property "iw.selfTest", "true"
+		}
+	}
+
 	mods {
 		"immersive_weathering" {
 			sourceSet sourceSets.main
