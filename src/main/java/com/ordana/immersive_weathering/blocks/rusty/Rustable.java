@@ -154,7 +154,7 @@ public interface Rustable extends ChangeOverTimeBlock<Rustable.RustLevel> {
         }
 
         float f = (float) (k + 1) / (float) (k + j + 1);
-        float f1 = f * f * this.getChanceModifier();
+        float f1 = (float) (f * f * this.getChanceModifier() * Math.sqrt(CommonConfigs.RUST_SPEED.get()));
         if (randomSource.nextFloat() < f1) {
             this.getNext(state).ifPresent(s -> serverLevel.setBlockAndUpdate(pos, s));
         }
@@ -167,18 +167,18 @@ public interface Rustable extends ChangeOverTimeBlock<Rustable.RustLevel> {
             for (Direction direction : Direction.values()) {
                 var targetPos = pos.relative(direction);
                 BlockState neighborState = level.getBlockState(targetPos);
-                if (neighborState.is(Blocks.BUBBLE_COLUMN) && random.nextFloat() < CommonConfigs.RUSTING_RATE.get()) {
+                if (neighborState.is(Blocks.BUBBLE_COLUMN) && random.nextFloat() < (CommonConfigs.RUSTING_RATE.get() * Math.sqrt(CommonConfigs.RUST_SPEED.get()))) {
                     canWeather = true;
-                } else if (neighborState.getFluidState().is(FluidTags.WATER) && random.nextFloat() < CommonConfigs.RUSTING_RATE.get() / 1.25) {
+                } else if (neighborState.getFluidState().is(FluidTags.WATER) && random.nextFloat() < (CommonConfigs.RUSTING_RATE.get() * Math.sqrt(CommonConfigs.RUST_SPEED.get())) / 1.25) {
                     canWeather = true;
                 } else if (state.is(ModTags.CLEAN_IRON)) {
-                    if (neighborState.is(Blocks.AIR) && random.nextFloat() < CommonConfigs.RUSTING_RATE.get() / 5) {
+                    if (neighborState.is(Blocks.AIR) && random.nextFloat() < (CommonConfigs.RUSTING_RATE.get() * Math.sqrt(CommonConfigs.RUST_SPEED.get())) / 5) {
                         canWeather = true;
                     }
-                } else if (state.is(ModTags.EXPOSED_IRON) || state.is(ModTags.CLEAN_IRON) && level.isRaining() && random.nextFloat() < CommonConfigs.RUSTING_RATE.get() / 2) {
+                } else if (state.is(ModTags.EXPOSED_IRON) || state.is(ModTags.CLEAN_IRON) && level.isRaining() && random.nextFloat() < (CommonConfigs.RUSTING_RATE.get() * Math.sqrt(CommonConfigs.RUST_SPEED.get())) / 2) {
                     if (level.isRainingAt(pos.above())) {
                         canWeather = true;
-                    } else if (CommonConfigs.RUST_STREAKING.get() && level.isRainingAt(targetPos) && level.getBlockState(pos.above()).is(ModTags.WEATHERED_IRON) && random.nextFloat() < CommonConfigs.RUSTING_RATE.get() / 3) {
+                    } else if (CommonConfigs.RUST_STREAKING.get() && level.isRainingAt(targetPos) && level.getBlockState(pos.above()).is(ModTags.WEATHERED_IRON) && random.nextFloat() < (CommonConfigs.RUSTING_RATE.get() * Math.sqrt(CommonConfigs.RUST_SPEED.get())) / 3) {
                         if (BlockPos.withinManhattanStream(pos, 2, 2, 2)
                                 .map(level::getBlockState)
                                 .filter(b -> b.is(ModTags.WEATHERED_IRON))

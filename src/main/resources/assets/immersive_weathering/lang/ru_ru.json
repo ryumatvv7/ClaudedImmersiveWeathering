@@ -237,6 +237,8 @@
   "block.immersive_weathering.weeds": "Сорняки",
   "block.immersive_weathering.soot": "Сажа",
   "block.immersive_weathering.sand_layer_block": "Куча песка",
+  "block.immersive_weathering.ash_layer_block": "Пепел",
+  "item.immersive_weathering.ash": "Пепел",
   "block.immersive_weathering.red_sand_layer_block": "Куча красного песка",
   "item.immersive_weathering.tallow": "Жир",
   

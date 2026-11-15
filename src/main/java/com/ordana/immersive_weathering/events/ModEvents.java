@@ -435,10 +435,16 @@ public class ModEvents {
             var state = event.getState();
             double charChance = CommonConfigs.FIRE_CHARS_WOOD_CHANCE.get();
             BlockState charred = WeatheringHelper.getCharredState(state);
-            if (charChance == 0 || charred == null) return;
-
-            if (serverLevel.getRandom().nextFloat() < charChance) {
+            if (charChance > 0 && charred != null && serverLevel.getRandom().nextFloat() < charChance) {
                 event.setFinalState(charred.setValue(CharredBlock.SMOLDERING, serverLevel.getRandom().nextBoolean()));
+                return;
+            }
+            //port addition: burned blocks can leave ash (only when fire does not take their place)
+            if (!event.wasReplacedByFire() && CommonConfigs.ASH_ENABLED.get()
+                    && serverLevel.getRandom().nextFloat() < CommonConfigs.ASH_FROM_BURNED_BLOCK.get()) {
+                int layers = 1 + serverLevel.getRandom().nextInt(CommonConfigs.ASH_MAX_LAYERS.get());
+                event.setFinalState(ModBlocks.ASH_LAYER_BLOCK.get().defaultBlockState()
+                        .setValue(com.ordana.immersive_weathering.blocks.LayerBlock.LAYERS_8, layers));
             }
 
         }

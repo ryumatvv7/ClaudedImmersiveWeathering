@@ -142,7 +142,7 @@ public interface Crackable extends Weatherable {
 
     @Override
     default void tryWeather(BlockState state, ServerLevel serverLevel, BlockPos pos, RandomSource random) {
-        if (random.nextFloat() < this.getWeatherChanceSpeed()) {
+        if (random.nextFloat() < this.getWeatherChanceSpeed() * com.ordana.immersive_weathering.configs.CommonConfigs.CRACK_SPEED.get()) {
             Optional<BlockState> opt = Optional.empty();
             if (this.getCrackSpreader().getWantedWeatheringState(true, pos, serverLevel)) {
                 opt = this.getNextCracked(state);

@@ -382,8 +382,11 @@ public class WeatheringHelper {
         return posRandom.nextInt(6) == 0;
     }
 
-    //TODO spawn soot?
+    //port addition: fire that goes out can leave ash
     public static void onFireExpired(ServerLevel serverLevel, BlockPos pos, BlockState state) {
+        if (CommonConfigs.ASH_ENABLED.get() && serverLevel.getRandom().nextFloat() < CommonConfigs.ASH_FROM_EXPIRED_FIRE.get()) {
+            com.ordana.immersive_weathering.blocks.AshLayerBlock.placeAsh(serverLevel, pos, 1);
+        }
     }
 
     public static final Supplier<Map<TagKey<Block>, Block>> WOOD_TO_CHARRED = Suppliers.memoize(() ->

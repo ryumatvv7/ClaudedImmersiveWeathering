@@ -130,7 +130,7 @@ public class BlockGrowthHandler extends RegistryJsonReloadListener {
             if (o.isPresent()) {
                 IBlockGrowth g = o.get();
                 if (!(g instanceof NoOpBlockGrowth)) {
-                    growths.add(g);
+                    growths.add(com.ordana.immersive_weathering.data.block_growths.growths.ScaledBlockGrowth.wrap(name, g));
                 }
             }
         }

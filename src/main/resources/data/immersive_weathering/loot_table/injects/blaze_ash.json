@@ -6,7 +6,7 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "immersive_weathering:soot",
+          "name": "immersive_weathering:ash",
           "functions": [
             {
               "function": "minecraft:set_count",

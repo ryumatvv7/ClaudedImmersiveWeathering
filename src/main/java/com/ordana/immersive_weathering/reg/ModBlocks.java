@@ -122,6 +122,11 @@ public class ModBlocks {
             .sound(SoundType.SAND).isSuffocating(NEVER)
             .isViewBlocking((blockState, blockView, blockPos) -> blockState.getValue(LayerBlock.LAYERS_8) >= 8)
             .noOcclusion().requiresCorrectToolForDrops());
+    public static final Supplier<Block> ASH_LAYER_BLOCK = regBlock("ash_layer_block", p ->
+        new com.ordana.immersive_weathering.blocks.AshLayerBlock(p), () -> Properties.of().mapColor(net.minecraft.world.level.material.MapColor.COLOR_GRAY)
+            .strength(0.1f).sound(SoundType.SAND).randomTicks().replaceable().isSuffocating(NEVER)
+            .isViewBlocking((blockState, blockView, blockPos) -> blockState.getValue(LayerBlock.LAYERS_8) >= 8));
+
     public static final Supplier<Block> RED_SAND_LAYER_BLOCK = regWithItem("red_sand_layer_block", p ->
         new SandLayerBlock(11098145, p), () -> Properties.ofFullCopy(Blocks.RED_SAND).strength(0.5f)
             .sound(SoundType.SAND).isSuffocating(NEVER)

@@ -87,6 +87,29 @@ public class CommonConfigs {
     public static final Supplier<Double> RUSTING_RATE;
     public static final Supplier<Boolean> RUST_STREAKING;
 
+    public static final Supplier<Double> GROWTH_SPEED;
+    public static final Supplier<Double> GROWTH_VEGETATION;
+    public static final Supplier<Double> GROWTH_FROST;
+    public static final Supplier<Double> GROWTH_FIRE;
+    public static final Supplier<Double> GROWTH_SAND;
+    public static final Supplier<Double> GROWTH_CORAL;
+    public static final Supplier<Double> GROWTH_LIGHTNING;
+    public static final Supplier<Double> GROWTH_LEAVES;
+    public static final Supplier<Double> GROWTH_NETHER;
+    public static final Supplier<Double> GROWTH_WEEDS;
+    public static final Supplier<Double> GROWTH_OTHER;
+    public static final Supplier<Double> MOSS_SPEED;
+    public static final Supplier<Double> CRACK_SPEED;
+    public static final Supplier<Double> RUST_SPEED;
+
+    public static final Supplier<Boolean> ASH_ENABLED;
+    public static final Supplier<Double> ASH_FROM_BURNED_BLOCK;
+    public static final Supplier<Double> ASH_FROM_EXPIRED_FIRE;
+    public static final Supplier<Integer> ASH_MAX_LAYERS;
+    public static final Supplier<Double> ASH_RAIN_WASH_CHANCE;
+    public static final Supplier<Boolean> ASH_FERTILIZER;
+    public static final Supplier<Boolean> ASH_KILLS_GRASS;
+
 
     public static void init() {
     }
@@ -192,10 +215,38 @@ public class CommonConfigs {
         builder.push("rusting");
         RUSTING = builder.define("rusting", true);
         RUSTING_INFLUENCE_RADIUS = builder.define("rusting_influence_radius", 4, 1, 8);
-        RUSTING_RATE = builder.define("rusting_rate", 0.06, 0, 1);
+        RUSTING_RATE = builder.comment("base rusting chance per random tick (higher = faster rust)").define("rusting_rate", 0.06, 0, 1);
         RUST_STREAKING = builder.define("rust_streaking", true);
         builder.pop();
 
+
+        builder.comment("Speed multipliers for all random mechanics (block growths). 1 = original speed, 2 = twice as fast, 0 = off. Final speed = global * category")
+                .push("speed");
+        GROWTH_SPEED = builder.comment("global multiplier for every block growth").define("global", 1.0, 0, 100);
+        GROWTH_VEGETATION = builder.comment("grass, saplings, roots, rooted dirt, podzol, mycelium, tall grass, ferns, seagrass").define("vegetation", 1.0, 0, 100);
+        GROWTH_FROST = builder.comment("frost, frosty glass/grass, thin ice, icicles, snow storms").define("frost_and_ice", 1.0, 0, 100);
+        GROWTH_FIRE = builder.comment("soot from fire and campfires, fire burning grass, magma").define("fire_and_soot", 1.0, 0, 100);
+        GROWTH_SAND = builder.comment("sand layers, sandstone erosion, sand storms").define("sand", 1.0, 0, 100);
+        GROWTH_CORAL = builder.define("coral", 1.0, 0, 100);
+        GROWTH_LIGHTNING = builder.comment("lightning effects (only multipliers <= 1 make sense)").define("lightning", 1.0, 0, 100);
+        GROWTH_LEAVES = builder.comment("leaf piles falling from leaves").define("leaf_piles", 1.0, 0, 100);
+        GROWTH_NETHER = builder.comment("nylium, wart vines, nether saplings").define("nether", 1.0, 0, 100);
+        GROWTH_WEEDS = builder.define("weeds", 1.0, 0, 100);
+        GROWTH_OTHER = builder.comment("everything else, including growths from datapacks").define("other", 1.0, 0, 100);
+        MOSS_SPEED = builder.comment("moss spreading on stone / bricks").define("moss", 1.0, 0, 100);
+        CRACK_SPEED = builder.comment("cracks spreading on bricks").define("cracks", 1.0, 0, 100);
+        RUST_SPEED = builder.comment("iron rusting (each rust stage)").define("rust", 1.0, 0, 100);
+        builder.pop();
+
+        builder.push("ash");
+        ASH_ENABLED = builder.define("enabled", true);
+        ASH_FROM_BURNED_BLOCK = builder.comment("chance that a block destroyed by fire (and not charred) leaves an ash layer").define("from_burned_block", 0.5, 0, 1);
+        ASH_FROM_EXPIRED_FIRE = builder.comment("chance that fire going out leaves an ash layer").define("from_expired_fire", 0.3, 0, 1);
+        ASH_MAX_LAYERS = builder.comment("max ash layers created by one burned block").define("max_layers", 2, 1, 8);
+        ASH_RAIN_WASH_CHANCE = builder.comment("chance per random tick that rain washes one ash layer away").define("rain_wash_chance", 0.3, 0, 1);
+        ASH_FERTILIZER = builder.comment("ash works like bone meal").define("ash_fertilizer", true);
+        ASH_KILLS_GRASS = builder.comment("burning on grass turns it into dirt under the ash").define("burns_grass", true);
+        builder.pop();
 
         SERVER_SPEC = builder.build();
         SERVER_SPEC.forceLoad();

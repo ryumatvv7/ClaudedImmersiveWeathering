@@ -165,7 +165,7 @@ public class ModCreativeTab {
         );
 
         before(e, Items.ICE, CreativeModeTabs.NATURAL_BLOCKS,
-            ModBlocks.SOOT, ModBlocks.FROST
+            ModBlocks.SOOT, ModItems.ASH, ModBlocks.FROST
         );
 
         after(e, Items.SANDSTONE, CreativeModeTabs.NATURAL_BLOCKS,

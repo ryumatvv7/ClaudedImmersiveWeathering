@@ -211,6 +211,15 @@ public class DevSelfTest {
         ImmersiveWeathering.LOGGER.info("Self test: burning oak log ended as {} with {} above", level.getBlockState(p), level.getBlockState(p.above()));
         clear(level, base);
 
+        guarded("ash", () -> {
+            level.setBlock(p.below(), Blocks.STONE.defaultBlockState(), 3);
+            com.ordana.immersive_weathering.blocks.AshLayerBlock.placeAsh(level, p, 2);
+            check("ash placed (" + level.getBlockState(p) + ")", level.getBlockState(p).is(com.ordana.immersive_weathering.reg.ModBlocks.ASH_LAYER_BLOCK.get()));
+            com.ordana.immersive_weathering.blocks.AshLayerBlock.placeAsh(level, p, 3);
+            check("ash stacks", level.getBlockState(p).getValue(com.ordana.immersive_weathering.blocks.LayerBlock.LAYERS_8) == 5);
+        });
+        clear(level, base);
+
         if (failures.isEmpty()) {
             ImmersiveWeathering.LOGGER.info("SELF TEST PASSED ({} checks)", checks);
         } else {

@@ -71,6 +71,10 @@ public class ModItems {
             ModBlocks.ICICLE.get(), p), () -> new Item.Properties()
             .food(ModFoods.ICICLE, ModFoods.ICICLE_CONSUMABLE).useBlockDescriptionPrefix());
 
+    //port addition: ash, places ash layers and works as fertilizer
+    public static final Supplier<BlockItem> ASH = regItem("ash", p -> new com.ordana.immersive_weathering.items.AshItem(
+            ModBlocks.ASH_LAYER_BLOCK.get(), p), Item.Properties::new);
+
     //leaf pile
     public static final Map<LeavesType, BlockItem> LEAF_PILES = new LinkedHashMap<>();
     public static final Supplier<BlockItem> AZALEA_FLOWER_PILE = regLeafPile("azalea_flower_pile", ModBlocks.AZALEA_FLOWER_PILE);

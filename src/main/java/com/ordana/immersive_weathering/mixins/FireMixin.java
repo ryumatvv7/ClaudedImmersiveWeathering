@@ -28,9 +28,19 @@ public abstract class FireMixin extends BaseFireBlock{
     @Inject(method = "tick",
             at = @At(value = "INVOKE",
                     target = "Lnet/minecraft/server/level/ServerLevel;removeBlock(Lnet/minecraft/core/BlockPos;Z)Z",
-                    ordinal = 3,
+                    ordinal = 2,
                     shift = At.Shift.AFTER))
     private void removeBlock(BlockState state, ServerLevel serverLevel, BlockPos pos, RandomSource random, CallbackInfo ci) {
+        WeatheringHelper.onFireExpired(serverLevel, pos, state);
+    }
+
+    //burned out at max age
+    @Inject(method = "tick",
+            at = @At(value = "INVOKE",
+                    target = "Lnet/minecraft/server/level/ServerLevel;removeBlock(Lnet/minecraft/core/BlockPos;Z)Z",
+                    ordinal = 3,
+                    shift = At.Shift.AFTER))
+    private void removeBlockOld(BlockState state, ServerLevel serverLevel, BlockPos pos, RandomSource random, CallbackInfo ci) {
         WeatheringHelper.onFireExpired(serverLevel, pos, state);
     }
 
