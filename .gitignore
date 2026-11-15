@@ -50,3 +50,6 @@ errs.txt
 
 # ready-to-run server folder (binaries, world)
 server/
+
+# private task notes
+prompt.txt
