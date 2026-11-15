@@ -1,6 +1,7 @@
 {
   "model": {
     "type": "minecraft:model",
-    "model": "immersive_weathering:item/spruce_leaf_pile"
+    "model": "immersive_weathering:item/spruce_leaf_pile",
+    "tints":[{"type":"minecraft:constant","value":-10380959}]
   }
 }

@@ -1,24 +1,39 @@
 package com.ordana.immersive_weathering.client;
 
+import com.ordana.immersive_weathering.ImmersiveWeathering;
+import com.ordana.immersive_weathering.blocks.LeafPileBlock;
+import com.ordana.immersive_weathering.client.particles.ModParticleProviders;
 import com.ordana.immersive_weathering.configs.ClientConfigs;
 import com.ordana.immersive_weathering.network.LeafDecayPayload;
+import com.ordana.immersive_weathering.reg.ModBlocks;
 import com.ordana.immersive_weathering.reg.ModEntities;
 import com.ordana.immersive_weathering.reg.ModParticles;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
 import net.fabricmc.fabric.api.client.particle.v1.ParticleProviderRegistry;
+import net.fabricmc.fabric.api.client.rendering.v1.BlockColorRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry;
 import net.mehvahdjukaar.moonlight.api.client.renderer.FallingBlockRendererGeneric;
+import net.mehvahdjukaar.moonlight.api.platform.ClientHelper;
+import net.mehvahdjukaar.moonlight.api.set.leaves.LeavesType;
+import net.mehvahdjukaar.moonlight.api.util.math.colors.RGBColor;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.color.block.BlockTintSource;
+import net.minecraft.client.color.block.BlockTintSources;
 import net.minecraft.client.multiplayer.ClientLevel;
-import net.minecraft.client.particle.FlameParticle;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.BlockParticleOption;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.core.particles.SimpleParticleType;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
+import net.minecraft.client.renderer.block.BlockAndTintGetter;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.properties.Property;
 
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 import java.util.function.Supplier;
 
 /**
@@ -26,7 +41,7 @@ import java.util.function.Supplier;
  * so a dedicated server never loads it.
  * <p>
  * Block render layers (cutout / translucent) are no longer registered by code: since 26.1 the game
- * picks them from the transparency of the textures.
+ * picks them from the transparency of the textures. Item tints live in the item model json.
  */
 public class ImmersiveWeatheringClient implements ClientModInitializer {
 
@@ -35,21 +50,91 @@ public class ImmersiveWeatheringClient implements ClientModInitializer {
         //per player visual options
         ClientConfigs.init();
 
+        //generated assets for leaf piles and bark of modded wood types
+        ClientDynamicResourcesHandler.init();
+
+        //optional built-in resource pack (off by default)
+        ClientHelper.registerOptionalTexturePack(ImmersiveWeathering.res("visual_waxed_iron_items"), false);
+
         EntityRendererRegistry.register(ModEntities.FALLING_ICICLE.get(), FallingBlockRendererGeneric::new);
         EntityRendererRegistry.register(ModEntities.FALLING_LAYER.get(), FallingBlockRendererGeneric::new);
         EntityRendererRegistry.register(ModEntities.FALLING_PROPAGULE.get(), FallingBlockRendererGeneric::new);
 
-        //TODO stage 4: port the custom particle classes (ember, leaf, gravity). For now every mod particle
-        // uses a simple vanilla behaviour with its own sprites so nothing is missing on the client
-        for (Supplier<SimpleParticleType> p : ModParticles.ALL) {
-            ParticleProviderRegistry.getInstance().register(p.get(), FlameParticle.Provider::new);
-        }
+        registerParticles();
+
+        //leaf piles are registered late (after every mod's leaves), so colors wait for client setup
+        ClientHelper.addClientSetup(ImmersiveWeatheringClient::registerBlockColors);
 
         //server tells us leaves decayed somewhere nearby: purely visual, runs on the client thread
         ClientPlayNetworking.registerGlobalReceiver(LeafDecayPayload.TYPE, (payload, context) -> {
             ClientLevel level = context.client().level;
             if (level != null) spawnLeafDecayEffects(level, payload.pos(), payload.state());
         });
+    }
+
+    private static void registerParticles() {
+        ParticleProviderRegistry r = ParticleProviderRegistry.getInstance();
+        Set<Supplier<SimpleParticleType>> done = new HashSet<>();
+
+        r.register(ModParticles.EMBERSPARK.get(), ModParticleProviders.EmberProvider::new);
+        r.register(ModParticles.SCRAPE_RUST.get(), ModParticleProviders.ScrapeRustProvider::new);
+        r.register(ModParticles.MOSS.get(), ModParticleProviders.NormalGravityProvider::new);
+        r.register(ModParticles.GRAVITY_AZALEA_FLOWER.get(), ModParticleProviders.NormalGravityProvider::new);
+        done.addAll(List.of(ModParticles.EMBERSPARK, ModParticles.SCRAPE_RUST, ModParticles.MOSS, ModParticles.GRAVITY_AZALEA_FLOWER));
+
+        //azalea flower and all the flower crown variants are falling petals
+        for (Supplier<SimpleParticleType> p : ModParticles.ALL) {
+            if (!done.contains(p)) r.register(p.get(), ModParticleProviders.LeafProvider::new);
+        }
+    }
+
+    private static void registerBlockColors() {
+        //tint index 0 is untinted (dirt / frost overlay), tint index 1 is the grass color
+        BlockColorRegistry.register(List.of(BlockTintSources.constant(-1), BlockTintSources.grassBlock()),
+                ModBlocks.GRASSY_PERMAFROST.get(),
+                ModBlocks.GRASSY_SILT.get(),
+                ModBlocks.GRASSY_EARTHEN_CLAY.get(),
+                ModBlocks.GRASSY_SANDY_DIRT.get(),
+                ModBlocks.ROOTED_GRASS_BLOCK.get(),
+                ModBlocks.FROSTY_GRASS.get(),
+                ModBlocks.FROSTY_FERN.get());
+
+        ModBlocks.LEAF_PILES.forEach((type, pile) ->
+                BlockColorRegistry.register(List.of(new LeafPileTint(type)), pile));
+    }
+
+    /**
+     * Leaf piles take the color of their leaves and turn brown with age.
+     */
+    private record LeafPileTint(LeavesType type) implements BlockTintSource {
+        private static final int BROWN = 0x7D5212;
+
+        private BlockTintSource leaves() {
+            return Minecraft.getInstance().getBlockColors().getTintSource(type.leaves.defaultBlockState(), 0);
+        }
+
+        private static int age(BlockState state, int original) {
+            float percentage = state.getValue(LeafPileBlock.AGE) / 10f;
+            if (percentage == 0) return original;
+            return 0xFF000000 | new RGBColor(original).asLAB().mixWith(new RGBColor(BROWN).asLAB(), percentage).asRGB().toInt();
+        }
+
+        @Override
+        public int color(BlockState state) {
+            BlockTintSource l = leaves();
+            return age(state, l == null ? -1 : l.color(type.leaves.defaultBlockState()));
+        }
+
+        @Override
+        public int colorInWorld(BlockState state, BlockAndTintGetter level, BlockPos pos) {
+            BlockTintSource l = leaves();
+            return age(state, l == null ? -1 : l.colorInWorld(type.leaves.defaultBlockState(), level, pos));
+        }
+
+        @Override
+        public Set<Property<?>> relevantProperties() {
+            return Set.of(LeafPileBlock.AGE);
+        }
     }
 
     private static void spawnLeafDecayEffects(ClientLevel level, BlockPos pos, BlockState state) {

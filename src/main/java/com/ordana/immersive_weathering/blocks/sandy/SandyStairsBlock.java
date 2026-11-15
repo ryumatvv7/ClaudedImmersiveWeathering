@@ -23,7 +23,7 @@ public class SandyStairsBlock extends ModStairBlock implements Sandy {
 
     public SandyStairsBlock(Supplier<Block> baseBlock, Properties settings) {
         super(baseBlock, settings);
-        this.registerDefaultState(this.stateDefinition.any().setValue(ModBlockProperties.SANDINESS, 0).setValue(ModBlockProperties.SAND_AGE, 0));
+        this.registerDefaultState(this.defaultBlockState().setValue(ModBlockProperties.SANDINESS, 0).setValue(ModBlockProperties.SAND_AGE, 0));
     }
 
     @Override

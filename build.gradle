@@ -83,3 +83,15 @@ jar {
 	from("LICENSE") { rename { "${it}_immersive_weathering" } }
 	from("ATTRIBUTIONS") { rename { "${it}_immersive_weathering" } }
 }
+
+// Automated client tests (dev only, never shipped): creates a world, places the mod's blocks, takes
+// screenshots, then starts a dedicated server and joins it. Run with: gradlew runClientGameTest
+fabricApi {
+	configureTests {
+		createSourceSet = true
+		modId = "immersive_weathering_test"
+		enableGameTests = false
+		enableClientGameTests = true
+		eula = true
+	}
+}

@@ -47,3 +47,6 @@ ref/
 
 build_log.txt
 errs.txt
+
+# ready-to-run server folder (binaries, world)
+server/

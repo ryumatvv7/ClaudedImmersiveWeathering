@@ -97,6 +97,11 @@ public class DevSelfTest {
             }
         }
         ImmersiveWeathering.LOGGER.info("Self test: ticked {} block states", states);
+        for (Block b : BuiltInRegistries.BLOCK) {
+            if (BuiltInRegistries.BLOCK.getKey(b).getNamespace().equals(ImmersiveWeathering.MOD_ID) && !b.defaultBlockState().getFluidState().isEmpty()) {
+                ImmersiveWeathering.LOGGER.info("Self test: default state contains fluid: {}", b.defaultBlockState());
+            }
+        }
 
         // --- growths on common vanilla owners
         for (Block b : List.of(Blocks.GRASS_BLOCK, Blocks.STONE, Blocks.STONE_BRICKS, Blocks.OAK_LEAVES, Blocks.ICE, Blocks.FIRE,

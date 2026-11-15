@@ -21,7 +21,7 @@ public class SandySlabBlock extends SlabBlock implements Sandy {
 
     public SandySlabBlock(Properties properties) {
         super(properties);
-        this.registerDefaultState(this.stateDefinition.any().setValue(ModBlockProperties.SANDINESS, 0).setValue(ModBlockProperties.SAND_AGE, 0));
+        this.registerDefaultState(this.defaultBlockState().setValue(ModBlockProperties.SANDINESS, 0).setValue(ModBlockProperties.SAND_AGE, 0));
     }
 
     @Override

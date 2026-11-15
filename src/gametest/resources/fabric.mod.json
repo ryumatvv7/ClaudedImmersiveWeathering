@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 1,
+  "id": "immersive_weathering_test",
+  "version": "1.0.0",
+  "name": "Immersive Weathering port - dev tests",
+  "environment": "*",
+  "entrypoints": {
+    "fabric-client-gametest": [
+      "com.ordana.immersive_weathering.test.IWClientGameTest"
+    ]
+  },
+  "depends": {
+    "immersive_weathering": "*"
+  }
+}

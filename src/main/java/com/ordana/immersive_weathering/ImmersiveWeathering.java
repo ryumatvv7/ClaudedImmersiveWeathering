@@ -57,7 +57,11 @@ public class ImmersiveWeathering implements ModInitializer {
         ModEntities.init();
         ModParticles.init();
         ModRuleTests.init();
+        ModFeatures.init();
         ModSoundEvents.init();
+
+        //generated tags, loot tables and recipes for leaf piles / bark of other mods' wood types
+        com.ordana.immersive_weathering.dynamicpack.ServerDynamicResourcesHandler.init();
 
         //network: payload types have to be known on both sides
         LeafDecayPayload.register();
