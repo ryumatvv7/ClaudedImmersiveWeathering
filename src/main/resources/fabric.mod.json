@@ -1,0 +1,46 @@
+{
+  "schemaVersion": 1,
+  "id": "immersive_weathering",
+  "version": "${version}",
+  "name": "Immersive Weathering",
+  "description": "An abundance of new natural systems to make your world feel more alive than ever.\nUnofficial private Fabric 26.1.2 port of the original mod.",
+  "authors": [
+    "Ordana",
+    "MehVahdjukaar",
+    "Keyberries",
+    "kayla_the_bee"
+  ],
+  "contributors": [
+    "Unofficial 26.1.2 Fabric port (private use)"
+  ],
+  "contact": {
+    "homepage": "https://discord.gg/MTUHt3r",
+    "sources": "https://github.com/Silversmith-Mods/Immersive-Weathering"
+  },
+  "license": "LGPL-3.0",
+  "icon": "icon.png",
+  "environment": "*",
+  "entrypoints": {
+    "main": [
+      "com.ordana.immersive_weathering.ImmersiveWeathering"
+    ],
+    "client": [
+      "com.ordana.immersive_weathering.client.ImmersiveWeatheringClient"
+    ]
+  },
+  "accessWidener": "immersive_weathering.accesswidener",
+  "mixins": [
+    "immersive_weathering.mixins.json",
+    {
+      "config": "immersive_weathering.client.mixins.json",
+      "environment": "client"
+    }
+  ],
+  "depends": {
+    "fabricloader": ">=${loader_version}",
+    "minecraft": "${minecraft_version}",
+    "java": ">=25",
+    "fabric-api": "*",
+    "moonlight": ">=${moonlight_version}"
+  }
+}
