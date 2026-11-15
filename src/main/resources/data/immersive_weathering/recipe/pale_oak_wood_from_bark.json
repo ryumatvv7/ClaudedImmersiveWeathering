@@ -1,0 +1,11 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "group": "wood_from_bark",
+  "ingredients": [
+    "immersive_weathering:pale_oak_bark",
+    "minecraft:pale_oak_log"
+  ],
+  "result": {
+    "id": "minecraft:pale_oak_wood"
+  }
+}

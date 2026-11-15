@@ -1,4 +1,6 @@
 {
+  "block.immersive_weathering.pale_oak_leaf_pile": "Pale Oak Leaf Pile",
+  "item.immersive_weathering.pale_oak_bark": "Pale Oak Bark",
   "itemGroup.immersive_weathering.immersive_weathering": "Immersive Weathering",
   "advancements.immersive_weathering.moss.title": "Perpetuate the Cycle?",
   "advancements.immersive_weathering.moss.description": "(You ate the moss.), (Tastes... mossy.), (Your HP was mossed out.)",
