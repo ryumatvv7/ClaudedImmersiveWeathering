@@ -1,8 +1,8 @@
 package com.ordana.immersive_weathering.items;
 
+import net.minecraft.util.ParticleUtils;
 import com.ordana.immersive_weathering.blocks.frosted.Frosty;
 import com.ordana.immersive_weathering.reg.ModBlocks;
-import net.mehvahdjukaar.moonlight.api.client.util.ParticleUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerPlayer;
@@ -43,7 +43,7 @@ public class FrostItem extends BlockItem {
         if (frosty.isPresent()) {
             Player player = context.getPlayer();
             level.playSound(player, pos, SoundEvents.POWDER_SNOW_BREAK, SoundSource.BLOCKS, 1.0f, 1.0f);
-            if (level.isClientSide()) ParticleUtil.spawnParticlesOnBlockFaces(level, pos, ParticleTypes.SNOWFLAKE, UniformInt.of(3, 5), -0.05f, 0.05f, false);
+            if (level.isClientSide()) ParticleUtils.spawnParticlesOnBlockFaces(level, pos, ParticleTypes.SNOWFLAKE, UniformInt.of(3, 5));
             if (player instanceof ServerPlayer) {
                 if (!player.getAbilities().instabuild) {
                     context.getItemInHand().shrink(1);

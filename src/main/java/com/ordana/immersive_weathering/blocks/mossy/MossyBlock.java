@@ -23,7 +23,7 @@ public class MossyBlock extends Block implements Mossable, BonemealableBlock {
     }
 
     @Override
-    public boolean isValidBonemealTarget(LevelReader level, BlockPos pos, BlockState state, boolean isClient) {
+    public boolean isValidBonemealTarget(LevelReader level, BlockPos pos, BlockState state) {
         return this.mossLevel == MossLevel.MOSSY;
     }
 
@@ -47,6 +47,7 @@ public class MossyBlock extends Block implements Mossable, BonemealableBlock {
         return false;
     }
 
+    @Override
     public MossLevel getMossLevel() {
         return mossLevel;
     }

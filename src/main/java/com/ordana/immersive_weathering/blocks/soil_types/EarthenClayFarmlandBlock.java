@@ -38,6 +38,7 @@ public class EarthenClayFarmlandBlock extends ModFarmlandBlock {
         this.registerDefaultState(this.stateDefinition.any().setValue(MOISTURE, 0));
     }
 
+    @Override
     public BlockState getStateForPlacement(BlockPlaceContext context) {
         FluidState fluidState = context.getLevel().getFluidState(context.getClickedPos());
         boolean bl = fluidState.getType() == Fluids.WATER;
@@ -81,8 +82,8 @@ public class EarthenClayFarmlandBlock extends ModFarmlandBlock {
 
 
     @Override
-    public void fallOn(Level level, BlockState state, BlockPos pos, Entity entity, float f) {
-        if (!level.isClientSide() && level.getRandom().nextFloat() < f - 0.5F && entity instanceof LivingEntity && (entity instanceof Player || level.getGameRules().get(GameRules.MOB_GRIEFING)) && entity.getBbWidth() * entity.getBbWidth() * entity.getBbHeight() > 0.512F) {
+    public void fallOn(Level level, BlockState state, BlockPos pos, Entity entity, double f) {
+        if (!level.isClientSide() && level.getRandom().nextFloat() < f - 0.5F && entity instanceof LivingEntity && (entity instanceof Player || ((ServerLevel) level).getGameRules().get(GameRules.MOB_GRIEFING)) && entity.getBbWidth() * entity.getBbWidth() * entity.getBbHeight() > 0.512F) {
             turnToDirt(state, level, pos);
         }
 
@@ -102,7 +103,7 @@ public class EarthenClayFarmlandBlock extends ModFarmlandBlock {
     }
 
     @Override
-    public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
+    protected InteractionResult useItemOn(ItemStack heldStack, BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
         if (!player.isSecondaryUseActive()) {
             ItemStack stack = player.getItemInHand(hand);
             if (stack.is(Items.WATER_BUCKET) && state.getValue(MOISTURE) == 0) {
@@ -126,6 +127,6 @@ public class EarthenClayFarmlandBlock extends ModFarmlandBlock {
                 return InteractionResult.SUCCESS;
             }
         }
-        return super.use(state, level, pos, player, hand, hit);
+        return super.useItemOn(heldStack, state, level, pos, player, hand, hit);
     }
 }

@@ -1,5 +1,8 @@
 package com.ordana.immersive_weathering.blocks;
 
+import com.mojang.serialization.MapCodec;
+import net.minecraft.world.level.ScheduledTickAccess;
+import net.minecraft.world.level.LevelReader;
 import com.ordana.immersive_weathering.entities.FallingLayerEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -29,6 +32,18 @@ import java.util.Collections;
  */
 
 public class LayerBlock extends FallingBlock {
+
+    public static final MapCodec<LayerBlock> CODEC = simpleCodec(LayerBlock::new);
+
+    @Override
+    protected MapCodec<? extends FallingBlock> codec() {
+        return CODEC;
+    }
+
+    @Override
+    public int getDustColor(BlockState state, BlockGetter level, BlockPos pos) {
+        return state.getMapColor(level, pos).col;
+    }
     public static final IntegerProperty LAYERS_8 = BlockStateProperties.LAYERS;
     private static final VoxelShape[] SHAPE_BY_LAYER = new VoxelShape[8 + 1];
 
@@ -88,7 +103,7 @@ public class LayerBlock extends FallingBlock {
     }
 
     @Override
-    public boolean isPathfindable(BlockState state, BlockGetter level, BlockPos pos, PathComputationType type) {
+    public boolean isPathfindable(BlockState state, PathComputationType type) {
         return switch (type) {
             case LAND -> getLayers(state) < 5;
             case WATER -> getLayers(state) == 0;
@@ -103,7 +118,7 @@ public class LayerBlock extends FallingBlock {
 
     //ugly but works
     @Override
-    public BlockState updateShape(BlockState state, Direction direction, BlockState facingState, LevelAccessor level, BlockPos currentPos, BlockPos otherPos) {
+    public BlockState updateShape(BlockState state, LevelReader level, ScheduledTickAccess tickAccess, BlockPos currentPos, Direction direction, BlockPos otherPos, BlockState facingState, RandomSource shapeRandom) {
         if (level instanceof ServerLevel serverLevel) {
             BlockPos pos = currentPos.above();
             BlockState state1 = level.getBlockState(pos);
@@ -114,7 +129,7 @@ public class LayerBlock extends FallingBlock {
                 state1 = serverLevel.getBlockState(pos);
             }
         }
-        return super.updateShape(state, direction, facingState, level, currentPos, otherPos);
+        return super.updateShape(state, level, tickAccess, currentPos, direction, otherPos, facingState, shapeRandom);
     }
 
 
@@ -142,6 +157,7 @@ public class LayerBlock extends FallingBlock {
     }
 
     @Nullable
+    @Override
     public BlockState getStateForPlacement(BlockPlaceContext context) {
         BlockState blockstate = context.getLevel().getBlockState(context.getClickedPos());
         if (blockstate.is(this)) {

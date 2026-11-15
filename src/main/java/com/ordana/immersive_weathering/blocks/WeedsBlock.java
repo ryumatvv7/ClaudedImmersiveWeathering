@@ -1,5 +1,6 @@
 package com.ordana.immersive_weathering.blocks;
 
+import net.minecraft.world.entity.InsideBlockEffectApplier;
 import com.ordana.immersive_weathering.configs.CommonConfigs;
 import com.ordana.immersive_weathering.reg.ModTags;
 import net.mehvahdjukaar.moonlight.api.platform.RegHelper;
@@ -59,7 +60,7 @@ public class WeedsBlock extends CropBlock {
     }
 
     @Override
-    public void entityInside(BlockState state, Level level, BlockPos pos, Entity entity) {
+    public void entityInside(BlockState state, Level level, BlockPos pos, Entity entity, InsideBlockEffectApplier effectApplier, boolean isPrecise) {
         if (level.getRandom().nextFloat() < 0.1 && entity instanceof Player player) { //no more dead villagers
             if (!level.isClientSide() && state.getValue(AGE) > 0 && (entity.xOld != entity.getX() || entity.zOld != entity.getZ())) {
                 if (player.getItemBySlot(EquipmentSlot.FEET).isEmpty() || !CommonConfigs.LEGGINGS_PREVENTS_THORN_DAMAGE.get()) {
@@ -77,12 +78,14 @@ public class WeedsBlock extends CropBlock {
     //commented out the PlatformOnlys because it wasnt working on forge?? ~o
 
     //@PlatformOnly(PlatformOnly.FABRIC)
+    @Override
     public boolean canSurvive(BlockState state, LevelReader level, BlockPos pos) {
         BlockPos below = pos.below();
         return this.mayPlaceOn(level.getBlockState(below), level, below);
     }
 
     //@PlatformOnly(PlatformOnly.FABRIC)
+    @Override
     protected boolean mayPlaceOn(BlockState floor, BlockGetter level, BlockPos pos) {
         return floor.is(ModTags.FERTILE_BLOCKS) || floor.is(BlockTags.DIRT) || floor.is(ModTags.CRACKED) || floor.is(ModTags.MOSSY);
     }

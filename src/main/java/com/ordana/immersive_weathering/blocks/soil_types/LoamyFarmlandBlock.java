@@ -25,6 +25,7 @@ public class LoamyFarmlandBlock extends ModFarmlandBlock {
         this.registerDefaultState(this.stateDefinition.any().setValue(MOISTURE, 0));
     }
 
+    @Override
     public BlockState getStateForPlacement(BlockPlaceContext context) {
         return !this.defaultBlockState().canSurvive(context.getLevel(), context.getClickedPos()) ? ModBlocks.LOAM.get().defaultBlockState() : super.getStateForPlacement(context);
     }
@@ -68,8 +69,8 @@ public class LoamyFarmlandBlock extends ModFarmlandBlock {
 
 
     @Override
-    public void fallOn(Level level, BlockState state, BlockPos pos, Entity entity, float f) {
-        if (!level.isClientSide() && level.getRandom().nextFloat() < f - 0.5F && entity instanceof LivingEntity && (entity instanceof Player || level.getGameRules().get(GameRules.MOB_GRIEFING)) && entity.getBbWidth() * entity.getBbWidth() * entity.getBbHeight() > 0.512F) {
+    public void fallOn(Level level, BlockState state, BlockPos pos, Entity entity, double f) {
+        if (!level.isClientSide() && level.getRandom().nextFloat() < f - 0.5F && entity instanceof LivingEntity && (entity instanceof Player || ((ServerLevel) level).getGameRules().get(GameRules.MOB_GRIEFING)) && entity.getBbWidth() * entity.getBbWidth() * entity.getBbHeight() > 0.512F) {
             turnToDirt(state, level, pos);
         }
 

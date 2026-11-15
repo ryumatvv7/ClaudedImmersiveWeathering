@@ -1,0 +1,13 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "SS",
+    "SS"
+  ],
+  "key": {
+    "S": "immersive_weathering:deepslate_tile"
+  },
+  "result": {
+    "id": "minecraft:deepslate_tiles"
+  }
+}

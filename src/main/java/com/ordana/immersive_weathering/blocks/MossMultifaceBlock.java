@@ -13,11 +13,13 @@ public class MossMultifaceBlock extends GlowLichenBlock {
         super(properties);
     }
 
+    
     @Override
     public MultifaceSpreader getSpreader() {
         return this.spreader;
     }
 
+    @Override
     public boolean canBeReplaced(BlockState state, BlockPlaceContext useContext) {
         return !useContext.getItemInHand().is(ModItems.MOSS_CLUMP.get()) || super.canBeReplaced(state, useContext);
     }

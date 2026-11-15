@@ -1,5 +1,7 @@
 package com.ordana.immersive_weathering.blocks;
 
+import net.minecraft.world.level.ScheduledTickAccess;
+import net.minecraft.world.entity.InsideBlockEffectApplier;
 import com.ordana.immersive_weathering.configs.CommonConfigs;
 import com.ordana.immersive_weathering.entities.FallingLayerEntity;
 import com.ordana.immersive_weathering.reg.ModBlocks;
@@ -101,7 +103,7 @@ public class LeafPileBlock extends LayerBlock implements BonemealableBlock {
     }
 
     @Override
-    public int getLightBlock(BlockState state, BlockGetter level, BlockPos pos) {
+    public int getLightDampening(BlockState state) {
         return 1;
     }
 
@@ -111,11 +113,11 @@ public class LeafPileBlock extends LayerBlock implements BonemealableBlock {
     }
 
     @Override
-    public void entityInside(BlockState state, Level level, BlockPos pos, Entity entity) {
+    public void entityInside(BlockState state, Level level, BlockPos pos, Entity entity, InsideBlockEffectApplier effectApplier, boolean isPrecise) {
         int layers = this.getLayers(state);
 
         if (layers > 3) {
-            if (CommonConfigs.LEAF_PILES_SLOW.get() && entity instanceof LivingEntity && !(entity instanceof Fox || entity instanceof Bee || EnchantmentHelper.getEnchantmentLevel(Enchantments.DEPTH_STRIDER, (LivingEntity) entity) > 0)) {
+            if (CommonConfigs.LEAF_PILES_SLOW.get() && entity instanceof LivingEntity && !(entity instanceof Fox || entity instanceof Bee || WeatheringHelper.getEnchantmentLevel(Enchantments.DEPTH_STRIDER, (LivingEntity) entity) > 0)) {
                 float stuck = COLLISIONS[Math.max(0, layers - 1)];
                 entity.makeStuckInBlock(state, new Vec3(stuck, 1, stuck));
 
@@ -170,11 +172,11 @@ public class LeafPileBlock extends LayerBlock implements BonemealableBlock {
     }
 
     @Override
-    public BlockState updateShape(BlockState state, Direction direction, BlockState neighborState, LevelAccessor level, BlockPos pos, BlockPos neighborPos) {
+    public BlockState updateShape(BlockState state, LevelReader level, ScheduledTickAccess tickAccess, BlockPos pos, Direction direction, BlockPos neighborPos, BlockState neighborState, RandomSource shapeRandom) {
         if (direction == Direction.DOWN && state.getValue(LAYERS) <= 1) {
             state = state.setValue(LAYERS, neighborState.is(Blocks.WATER) ? 0 : 1);
         }
-        return super.updateShape(state, direction, neighborState, level, pos, neighborPos);
+        return super.updateShape(state, level, tickAccess, pos, direction, neighborPos, neighborState, shapeRandom);
     }
 
     @Override
@@ -188,6 +190,7 @@ public class LeafPileBlock extends LayerBlock implements BonemealableBlock {
     }
 
     @Nullable
+    @Override
     public BlockState getStateForPlacement(BlockPlaceContext ctx) {
         BlockState blockState = ctx.getLevel().getBlockState(ctx.getClickedPos());
         if (blockState.is(this)) {
@@ -205,7 +208,7 @@ public class LeafPileBlock extends LayerBlock implements BonemealableBlock {
     }
 
     @Override
-    public boolean isValidBonemealTarget(LevelReader level, BlockPos pos, BlockState state, boolean isClient) {
+    public boolean isValidBonemealTarget(LevelReader level, BlockPos pos, BlockState state) {
         return this.canBeBonemealed;
     }
 

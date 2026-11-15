@@ -1,5 +1,6 @@
 package com.ordana.immersive_weathering.blocks.soil_types;
 
+import net.minecraft.world.level.gamerules.GameRules;
 import com.ordana.immersive_weathering.reg.ModBlocks;
 import com.ordana.immersive_weathering.reg.ModTags;
 import net.minecraft.core.BlockPos;
@@ -30,6 +31,7 @@ public class SandyFarmlandBlock extends ModFarmlandBlock implements Fallable {
         this.registerDefaultState(this.stateDefinition.any().setValue(MOISTURE, 0));
     }
 
+    @Override
     public BlockState getStateForPlacement(BlockPlaceContext context) {
         return !this.defaultBlockState().canSurvive(context.getLevel(), context.getClickedPos()) ? ModBlocks.SANDY_DIRT.get().defaultBlockState() : super.getStateForPlacement(context);
     }
@@ -74,8 +76,8 @@ public class SandyFarmlandBlock extends ModFarmlandBlock implements Fallable {
 
 
     @Override
-    public void fallOn(Level level, BlockState state, BlockPos pos, Entity entity, float f) {
-        if (!level.isClientSide() && level.getRandom().nextFloat() < f - 0.5F && entity instanceof LivingEntity && (entity instanceof Player || level.getGameRules().get(GameRules.MOB_GRIEFING)) && entity.getBbWidth() * entity.getBbWidth() * entity.getBbHeight() > 0.512F) {
+    public void fallOn(Level level, BlockState state, BlockPos pos, Entity entity, double f) {
+        if (!level.isClientSide() && level.getRandom().nextFloat() < f - 0.5F && entity instanceof LivingEntity && (entity instanceof Player || ((ServerLevel) level).getGameRules().get(GameRules.MOB_GRIEFING)) && entity.getBbWidth() * entity.getBbWidth() * entity.getBbHeight() > 0.512F) {
             turnToDirt(state, level, pos);
         }
 
@@ -97,13 +99,15 @@ public class SandyFarmlandBlock extends ModFarmlandBlock implements Fallable {
         level.setBlockAndUpdate(pos, pushEntitiesUp(state, ModBlocks.SANDY_DIRT.get().withPropertiesOf(state), level, pos));
     }
 
+    @Override
     public void onPlace(BlockState state, Level level, BlockPos pos, BlockState oldState, boolean movedByPiston) {
         level.scheduleTick(pos, this, this.getDelayAfterPlace());
     }
 
-    public BlockState updateShape(BlockState state, Direction direction, BlockState neighborState, LevelAccessor level, BlockPos pos, BlockPos neighborPos) {
-        level.scheduleTick(pos, this, this.getDelayAfterPlace());
-        return super.updateShape(state, direction, neighborState, level, pos, neighborPos);
+    @Override
+    public BlockState updateShape(BlockState state, LevelReader level, ScheduledTickAccess tickAccess, BlockPos pos, Direction direction, BlockPos neighborPos, BlockState neighborState, RandomSource shapeRandom) {
+        tickAccess.scheduleTick(pos, this, this.getDelayAfterPlace());
+        return super.updateShape(state, level, tickAccess, pos, direction, neighborPos, neighborState, shapeRandom);
     }
 
     protected void falling(FallingBlockEntity entity) {
@@ -117,6 +121,7 @@ public class SandyFarmlandBlock extends ModFarmlandBlock implements Fallable {
         return state.isAir() || state.is(BlockTags.FIRE) || state.liquid() || state.canBeReplaced();
     }
 
+    @Override
     public void animateTick(BlockState state, Level level, BlockPos pos, RandomSource random) {
         if (random.nextInt(16) == 0) {
             BlockPos blockPos = pos.below();

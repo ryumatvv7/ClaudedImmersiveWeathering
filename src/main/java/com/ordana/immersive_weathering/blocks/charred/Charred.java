@@ -4,7 +4,6 @@ import com.ordana.immersive_weathering.blocks.ModBlockProperties;
 import com.ordana.immersive_weathering.reg.ModParticles;
 import com.ordana.immersive_weathering.reg.ModTags;
 import net.mehvahdjukaar.moonlight.api.block.ILightable;
-import net.mehvahdjukaar.moonlight.api.client.util.ParticleUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.particles.BlockParticleOption;
@@ -30,6 +29,9 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.LevelAccessor;
+import org.jetbrains.annotations.Nullable;
 import net.minecraft.world.level.block.Fallable;
 import net.minecraft.world.level.block.FallingBlock;
 import net.minecraft.world.level.block.state.BlockState;
@@ -88,19 +90,27 @@ public interface Charred extends ILightable, Fallable {
 
     default void onEntityStepOn(BlockState state, Entity entity) {
         if (isLitUp(state)) {
-            if (!entity.fireImmune() && entity instanceof LivingEntity && !EnchantmentHelper.hasFrostWalker((LivingEntity) entity)) {
+            if (!entity.fireImmune() && entity instanceof LivingEntity && !entity.isSteppingCarefully()) {
                 entity.hurt(entity.damageSources().hotFloor(), 1.0F);
             }
         }
     }
 
 
-    @Override
     default boolean isLitUp(BlockState state) {
         return state.getValue(SMOLDERING);
     }
 
     @Override
+    default boolean isLitUp(BlockState state, BlockGetter level, BlockPos pos) {
+        return isLitUp(state);
+    }
+
+    @Override
+    default void setLitUp(BlockState state, LevelAccessor level, BlockPos pos, @Nullable Entity entity, boolean lit) {
+        level.setBlock(pos, toggleLitState(state, lit), 3);
+    }
+
     default BlockState toggleLitState(BlockState state, boolean lit) {
         return state.setValue(SMOLDERING, lit);
     }
@@ -174,7 +184,7 @@ public interface Charred extends ILightable, Fallable {
             level.playSound(player, pos, SoundEvents.FIRE_EXTINGUISH, SoundSource.BLOCKS, 1.0f, 1.0f);
             if (level.isClientSide()) {
                 ParticleUtils.spawnParticlesOnBlockFaces(level, pos, ModParticles.EMBERSPARK.get(), UniformInt.of(3, 5));
-                ParticleUtil.spawnParticlesOnBlockFaces(level, pos, ParticleTypes.SMOKE, UniformInt.of(3, 5), -0.05f, 0.05f, false);
+                ParticleUtils.spawnParticlesOnBlockFaces(level, pos, ParticleTypes.SMOKE, UniformInt.of(3, 5));
             }
             if (player instanceof ServerPlayer) {
                 level.setBlockAndUpdate(pos, state.setValue(SMOLDERING, Boolean.FALSE));

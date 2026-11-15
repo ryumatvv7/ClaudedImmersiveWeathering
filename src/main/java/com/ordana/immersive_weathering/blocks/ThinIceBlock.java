@@ -1,5 +1,8 @@
 package com.ordana.immersive_weathering.blocks;
 
+import com.ordana.immersive_weathering.util.WeatheringHelper;
+import net.minecraft.world.level.gamerules.GameRules;
+import net.minecraft.world.attribute.EnvironmentAttributes;
 import com.ordana.immersive_weathering.configs.CommonConfigs;
 import com.ordana.immersive_weathering.reg.ModSoundEvents;
 import com.ordana.immersive_weathering.reg.ModTags;
@@ -87,7 +90,7 @@ public class ThinIceBlock extends IceBlock implements LiquidBlockContainer {
     }
 
     public boolean canExpand(Level level, BlockPos pos){
-        return level.getBlockState(pos).is(ModTags.ICE) && level.getBiome(pos).value().coldEnoughToSnow(pos);
+        return level.getBlockState(pos).is(ModTags.ICE) && level.getBiome(pos).value().coldEnoughToSnow(pos, level.getSeaLevel());
     }
 
     @Override
@@ -107,30 +110,30 @@ public class ThinIceBlock extends IceBlock implements LiquidBlockContainer {
         }*/
 
         //TODO: group in a single method
-        if (level.getBrightness(LightLayer.BLOCK, pos) > 11 - state.getLightBlock(level, pos)) {
+        if (level.getBrightness(LightLayer.BLOCK, pos) > 11 - state.getLightDampening()) {
             this.melt(state, level, pos);
         }
 
         //TODO: also move to growths
         if (CommonConfigs.THIN_ICE_MELTING.get()) {
-            if (level.dimensionType().ultraWarm() || (!level.isRaining() && level.isBrightOutside()) || !isDimEnoughToForm(state, level, pos)) {
+            if (level.environmentAttributes().getValue(EnvironmentAttributes.WATER_EVAPORATES, pos) || (!level.isRaining() && level.isBrightOutside()) || !isDimEnoughToForm(state, level, pos)) {
                 level.setBlockAndUpdate(pos, Blocks.WATER.defaultBlockState());
             }
         }
     }
 
     private boolean isDimEnoughToForm(BlockState state, LevelReader level, BlockPos pos) {
-        return level.getBrightness(LightLayer.BLOCK, pos) < 7 - state.getLightBlock(level, pos);
+        return level.getBrightness(LightLayer.BLOCK, pos) < 7 - state.getLightDampening();
     }
 
 
     @Override
-    public void fallOn(Level level, BlockState state, BlockPos pos, Entity entity, float fallDistance) {
+    public void fallOn(Level level, BlockState state, BlockPos pos, Entity entity, double fallDistance) {
         int i = state.getValue(CRACKED);
-        if (!(entity instanceof LivingEntity) || EnchantmentHelper.getEnchantmentLevel(Enchantments.FALL_PROTECTION, (LivingEntity) entity) > 0) {
+        if (!(entity instanceof LivingEntity) || WeatheringHelper.getEnchantmentLevel(Enchantments.FEATHER_FALLING, (LivingEntity) entity) > 0) {
             return;
         }
-        if (!level.isClientSide() && level.getRandom().nextFloat() < fallDistance - 0.5f && (entity instanceof Player || level.getGameRules().get(GameRules.MOB_GRIEFING)) && entity.getBbWidth() * entity.getBbWidth() * entity.getBbHeight() > 0.512f) {
+        if (!level.isClientSide() && level.getRandom().nextFloat() < fallDistance - 0.5f && (entity instanceof Player || ((ServerLevel) level).getGameRules().get(GameRules.MOB_GRIEFING)) && entity.getBbWidth() * entity.getBbWidth() * entity.getBbHeight() > 0.512f) {
             if (level.getRandom().nextBoolean()) {
                 level.setBlockAndUpdate(pos, ThinIceBlock.pushEntitiesUp(state, Blocks.WATER.defaultBlockState(), level, pos));
                 level.playSound(null, pos, SoundEvents.GLASS_BREAK, SoundSource.BLOCKS, 1.0f, 1.0f);
@@ -156,10 +159,10 @@ public class ThinIceBlock extends IceBlock implements LiquidBlockContainer {
 
     @Override
     public void stepOn(Level level, BlockPos pos, BlockState state, Entity entity) {
-        if (!(entity instanceof LivingEntity) || EnchantmentHelper.getEnchantmentLevel(Enchantments.FALL_PROTECTION, (LivingEntity) entity) > 0) {
+        if (!(entity instanceof LivingEntity) || WeatheringHelper.getEnchantmentLevel(Enchantments.FEATHER_FALLING, (LivingEntity) entity) > 0) {
             return;
         }
-        if (!level.isClientSide() && (entity instanceof Player || level.getGameRules().get(GameRules.MOB_GRIEFING)) && entity.getBbWidth() * entity.getBbWidth() * entity.getBbHeight() > 0.512f) {
+        if (!level.isClientSide() && (entity instanceof Player || ((ServerLevel) level).getGameRules().get(GameRules.MOB_GRIEFING)) && entity.getBbWidth() * entity.getBbWidth() * entity.getBbHeight() > 0.512f) {
             //TODO: merge check and optimize
             if (level.getRandom().nextInt(15) == 0) {
                 int i = state.getValue(CRACKED);
@@ -176,9 +179,9 @@ public class ThinIceBlock extends IceBlock implements LiquidBlockContainer {
     }
 
     @Override
-    public BlockState updateShape(BlockState state, Direction direction, BlockState neighborState, LevelAccessor level, BlockPos pos, BlockPos neighborPos) {
-        level.scheduleTick(pos, Fluids.WATER, Fluids.WATER.getTickDelay(level));
-        return super.updateShape(state, direction, neighborState, level, pos, neighborPos);
+    public BlockState updateShape(BlockState state, LevelReader level, ScheduledTickAccess tickAccess, BlockPos pos, Direction direction, BlockPos neighborPos, BlockState neighborState, RandomSource shapeRandom) {
+        tickAccess.scheduleTick(pos, Fluids.WATER, Fluids.WATER.getTickDelay(level));
+        return super.updateShape(state, level, tickAccess, pos, direction, neighborPos, neighborState, shapeRandom);
     }
 
     @Override
@@ -187,7 +190,7 @@ public class ThinIceBlock extends IceBlock implements LiquidBlockContainer {
     }
 
     @Override
-    public boolean canPlaceLiquid(BlockGetter blockGetter, BlockPos blockPos, BlockState blockState, Fluid fluid) {
+    public boolean canPlaceLiquid(@Nullable LivingEntity user, BlockGetter blockGetter, BlockPos blockPos, BlockState blockState, Fluid fluid) {
         return false;
     }
 

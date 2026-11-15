@@ -1,5 +1,6 @@
 package com.ordana.immersive_weathering.blocks.frosted;
 
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerLevel;
@@ -43,11 +44,11 @@ public class FrostyGlassPaneBlock extends IronBarsBlock implements Frosty {
 
 
     @Override
-    public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
+    protected InteractionResult useItemOn(ItemStack heldStack, BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
         InteractionResult success = interactWithPlayer(state, level, pos, player, hand);
         if (success != InteractionResult.PASS) return success;
 
-        return super.use(state, level, pos, player, hand, hit);
+        return super.useItemOn(heldStack, state, level, pos, player, hand, hit);
     }
 
 

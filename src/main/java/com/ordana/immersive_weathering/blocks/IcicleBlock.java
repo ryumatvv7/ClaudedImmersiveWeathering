@@ -1,5 +1,6 @@
 package com.ordana.immersive_weathering.blocks;
 
+import net.minecraft.world.level.ScheduledTickAccess;
 import com.ordana.immersive_weathering.entities.FallingIcicleEntity;
 import com.ordana.immersive_weathering.entities.IcicleBlockEntity;
 import com.ordana.immersive_weathering.reg.ModBlocks;
@@ -58,7 +59,7 @@ public class IcicleBlock extends PointedDripstoneBlock implements EntityBlock {
     @Override
     public void onProjectileHit(Level level, BlockState state, BlockHitResult hitResult, Projectile projectile) {
         BlockPos blockpos = hitResult.getBlockPos();
-        if (!level.isClientSide() && projectile.mayInteract(level, blockpos) && projectile.getDeltaMovement().length() > 0.6D) {
+        if (level instanceof ServerLevel serverLevel && projectile.mayInteract(serverLevel, blockpos) && projectile.getDeltaMovement().length() > 0.6D) {
             level.destroyBlock(blockpos, true);
         }
     }
@@ -69,22 +70,22 @@ public class IcicleBlock extends PointedDripstoneBlock implements EntityBlock {
     }
 
     @Override
-    public BlockState updateShape(BlockState state, Direction dir, BlockState neighborState, LevelAccessor level, BlockPos pos, BlockPos neighborPos) {
+    public BlockState updateShape(BlockState state, LevelReader level, ScheduledTickAccess tickAccess, BlockPos pos, Direction dir, BlockPos neighborPos, BlockState neighborState, RandomSource shapeRandom) {
         if (state.getValue(WATERLOGGED)) {
-            level.scheduleTick(pos, Fluids.WATER, Fluids.WATER.getTickDelay(level));
+            tickAccess.scheduleTick(pos, Fluids.WATER, Fluids.WATER.getTickDelay(level));
         }
 
         if (dir != Direction.UP && dir != Direction.DOWN) {
             return state;
         } else {
             Direction direction = state.getValue(TIP_DIRECTION);
-            if (direction == Direction.DOWN && level.getBlockTicks().hasScheduledTick(pos, this)) {
+            if (direction == Direction.DOWN && tickAccess.getBlockTicks().hasScheduledTick(pos, this)) {
                 return state;
             } else if (dir == direction.getOpposite() && !this.canSurvive(state, level, pos)) {
                 if (direction == Direction.DOWN) {
-                    level.scheduleTick(pos, this, 2);
+                    tickAccess.scheduleTick(pos, this, 2);
                 } else {
-                    level.scheduleTick(pos, this, 1);
+                    tickAccess.scheduleTick(pos, this, 1);
                 }
 
                 return state;
@@ -97,7 +98,7 @@ public class IcicleBlock extends PointedDripstoneBlock implements EntityBlock {
     }
 
     @Override
-    public void fallOn(Level level, BlockState state, BlockPos pos, Entity entity, float fallDistance) {
+    public void fallOn(Level level, BlockState state, BlockPos pos, Entity entity, double fallDistance) {
         if (state.getValue(TIP_DIRECTION) == Direction.UP && state.getValue(THICKNESS) == DripstoneThickness.TIP) {
             entity.causeFallDamage(fallDistance + 2.0F, 3.5F, level.damageSources().fall());
 
@@ -115,7 +116,7 @@ public class IcicleBlock extends PointedDripstoneBlock implements EntityBlock {
             if (!(f > 0.12F)) {
                 var optional = getFluidAboveStalactite(level, pos, state);
                 if (optional.filter(fluid -> (isValidDripFluid(fluid) ||
-                        (!level.getBiome(pos).value().coldEnoughToSnow(pos) && f < 0.02f))).isPresent()) {
+                        (!level.getBiome(pos).value().coldEnoughToSnow(pos, level.getSeaLevel()) && f < 0.02f))).isPresent()) {
                     //TODO: make lava above melt icicle and remove particle
                     spawnDripParticle(level, pos, state, optional.get());
                 }
@@ -139,7 +140,7 @@ public class IcicleBlock extends PointedDripstoneBlock implements EntityBlock {
             growStalactiteOrStalagmiteIfPossible(state, level, pos, random);
         }
         var biome = level.getBiome(pos);
-        if ((level.getBrightness(LightLayer.BLOCK, pos) > 13 - state.getLightBlock(level, pos)) || (level.dimension() == Level.NETHER) || (!biome.is(ModTags.ICY) && level.isBrightOutside() && !level.isRaining())) {
+        if ((level.getBrightness(LightLayer.BLOCK, pos) > 13 - state.getLightDampening()) || (level.dimension() == Level.NETHER) || (!biome.is(ModTags.ICY) && level.isBrightOutside() && !level.isRaining())) {
             level.removeBlock(pos, false);
         }
     }
@@ -173,6 +174,7 @@ public class IcicleBlock extends PointedDripstoneBlock implements EntityBlock {
     }
 
     @Nullable
+    @Override
     public BlockState getStateForPlacement(BlockPlaceContext ctx) {
         LevelAccessor levelAccess = ctx.getLevel();
         BlockPos blockPos = ctx.getClickedPos();
@@ -296,7 +298,7 @@ public class IcicleBlock extends PointedDripstoneBlock implements EntityBlock {
     }
 
     private static void spawnDripParticle(Level level, BlockPos pos, BlockState state, Fluid fluid) {
-        Vec3 vec3d = state.getOffset(level, pos);
+        Vec3 vec3d = state.getOffset(pos);
         double e = pos.getX() + 0.5D + vec3d.x;
         double f = pos.getY() + 0;
         double g = pos.getZ() + 0.5D + vec3d.z;

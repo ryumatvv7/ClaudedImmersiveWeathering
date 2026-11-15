@@ -23,6 +23,7 @@ public class LoamBlockGrassy extends BaseSoilBlock {
         super(properties);
     }
 
+    @Override
     public void randomTick(BlockState state, ServerLevel level, BlockPos pos, RandomSource random) {
         if (!canBeGrass(state, level, pos)) {
             level.setBlockAndUpdate(pos, ModBlocks.LOAM.get().defaultBlockState());
@@ -30,7 +31,8 @@ public class LoamBlockGrassy extends BaseSoilBlock {
         super.randomTick(state, level, pos, random);
     }
 
-    public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hitResult) {
+    @Override
+    protected InteractionResult useItemOn(ItemStack heldStack, BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hitResult) {
         ItemStack stack = player.getItemInHand(hand);
         Item item = stack.getItem();
         if (item instanceof HoeItem) {
@@ -42,6 +44,6 @@ public class LoamBlockGrassy extends BaseSoilBlock {
             }
             return InteractionResult.SUCCESS;
         }
-        return super.use(state, level, pos, player, hand, hitResult);
+        return super.useItemOn(heldStack, state, level, pos, player, hand, hitResult);
     }
 }

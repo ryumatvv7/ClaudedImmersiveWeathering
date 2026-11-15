@@ -1,0 +1,6 @@
+{
+  "model": {
+    "type": "minecraft:model",
+    "model": "immersive_weathering:item/tinted_glass_pane"
+  }
+}

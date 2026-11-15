@@ -1,0 +1,256 @@
+{
+  "model": {
+    "type": "minecraft:select",
+    "property": "minecraft:component",
+    "component": "minecraft:custom_name",
+    "cases": [
+      {
+        "when": [
+          "ordana",
+          "Ordana",
+          "ORDANA",
+          "bee",
+          "Bee",
+          "BEE"
+        ],
+        "model": {
+          "type": "minecraft:model",
+          "model": "immersive_weathering:item/flower_crown_bee"
+        }
+      },
+      {
+        "when": [
+          "mehvahdjukaar",
+          "Mehvahdjukaar",
+          "MEHVAHDJUKAAR",
+          "jar",
+          "Jar",
+          "JAR"
+        ],
+        "model": {
+          "type": "minecraft:model",
+          "model": "immersive_weathering:item/flower_crown_jar"
+        }
+      },
+      {
+        "when": [
+          "bob",
+          "Bob",
+          "BOB",
+          "bobisnotaperson",
+          "Bobisnotaperson",
+          "BOBISNOTAPERSON"
+        ],
+        "model": {
+          "type": "minecraft:model",
+          "model": "immersive_weathering:item/flower_crown_bob"
+        }
+      },
+      {
+        "when": [
+          "asexual",
+          "Asexual",
+          "ASEXUAL",
+          "ace",
+          "Ace",
+          "ACE"
+        ],
+        "model": {
+          "type": "minecraft:model",
+          "model": "immersive_weathering:item/flower_crown_ace"
+        }
+      },
+      {
+        "when": [
+          "aromantic",
+          "Aromantic",
+          "AROMANTIC",
+          "aro",
+          "Aro",
+          "ARO"
+        ],
+        "model": {
+          "type": "minecraft:model",
+          "model": "immersive_weathering:item/flower_crown_aro"
+        }
+      },
+      {
+        "when": [
+          "bisexual",
+          "Bisexual",
+          "BISEXUAL",
+          "bi",
+          "Bi",
+          "BI"
+        ],
+        "model": {
+          "type": "minecraft:model",
+          "model": "immersive_weathering:item/flower_crown_bi"
+        }
+      },
+      {
+        "when": [
+          "non-binary",
+          "Non-binary",
+          "NON-BINARY",
+          "nb",
+          "Nb",
+          "NB",
+          "enby",
+          "Enby",
+          "ENBY"
+        ],
+        "model": {
+          "type": "minecraft:model",
+          "model": "immersive_weathering:item/flower_crown_enby"
+        }
+      },
+      {
+        "when": [
+          "gay",
+          "Gay",
+          "GAY",
+          "mlm",
+          "Mlm",
+          "MLM"
+        ],
+        "model": {
+          "type": "minecraft:model",
+          "model": "immersive_weathering:item/flower_crown_gay"
+        }
+      },
+      {
+        "when": [
+          "lesbian",
+          "Lesbian",
+          "LESBIAN",
+          "wlw",
+          "Wlw",
+          "WLW"
+        ],
+        "model": {
+          "type": "minecraft:model",
+          "model": "immersive_weathering:item/flower_crown_lesbian"
+        }
+      },
+      {
+        "when": [
+          "rainbow",
+          "Rainbow",
+          "RAINBOW",
+          "pride",
+          "Pride",
+          "PRIDE"
+        ],
+        "model": {
+          "type": "minecraft:model",
+          "model": "immersive_weathering:item/flower_crown_rainbow"
+        }
+      },
+      {
+        "when": [
+          "trans",
+          "Trans",
+          "TRANS",
+          "transgender",
+          "Transgender",
+          "TRANSGENDER"
+        ],
+        "model": {
+          "type": "minecraft:model",
+          "model": "immersive_weathering:item/flower_crown_trans"
+        }
+      },
+      {
+        "when": [
+          "pan",
+          "Pan",
+          "PAN",
+          "pansexual",
+          "Pansexual",
+          "PANSEXUAL"
+        ],
+        "model": {
+          "type": "minecraft:model",
+          "model": "immersive_weathering:item/flower_crown_pan"
+        }
+      },
+      {
+        "when": [
+          "intersex",
+          "Intersex",
+          "INTERSEX"
+        ],
+        "model": {
+          "type": "minecraft:model",
+          "model": "immersive_weathering:item/flower_crown_intersex"
+        }
+      },
+      {
+        "when": [
+          "genderqueer",
+          "Genderqueer",
+          "GENDERQUEER"
+        ],
+        "model": {
+          "type": "minecraft:model",
+          "model": "immersive_weathering:item/flower_crown_genderqueer"
+        }
+      },
+      {
+        "when": [
+          "genderfluid",
+          "Genderfluid",
+          "GENDERFLUID",
+          "fluid",
+          "Fluid",
+          "FLUID"
+        ],
+        "model": {
+          "type": "minecraft:model",
+          "model": "immersive_weathering:item/flower_crown_fluid"
+        }
+      },
+      {
+        "when": [
+          "flax",
+          "Flax",
+          "FLAX"
+        ],
+        "model": {
+          "type": "minecraft:model",
+          "model": "immersive_weathering:item/flower_crown_flax"
+        }
+      },
+      {
+        "when": [
+          "neko",
+          "Neko",
+          "NEKO",
+          "nekomaster",
+          "Nekomaster",
+          "NEKOMASTER"
+        ],
+        "model": {
+          "type": "minecraft:model",
+          "model": "immersive_weathering:item/flower_crown_nekomaster"
+        }
+      },
+      {
+        "when": [
+          "akashii",
+          "Akashii",
+          "AKASHII"
+        ],
+        "model": {
+          "type": "minecraft:model",
+          "model": "immersive_weathering:item/flower_crown_akashii"
+        }
+      }
+    ],
+    "fallback": {
+      "type": "minecraft:model",
+      "model": "immersive_weathering:item/flower_crown"
+    }
+  }
+}

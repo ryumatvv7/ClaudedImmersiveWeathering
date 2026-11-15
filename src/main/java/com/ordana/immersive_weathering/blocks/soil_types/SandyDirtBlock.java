@@ -1,5 +1,6 @@
 package com.ordana.immersive_weathering.blocks.soil_types;
 
+import com.mojang.serialization.MapCodec;
 import com.ordana.immersive_weathering.reg.ModBlocks;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerPlayer;
@@ -19,11 +20,19 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
 
 public class SandyDirtBlock extends FallingBlock {
+
+    public static final MapCodec<SandyDirtBlock> CODEC = simpleCodec(SandyDirtBlock::new);
+
+    @Override
+    protected MapCodec<? extends FallingBlock> codec() {
+        return CODEC;
+    }
     public SandyDirtBlock(Properties properties) {
         super(properties);
     }
 
-    public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hitResult) {
+    @Override
+    protected InteractionResult useItemOn(ItemStack heldStack, BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hitResult) {
         ItemStack stack = player.getItemInHand(hand);
         Item item = stack.getItem();
         if (item instanceof HoeItem) {
@@ -35,9 +44,10 @@ public class SandyDirtBlock extends FallingBlock {
             }
             return InteractionResult.SUCCESS;
         }
-        return super.use(state, level, pos, player, hand, hitResult);
+        return super.useItemOn(heldStack, state, level, pos, player, hand, hitResult);
     }
 
+    @Override
     public int getDustColor(BlockState state, BlockGetter level, BlockPos pos) {
         return 0xd3b893;
     }

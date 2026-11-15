@@ -1,5 +1,8 @@
 package com.ordana.immersive_weathering.blocks.snowy;
 
+import com.ordana.immersive_weathering.util.WeatheringHelper;
+import net.minecraft.world.level.redstone.Orientation;
+import org.jetbrains.annotations.Nullable;
 import com.google.common.base.Suppliers;
 import com.google.common.collect.BiMap;
 import com.google.common.collect.ImmutableBiMap;
@@ -121,10 +124,11 @@ public interface Snowy {
         }
     }
 
-    default void neighborChanged(BlockState state, Level level, BlockPos pos, Block block, BlockPos neighborPos, boolean isMoving) {
+    default void neighborChanged(BlockState state, Level level, BlockPos pos, Block block, @Nullable Orientation neighborPos, boolean isMoving) {
         Optional<BlockState> unSnowy = getUnSnowy(state);
-        BlockState neighborState = level.getBlockState(neighborPos);
-        if (neighborState.getFluidState().is(FluidTags.WATER) || neighborState.getFluidState().is(FluidTags.LAVA) && unSnowy.isPresent()) {
+        //the new neighbor update API has no source position: look at all sides
+        BlockState neighborState = WeatheringHelper.findNeighbor(level, pos, s -> s.getFluidState().is(FluidTags.WATER) || s.getFluidState().is(FluidTags.LAVA));
+        if (neighborState != null && unSnowy.isPresent()) {
             level.setBlockAndUpdate(pos, unSnowy.get());
             level.playSound(null, pos, SoundEvents.SNOW_BREAK, SoundSource.BLOCKS, 1.0f, 1.0f);
             if (neighborState.getFluidState().is(FluidTags.LAVA)) level.playSound(null, pos, SoundEvents.GENERIC_EXTINGUISH_FIRE, SoundSource.BLOCKS, 1f, 1f);

@@ -1,5 +1,9 @@
 package com.ordana.immersive_weathering.blocks.rusty;
 
+import net.minecraft.world.level.ScheduledTickAccess;
+import net.minecraft.world.level.redstone.Orientation;
+import org.jetbrains.annotations.Nullable;
+import net.minecraft.world.level.LevelReader;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerLevel;
@@ -19,12 +23,12 @@ public class RustAffectedDoorBlock extends DoorBlock{
     protected final Rustable.RustLevel rustLevel;
 
     public RustAffectedDoorBlock(Rustable.RustLevel rustLevel, Properties properties) {
-        super(properties, BlockSetType.IRON);
+        super(BlockSetType.IRON, properties);
         this.rustLevel = rustLevel;
     }
 
     @Override
-    public BlockState updateShape(BlockState state, Direction direction, BlockState neighborState, LevelAccessor level, BlockPos pos, BlockPos neighborPos) {
+    public BlockState updateShape(BlockState state, LevelReader level, ScheduledTickAccess tickAccess, BlockPos pos, Direction direction, BlockPos neighborPos, BlockState neighborState, RandomSource shapeRandom) {
         DoubleBlockHalf doubleBlockHalf = state.getValue(HALF);
         if ((direction == Direction.UP && doubleBlockHalf == DoubleBlockHalf.LOWER) ||
                 (direction == Direction.DOWN && doubleBlockHalf == DoubleBlockHalf.UPPER)) {
@@ -44,7 +48,7 @@ public class RustAffectedDoorBlock extends DoorBlock{
     }
 
     @Override
-    public void neighborChanged(BlockState state, Level level, BlockPos pos, Block block, BlockPos fromPos, boolean notify) {
+    public void neighborChanged(BlockState state, Level level, BlockPos pos, Block block, @Nullable Orientation fromPos, boolean notify) {
         boolean hasPower = level.hasNeighborSignal(pos) || level.hasNeighborSignal(pos.relative(state.getValue(HALF) == DoubleBlockHalf.LOWER ? Direction.UP : Direction.DOWN));
         if (hasPower != state.getValue(POWERED) && this != block) { // checks if redstone input has changed. only reacts to non door blocks
 

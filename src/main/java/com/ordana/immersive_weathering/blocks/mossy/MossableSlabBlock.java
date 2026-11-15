@@ -1,5 +1,7 @@
 package com.ordana.immersive_weathering.blocks.mossy;
 
+import net.minecraft.world.level.redstone.Orientation;
+import org.jetbrains.annotations.Nullable;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.RandomSource;
@@ -28,7 +30,7 @@ public class MossableSlabBlock extends MossySlabBlock {
     }
 
     @Override
-    public void neighborChanged(BlockState state, Level level, BlockPos pos, Block block, BlockPos neighbor, boolean isMoving) {
+    public void neighborChanged(BlockState state, Level level, BlockPos pos, Block block, @Nullable Orientation neighbor, boolean isMoving) {
         this.updateWeatheredStateOnNeighborChanged(state, level, pos);
     }
 

@@ -1,5 +1,9 @@
 package com.ordana.immersive_weathering.blocks.charred;
 
+import net.minecraft.world.level.redstone.Orientation;
+import org.jetbrains.annotations.Nullable;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.entity.InsideBlockEffectApplier;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.RandomSource;
@@ -32,7 +36,7 @@ public class CharredFenceBlock extends FenceBlock implements Charred {
     }
 
     @Override
-    public void neighborChanged(BlockState state, Level level, BlockPos pos, Block block, BlockPos fromPos, boolean isMoving) {
+    public void neighborChanged(BlockState state, Level level, BlockPos pos, Block block, @Nullable Orientation fromPos, boolean isMoving) {
         super.neighborChanged(state, level, pos, block, fromPos, isMoving);
         updateOverhang(state, level, pos);
     }
@@ -75,20 +79,20 @@ public class CharredFenceBlock extends FenceBlock implements Charred {
     }
 
     @Override
-    public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hitResult) {
+    protected InteractionResult useItemOn(ItemStack heldStack, BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hitResult) {
         return Charred.super.use(state, level, pos, player, hand, hitResult);
     }
 
     @Override
     public void onProjectileHit(Level level, BlockState state, BlockHitResult pHit, Projectile projectile) {
         BlockPos pos = pHit.getBlockPos();
-        interactWithProjectile(level, state, projectile, pos);
+        lightableInteractWithEntity(level, state, projectile, pos);
     }
 
     @Override
-    public void entityInside(BlockState state, Level levelIn, BlockPos pos, Entity entityIn) {
+    public void entityInside(BlockState state, Level levelIn, BlockPos pos, Entity entityIn, InsideBlockEffectApplier effectApplier, boolean isPrecise) {
         if (entityIn instanceof Projectile projectile) {
-            interactWithProjectile(levelIn, state, projectile, pos);
+            lightableInteractWithEntity(levelIn, state, projectile, pos);
         }
     }
 

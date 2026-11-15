@@ -1,5 +1,8 @@
 package com.ordana.immersive_weathering.blocks.sandy;
 
+import net.minecraft.world.level.redstone.Orientation;
+import org.jetbrains.annotations.Nullable;
+import net.minecraft.world.item.ItemStack;
 import com.ordana.immersive_weathering.blocks.ModBlockProperties;
 import net.mehvahdjukaar.moonlight.api.block.ModStairBlock;
 import net.minecraft.core.BlockPos;
@@ -39,15 +42,15 @@ public class SandyStairsBlock extends ModStairBlock implements Sandy {
     }
 
     @Override
-    public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
+    protected InteractionResult useItemOn(ItemStack heldStack, BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
         if(interactWithPlayer(state, level, pos, player, hand, hit)){
             return InteractionResult.SUCCESS;
         }
-        return super.use(state, level, pos, player, hand, hit);
+        return super.useItemOn(heldStack, state, level, pos, player, hand, hit);
     }
 
     @Override
-    public void neighborChanged(BlockState state, Level level, BlockPos pos, Block block, BlockPos neighborPos, boolean isMoving) {
+    public void neighborChanged(BlockState state, Level level, BlockPos pos, Block block, @Nullable Orientation neighborPos, boolean isMoving) {
         Sandy.super.neighborChanged(state, level, pos, block, neighborPos, isMoving);
     }
 }

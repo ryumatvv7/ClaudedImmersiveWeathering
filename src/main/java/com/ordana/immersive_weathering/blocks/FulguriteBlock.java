@@ -77,13 +77,11 @@ public class FulguriteBlock extends AmethystClusterBlock {
     }
 
     @Override
-    public void onRemove(BlockState state, Level level, BlockPos pos, BlockState newState, boolean moved) {
-        if (!state.is(newState.getBlock())) {
-            if (state.getValue(POWERED)) {
-                this.updateNeighbors(state, level, pos);
-            }
-            super.onRemove(state, level, pos, newState, moved);
+    protected void affectNeighborsAfterRemoval(BlockState state, ServerLevel level, BlockPos pos, boolean movedByPiston) {
+        if (state.getValue(POWERED)) {
+            this.updateNeighbors(state, level, pos);
         }
+        super.affectNeighborsAfterRemoval(state, level, pos, movedByPiston);
     }
 
     @Override
@@ -95,21 +93,8 @@ public class FulguriteBlock extends AmethystClusterBlock {
         }
     }
 
-    @Override
-    public void onProjectileHit(Level level, BlockState state, BlockHitResult hit, Projectile projectile) {
-        if (level.isThundering() && projectile instanceof ThrownTrident && ((ThrownTrident) projectile).isChanneling()) {
-            BlockPos blockPos = hit.getBlockPos();
-            if (level.canSeeSky(blockPos)) {
-                LightningBolt lightningEntity = EntityType.LIGHTNING_BOLT.create(level);
-                lightningEntity.moveTo(Vec3.atBottomCenterOf(blockPos.above()));
-                Entity entity = projectile.getOwner();
-                lightningEntity.setCause(entity instanceof ServerPlayer ? (ServerPlayer) entity : null);
-                level.addFreshEntity(lightningEntity);
-                level.playSound(null, blockPos, SoundEvents.TRIDENT_THUNDER, SoundSource.WEATHER, 5.0F, 1.0F);
-            }
-        }
-
-    }
+    //Channeling tridents: handled by the vanilla data driven enchantment (fulgurite is in the
+    //minecraft:lightning_rods block tag), so the old onProjectileHit code is gone
 
     @Override
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {

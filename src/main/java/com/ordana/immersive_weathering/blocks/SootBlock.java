@@ -11,7 +11,7 @@ public class SootBlock extends MultifaceBlock {
         this.registerDefaultState(this.defaultBlockState());
     }
 
-    @Override
+    
     public MultifaceSpreader getSpreader() {
         return this.spreader;
     }

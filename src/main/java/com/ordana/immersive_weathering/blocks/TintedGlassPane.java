@@ -10,11 +10,11 @@ public class TintedGlassPane extends IronBarsBlock {
     super(properties);
   }
 
-  public boolean propagatesSkylightDown(BlockState state, BlockGetter level, BlockPos pos) {
+  public boolean propagatesSkylightDown(BlockState state) {
     return false;
   }
 
-  public int getLightBlock(BlockState state, BlockGetter level, BlockPos pos) {
-    return level.getMaxLightLevel();
+  public int getLightDampening(BlockState state) {
+    return 15;
   }
 }

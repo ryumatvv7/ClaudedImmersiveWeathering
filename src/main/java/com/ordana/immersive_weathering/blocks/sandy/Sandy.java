@@ -1,5 +1,8 @@
 package com.ordana.immersive_weathering.blocks.sandy;
 
+import com.ordana.immersive_weathering.util.WeatheringHelper;
+import net.minecraft.world.level.redstone.Orientation;
+import org.jetbrains.annotations.Nullable;
 import com.google.common.base.Suppliers;
 import com.google.common.collect.BiMap;
 import com.google.common.collect.ImmutableBiMap;
@@ -151,10 +154,11 @@ public interface Sandy {
         }
     }
 
-    default void neighborChanged(BlockState state, Level level, BlockPos pos, Block block, BlockPos neighborPos, boolean isMoving) {
+    default void neighborChanged(BlockState state, Level level, BlockPos pos, Block block, @Nullable Orientation neighborPos, boolean isMoving) {
         Optional<BlockState> unSandy = Sandy.getUnSandy(state);
-        BlockState neighborState = level.getBlockState(neighborPos);
-        if (neighborState.getFluidState().is(Fluids.FLOWING_WATER) && unSandy.isPresent()) {
+        //the new neighbor update API has no source position: look at all sides
+        BlockState neighborState = WeatheringHelper.findNeighbor(level, pos, s -> s.getFluidState().is(Fluids.FLOWING_WATER));
+        if (neighborState != null && unSandy.isPresent()) {
             level.setBlockAndUpdate(pos, unSandy.get());
             ItemStack stack = new ItemStack(ModBlocks.SAND_LAYER_BLOCK.get());
             Containers.dropItemStack(level, pos.getX(), pos.getY(), pos.getZ(), stack);

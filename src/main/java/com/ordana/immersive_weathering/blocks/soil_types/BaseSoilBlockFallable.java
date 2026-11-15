@@ -1,5 +1,10 @@
 package com.ordana.immersive_weathering.blocks.soil_types;
 
+import net.minecraft.util.Util;
+import net.minecraft.world.level.block.FallingBlock;
+import net.minecraft.world.level.BlockGetter;
+import com.mojang.serialization.MapCodec;
+import net.minecraft.world.level.ScheduledTickAccess;
 import com.ordana.immersive_weathering.configs.CommonConfigs;
 import com.ordana.immersive_weathering.util.WeatheringHelper;
 import net.minecraft.core.BlockPos;
@@ -22,7 +27,6 @@ import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.level.levelgen.feature.ConfiguredFeature;
-import net.minecraft.world.level.levelgen.feature.configurations.RandomPatchConfiguration;
 import net.minecraft.world.level.levelgen.placement.PlacedFeature;
 import net.minecraft.world.level.lighting.LightEngine;
 
@@ -30,6 +34,18 @@ import java.util.List;
 import java.util.Optional;
 
 public class BaseSoilBlockFallable extends FallingBlock implements BonemealableBlock {
+
+    public static final MapCodec<BaseSoilBlockFallable> CODEC = simpleCodec(BaseSoilBlockFallable::new);
+
+    @Override
+    protected MapCodec<? extends FallingBlock> codec() {
+        return CODEC;
+    }
+
+    @Override
+    public int getDustColor(BlockState state, BlockGetter level, BlockPos pos) {
+        return state.getMapColor(level, pos).col;
+    }
 
     public static final BooleanProperty SNOWY;
 
@@ -51,8 +67,8 @@ public class BaseSoilBlockFallable extends FallingBlock implements BonemealableB
         } else if (blockstate.getFluidState().getAmount() == 8) {
             return false;
         } else {
-            int i = LightEngine.getLightBlockInto(levelReader, state, pos, blockstate, blockpos, Direction.UP, blockstate.getLightBlock(levelReader, blockpos));
-            return i < levelReader.getMaxLightLevel();
+            int i = LightEngine.getLightBlockInto(state, blockstate, Direction.UP, blockstate.getLightDampening());
+            return i < 15;
         }
     }
 
@@ -61,6 +77,7 @@ public class BaseSoilBlockFallable extends FallingBlock implements BonemealableB
         return canBeGrass(state, level, pos) && !level.getFluidState(blockpos).is(FluidTags.WATER);
     }
 
+    @Override
     public void randomTick(BlockState state, ServerLevel level, BlockPos pos, RandomSource random) {
         if (level.getMaxLocalRawBrightness(pos.above()) >= 9 && canBeGrass(state, level, pos)) {
 
@@ -79,18 +96,20 @@ public class BaseSoilBlockFallable extends FallingBlock implements BonemealableB
     }
 
     @Override
-    public boolean isValidBonemealTarget(LevelReader level, BlockPos pos, BlockState state, boolean isClient) {
+    public boolean isValidBonemealTarget(LevelReader level, BlockPos pos, BlockState state) {
         return level.getBlockState(pos.above()).isAir();
     }
 
+    @Override
     public boolean isBonemealSuccess(Level level, RandomSource randomSource, BlockPos blockPos, BlockState blockState) {
         return true;
     }
 
+    @Override
     public void performBonemeal(ServerLevel level, RandomSource random, BlockPos pos, BlockState state) {
         BlockPos blockPos = pos.above();
         BlockState blockState = Blocks.SHORT_GRASS.defaultBlockState();
-        Optional<Holder.Reference<PlacedFeature>> optional = level.registryAccess().registryOrThrow(Registries.PLACED_FEATURE).getHolder(VegetationPlacements.GRASS_BONEMEAL);
+        Optional<Holder.Reference<PlacedFeature>> optional = level.registryAccess().lookupOrThrow(Registries.PLACED_FEATURE).get(VegetationPlacements.GRASS_BONEMEAL);
 
         label49:
         for(int i = 0; i < 128; ++i) {
@@ -108,32 +127,25 @@ public class BaseSoilBlockFallable extends FallingBlock implements BonemealableB
                 ((BonemealableBlock)blockState.getBlock()).performBonemeal(level, random, blockPos2, blockState2);
             }
 
-            if (blockState2.isAir()) {
-                Holder holder;
+            if (blockState2.isAir() && !level.isOutsideBuildHeight(blockPos2)) {
                 if (random.nextInt(8) == 0) {
-                    List<ConfiguredFeature<?, ?>> list = ((Biome)level.getBiome(blockPos2).value()).getGenerationSettings().getFlowerFeatures();
-                    if (list.isEmpty()) {
-                        continue;
+                    List<ConfiguredFeature<?, ?>> list = level.getBiome(blockPos2).value().getGenerationSettings().getBoneMealFeatures();
+                    if (!list.isEmpty()) {
+                        Util.getRandom(list, random).place(level, level.getChunkSource().getGenerator(), random, blockPos2);
                     }
-
-                    holder = ((RandomPatchConfiguration)((ConfiguredFeature)list.get(0)).config()).feature();
-                } else {
-                    if (!optional.isPresent()) {
-                        continue;
-                    }
-
-                    holder = (Holder)optional.get();
+                } else if (optional.isPresent()) {
+                    optional.get().value().place(level, level.getChunkSource().getGenerator(), random, blockPos2);
                 }
-
-                ((PlacedFeature)holder.value()).place(level, level.getChunkSource().getGenerator(), random, blockPos2);
             }
         }
     }
 
-    public BlockState updateShape(BlockState state, Direction direction, BlockState neighborState, LevelAccessor level, BlockPos pos, BlockPos neighborPos) {
-        return direction == Direction.UP ? state.setValue(SNOWY, isSnowySetting(neighborState)) : super.updateShape(state, direction, neighborState, level, pos, neighborPos);
+    @Override
+    public BlockState updateShape(BlockState state, LevelReader level, ScheduledTickAccess tickAccess, BlockPos pos, Direction direction, BlockPos neighborPos, BlockState neighborState, RandomSource shapeRandom) {
+        return direction == Direction.UP ? state.setValue(SNOWY, isSnowySetting(neighborState)) : super.updateShape(state, level, tickAccess, pos, direction, neighborPos, neighborState, shapeRandom);
     }
 
+    @Override
     public BlockState getStateForPlacement(BlockPlaceContext context) {
         BlockState blockState = context.getLevel().getBlockState(context.getClickedPos().above());
         return this.defaultBlockState().setValue(SNOWY, isSnowySetting(blockState));
@@ -143,6 +155,7 @@ public class BaseSoilBlockFallable extends FallingBlock implements BonemealableB
         return state.is(BlockTags.SNOW);
     }
 
+    @Override
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
         builder.add(SNOWY);
     }

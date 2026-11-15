@@ -1,5 +1,11 @@
 package com.ordana.immersive_weathering.util;
 
+import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.item.enchantment.EnchantmentHelper;
+import net.minecraft.world.item.enchantment.Enchantment;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.resources.ResourceKey;
+import net.minecraft.core.registries.Registries;
 import com.google.common.base.Suppliers;
 import com.google.common.collect.BiMap;
 import com.google.common.collect.ImmutableBiMap;
@@ -41,6 +47,22 @@ import java.util.function.Predicate;
 import java.util.function.Supplier;
 
 public class WeatheringHelper {
+
+    //first neighbor (6 sides) matching the predicate, or null
+    @Nullable
+    public static BlockState findNeighbor(BlockGetter level, BlockPos pos, Predicate<BlockState> predicate) {
+        for (Direction d : Direction.values()) {
+            BlockState s = level.getBlockState(pos.relative(d));
+            if (predicate.test(s)) return s;
+        }
+        return null;
+    }
+
+    //enchantments are a data driven registry since 1.21, so they have to be looked up
+    public static int getEnchantmentLevel(ResourceKey<Enchantment> key, LivingEntity entity) {
+        return entity.registryAccess().lookupOrThrow(Registries.ENCHANTMENT).get(key)
+                .map(h -> EnchantmentHelper.getEnchantmentLevel(h, entity)).orElse(0);
+    }
 
     public static void addOptional(ImmutableBiMap.Builder<Block, Block> map,
                                    String moddedId, String moddedId2) {

@@ -68,7 +68,7 @@ public class IvyBlock extends MultifaceBlock implements BonemealableBlock {
 		return Arrays.stream(ctx.getNearestLookingDirections()).map(direction -> this.getStateForPlacement(blockState, level, blockPos, direction)).filter(Objects::nonNull).findFirst().orElse(null);
 	}
 
-	@Override
+	
 	public MultifaceSpreader getSpreader() {
 		return this.spreader;
 	}
@@ -79,7 +79,7 @@ public class IvyBlock extends MultifaceBlock implements BonemealableBlock {
 	}
 
 	@Override
-	public boolean isValidBonemealTarget(LevelReader level, BlockPos pos, BlockState state, boolean isClient) {
+	public boolean isValidBonemealTarget(LevelReader level, BlockPos pos, BlockState state) {
 		return state.getValue(AGE) < 0 || Stream.of(DIRECTIONS).anyMatch(direction -> this.isValidStateForPlacement(level, state, pos, direction.getOpposite()));
 	}
 
@@ -356,7 +356,7 @@ public class IvyBlock extends MultifaceBlock implements BonemealableBlock {
 	}
 
 	@Override
-	public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hitResult) {
+	protected InteractionResult useItemOn(ItemStack heldStack, BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hitResult) {
 		ItemStack stack = player.getItemInHand(hand);
 		if (stack.getItem() instanceof ShearsItem && state.getValue(AGE) < MAX_AGE) {
 			level.playSound(player, pos, SoundEvents.GROWING_PLANT_CROP, SoundSource.BLOCKS, 1.0f, 1.0f);
@@ -369,6 +369,6 @@ public class IvyBlock extends MultifaceBlock implements BonemealableBlock {
 			}
 			return InteractionResult.SUCCESS;
 		}
-		return super.use(state, level, pos, player, hand, hitResult);
+		return super.useItemOn(heldStack, state, level, pos, player, hand, hitResult);
 	}
 }

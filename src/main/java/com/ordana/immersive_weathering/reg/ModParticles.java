@@ -12,8 +12,12 @@ public class ModParticles {
         //BlockSetAPI.addDynamicRegistration(ModParticles::registerLeafParticles, LeavesType.class, Registries.PARTICLE_TYPE);
     }
 
+    public static final java.util.List<Supplier<SimpleParticleType>> ALL = new java.util.ArrayList<>();
+
     public static Supplier<SimpleParticleType> registerParticle(String name) {
-        return RegHelper.registerParticle(ImmersiveWeathering.res(name));
+        Supplier<SimpleParticleType> p = RegHelper.registerParticle(ImmersiveWeathering.res(name));
+        ALL.add(p);
+        return p;
     }
 
     public static final Supplier<SimpleParticleType> GRAVITY_AZALEA_FLOWER = registerParticle("gravity_azalea_flower");

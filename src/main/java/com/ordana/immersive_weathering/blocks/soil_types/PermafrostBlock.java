@@ -1,5 +1,9 @@
 package com.ordana.immersive_weathering.blocks.soil_types;
 
+import net.minecraft.world.level.BlockGetter;
+import com.mojang.serialization.MapCodec;
+import net.minecraft.world.level.ScheduledTickAccess;
+import net.minecraft.world.level.LevelReader;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.particles.ParticleTypes;
@@ -14,6 +18,18 @@ import net.minecraft.world.level.block.FallingBlock;
 import net.minecraft.world.level.block.state.BlockState;
 
 public class PermafrostBlock extends FallingBlock {
+
+    public static final MapCodec<PermafrostBlock> CODEC = simpleCodec(PermafrostBlock::new);
+
+    @Override
+    protected MapCodec<? extends FallingBlock> codec() {
+        return CODEC;
+    }
+
+    @Override
+    public int getDustColor(BlockState state, BlockGetter level, BlockPos pos) {
+        return state.getMapColor(level, pos).col;
+    }
     public PermafrostBlock(Properties properties) {
         super(properties);
     }
@@ -32,6 +48,7 @@ public class PermafrostBlock extends FallingBlock {
         }
     }
 
+    @Override
     public boolean isRandomlyTicking(BlockState state) {
         return true;
     }
@@ -44,6 +61,7 @@ public class PermafrostBlock extends FallingBlock {
         }
     }
 
+    @Override
     public void randomTick(BlockState state, ServerLevel level, BlockPos pos, RandomSource random) {
         if (canMelt(level, pos)) level.scheduleTick(pos, this, this.getDelayAfterPlace());
     }
@@ -63,10 +81,11 @@ public class PermafrostBlock extends FallingBlock {
     }
 
     @Override
-    public BlockState updateShape(BlockState state, Direction direction, BlockState neighborState, LevelAccessor level, BlockPos pos, BlockPos neighborPos) {
+    public BlockState updateShape(BlockState state, LevelReader level, ScheduledTickAccess tickAccess, BlockPos pos, Direction direction, BlockPos neighborPos, BlockState neighborState, RandomSource shapeRandom) {
         return state;
     }
 
+    @Override
     public void onLand(Level level, BlockPos pos, BlockState state, BlockState replaceableState, FallingBlockEntity fallingBlock) {
         if (level.getRandom().nextBoolean()) level.destroyBlock(pos, false);
     }

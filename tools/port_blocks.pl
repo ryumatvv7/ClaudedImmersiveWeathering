@@ -63,7 +63,7 @@ while (my $file = shift @ARGV) {
         next if $s =~ /import [\w.]*\.\Q$cls\E;/;
         my ($pkg) = $fq =~ /^(.*)\.\w+$/;
         next if $s =~ /import \Q$pkg\E\.\*;/;
-        $s =~ s/(\npackage [\w.]+;\n)/$1\nimport $fq;/;
+        $s =~ s/^(package [\w.]+;\n)/$1\nimport $fq;/m;
     }
 
     if ($s ne $o) { open(my $out, '>', $file) or die; print $out $s; close $out; print "patched $file\n"; }

@@ -1,11 +1,12 @@
 package com.ordana.immersive_weathering.blocks.frosted;
 
+import net.minecraft.util.ParticleUtils;
+import net.minecraft.world.attribute.EnvironmentAttributes;
 import com.google.common.base.Suppliers;
 import com.google.common.collect.BiMap;
 import com.google.common.collect.ImmutableBiMap;
 import com.ordana.immersive_weathering.blocks.ModBlockProperties;
 import com.ordana.immersive_weathering.reg.ModBlocks;
-import net.mehvahdjukaar.moonlight.api.client.util.ParticleUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerLevel;
@@ -67,7 +68,7 @@ public interface Frosty {
 
     default void tryUnFrost(BlockState state, ServerLevel level, BlockPos pos) {
         if (state.getValue(NATURAL)) {
-            if (level.dimensionType().ultraWarm() || level.isRaining() || level.isBrightOutside() || (level.getBrightness(LightLayer.BLOCK, pos) > 7 - state.getLightBlock(level, pos))) {
+            if (level.environmentAttributes().getValue(EnvironmentAttributes.WATER_EVAPORATES, pos) || level.isRaining() || level.isBrightOutside() || (level.getBrightness(LightLayer.BLOCK, pos) > 7 - state.getLightDampening())) {
                 level.setBlockAndUpdate(pos, getUnfrosty(state).get());
             }
         }
@@ -78,7 +79,7 @@ public interface Frosty {
 
         if (stack.getItem() instanceof FlintAndSteelItem) {
             level.playSound(player, pos, SoundEvents.FLINTANDSTEEL_USE, SoundSource.BLOCKS, 1.0f, 1.0f);
-            if (level.isClientSide()) ParticleUtil.spawnParticlesOnBlockFaces(level, pos, ParticleTypes.SMOKE, UniformInt.of(3, 5), -0.05f, 0.05f, false);
+            if (level.isClientSide()) ParticleUtils.spawnParticlesOnBlockFaces(level, pos, ParticleTypes.SMOKE, UniformInt.of(3, 5));
             if (player instanceof ServerPlayer) {
                 if (!player.getAbilities().instabuild) stack.hurtAndBreak(1, player, hand);
                 level.setBlockAndUpdate(pos, this.getUnfrosty(state).get());

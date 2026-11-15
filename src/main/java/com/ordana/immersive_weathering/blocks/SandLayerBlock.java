@@ -26,7 +26,7 @@ public class SandLayerBlock extends LayerBlock {
     }
 
     @Override
-    public void fallOn(Level level, BlockState state, BlockPos pos, Entity entity, float height) {
+    public void fallOn(Level level, BlockState state, BlockPos pos, Entity entity, double height) {
         int layers = state.getValue(LAYERS_8);
         entity.causeFallDamage(height, layers > 2 ? 0.3f : 1, level.damageSources().fall());
         if (level.isClientSide()) {

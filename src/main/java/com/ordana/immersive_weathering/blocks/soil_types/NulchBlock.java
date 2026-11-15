@@ -1,5 +1,7 @@
 package com.ordana.immersive_weathering.blocks.soil_types;
 
+import net.minecraft.world.level.ScheduledTickAccess;
+import net.minecraft.world.level.LevelReader;
 import com.ordana.immersive_weathering.blocks.ModBlockProperties;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -48,7 +50,7 @@ public class NulchBlock extends Block {
     }
 
     @Override
-    public void fallOn(Level level, BlockState state, BlockPos pos, Entity entity, float fallDistance) {
+    public void fallOn(Level level, BlockState state, BlockPos pos, Entity entity, double fallDistance) {
         entity.causeFallDamage(fallDistance, 0.2F, level.damageSources().fall());
     }
 
@@ -58,19 +60,22 @@ public class NulchBlock extends Block {
     }
 
     @Nullable
+    @Override
     public BlockState getStateForPlacement(BlockPlaceContext context) {
         FluidState fluidState = context.getLevel().getFluidState(context.getClickedPos());
         boolean bl = fluidState.getType() == Fluids.LAVA;
         return Objects.requireNonNull(super.getStateForPlacement(context)).setValue(MOLTEN, bl);
     }
 
-    public BlockState updateShape(BlockState state, Direction direction, BlockState neighborState, LevelAccessor level, BlockPos currentPos, BlockPos neighborPos) {
+    @Override
+    public BlockState updateShape(BlockState state, LevelReader level, ScheduledTickAccess tickAccess, BlockPos currentPos, Direction direction, BlockPos neighborPos, BlockState neighborState, RandomSource shapeRandom) {
         if (state.getValue(MOLTEN)) {
-            level.scheduleTick(currentPos, Fluids.LAVA, Fluids.LAVA.getTickDelay(level));
+            tickAccess.scheduleTick(currentPos, Fluids.LAVA, Fluids.LAVA.getTickDelay(level));
         }
         return state;
     }
 
+    @Override
     public FluidState getFluidState(BlockState state) {
         return state.getValue(MOLTEN) ? Fluids.LAVA.getSource(false) : super.getFluidState(state);
     }
@@ -88,7 +93,7 @@ public class NulchBlock extends Block {
     @Override
     public void stepOn(Level level, BlockPos pos, BlockState state, Entity entity) {
         if (state.getValue(MOLTEN)) {
-            if (!entity.fireImmune() && entity instanceof LivingEntity && !EnchantmentHelper.hasFrostWalker((LivingEntity) entity)) {
+            if (!entity.fireImmune() && entity instanceof LivingEntity && !entity.isSteppingCarefully()) {
                 entity.hurt(level.damageSources().hotFloor(), 1.0F);
             }
         }
@@ -113,7 +118,7 @@ public class NulchBlock extends Block {
 
 
     @Override
-    public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
+    protected InteractionResult useItemOn(ItemStack heldStack, BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
         if (!player.isSecondaryUseActive()) {
             // empty bucket into mulch
             ItemStack stack = player.getItemInHand(hand);
@@ -141,7 +146,7 @@ public class NulchBlock extends Block {
                 return InteractionResult.SUCCESS;
             }
         }
-        return super.use(state, level, pos, player, hand, hit);
+        return super.useItemOn(heldStack, state, level, pos, player, hand, hit);
     }
 
 

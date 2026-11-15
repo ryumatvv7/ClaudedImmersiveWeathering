@@ -1,5 +1,7 @@
 package com.ordana.immersive_weathering.blocks.soil_types;
 
+import net.minecraft.world.level.ScheduledTickAccess;
+import net.minecraft.world.attribute.EnvironmentAttributes;
 import com.ordana.immersive_weathering.reg.ModBlocks;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -48,19 +50,22 @@ public class EarthenClayBlock extends Block implements SimpleWaterloggedBlock {
     }
 
     @Nullable
+    @Override
     public BlockState getStateForPlacement(BlockPlaceContext context) {
         FluidState fluidState = context.getLevel().getFluidState(context.getClickedPos());
         boolean bl = fluidState.getType() == Fluids.WATER;
         return Objects.requireNonNull(super.getStateForPlacement(context)).setValue(WATERLOGGED, bl);
     }
 
-    public BlockState updateShape(BlockState state, Direction direction, BlockState neighborState, LevelAccessor level, BlockPos currentPos, BlockPos neighborPos) {
+    @Override
+    public BlockState updateShape(BlockState state, LevelReader level, ScheduledTickAccess tickAccess, BlockPos currentPos, Direction direction, BlockPos neighborPos, BlockState neighborState, RandomSource shapeRandom) {
         if (state.getValue(WATERLOGGED)) {
-            level.scheduleTick(currentPos, Fluids.WATER, Fluids.WATER.getTickDelay(level));
+            tickAccess.scheduleTick(currentPos, Fluids.WATER, Fluids.WATER.getTickDelay(level));
         }
         return state;
     }
 
+    @Override
     public FluidState getFluidState(BlockState state) {
         return state.getValue(WATERLOGGED) ? Fluids.WATER.getSource(false) : super.getFluidState(state);
     }
@@ -100,12 +105,13 @@ public class EarthenClayBlock extends Block implements SimpleWaterloggedBlock {
     public void randomTick(BlockState blockState, ServerLevel serverLevel, BlockPos pos, RandomSource randomSource) {
         if (!blockState.getValue(WATERLOGGED) && serverLevel.isRainingAt(pos.above()) || isNearWater(serverLevel, pos)) {
             serverLevel.setBlock(pos, blockState.setValue(WATERLOGGED, true), 2);
-        } else if (blockState.getValue(WATERLOGGED) && serverLevel.dimensionType().ultraWarm()) {
+        } else if (blockState.getValue(WATERLOGGED) && serverLevel.environmentAttributes().getValue(EnvironmentAttributes.WATER_EVAPORATES, pos)) {
             serverLevel.setBlock(pos, blockState.setValue(WATERLOGGED, false), 2);
         }
     }
 
-    public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hitResult) {
+    @Override
+    protected InteractionResult useItemOn(ItemStack heldStack, BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hitResult) {
         ItemStack stack = player.getItemInHand(hand);
         Item item = stack.getItem();
         if (item instanceof HoeItem) {
@@ -118,6 +124,6 @@ public class EarthenClayBlock extends Block implements SimpleWaterloggedBlock {
             }
             return InteractionResult.SUCCESS;
         }
-        return super.use(state, level, pos, player, hand, hitResult);
+        return super.useItemOn(heldStack, state, level, pos, player, hand, hitResult);
     }
 }

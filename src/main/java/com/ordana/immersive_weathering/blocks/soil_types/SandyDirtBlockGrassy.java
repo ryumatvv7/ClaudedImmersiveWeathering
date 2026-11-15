@@ -1,5 +1,7 @@
 package com.ordana.immersive_weathering.blocks.soil_types;
 
+import net.minecraft.world.level.ScheduledTickAccess;
+import net.minecraft.world.level.LevelReader;
 import com.ordana.immersive_weathering.reg.ModBlocks;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -33,6 +35,7 @@ public class SandyDirtBlockGrassy extends BaseSoilBlockFallable implements Falla
         this.registerDefaultState(this.stateDefinition.any().setValue(SNOWY, false));
     }
 
+    @Override
     public void randomTick(BlockState state, ServerLevel level, BlockPos pos, RandomSource random) {
         if (!canBeGrass(state, level, pos)) {
             level.setBlockAndUpdate(pos, ModBlocks.SANDY_DIRT.get().defaultBlockState());
@@ -40,7 +43,8 @@ public class SandyDirtBlockGrassy extends BaseSoilBlockFallable implements Falla
         super.randomTick(state, level, pos, random);
     }
 
-    public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hitResult) {
+    @Override
+    protected InteractionResult useItemOn(ItemStack heldStack, BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hitResult) {
         ItemStack stack = player.getItemInHand(hand);
         Item item = stack.getItem();
         if (item instanceof HoeItem) {
@@ -52,18 +56,21 @@ public class SandyDirtBlockGrassy extends BaseSoilBlockFallable implements Falla
             }
             return InteractionResult.SUCCESS;
         }
-        return super.use(state, level, pos, player, hand, hitResult);
+        return super.useItemOn(heldStack, state, level, pos, player, hand, hitResult);
     }
 
+    @Override
     public void onPlace(BlockState state, Level level, BlockPos pos, BlockState oldState, boolean movedByPiston) {
         level.scheduleTick(pos, this, this.getDelayAfterPlace());
     }
 
-    public BlockState updateShape(BlockState state, Direction direction, BlockState neighborState, LevelAccessor level, BlockPos pos, BlockPos neighborPos) {
-        level.scheduleTick(pos, this, this.getDelayAfterPlace());
-        return super.updateShape(state, direction, neighborState, level, pos, neighborPos);
+    @Override
+    public BlockState updateShape(BlockState state, LevelReader level, ScheduledTickAccess tickAccess, BlockPos pos, Direction direction, BlockPos neighborPos, BlockState neighborState, RandomSource shapeRandom) {
+        tickAccess.scheduleTick(pos, this, this.getDelayAfterPlace());
+        return super.updateShape(state, level, tickAccess, pos, direction, neighborPos, neighborState, shapeRandom);
     }
 
+    @Override
     public void tick(BlockState state, ServerLevel level, BlockPos pos, RandomSource random) {
         if (isFree(level.getBlockState(pos.below())) && pos.getY() >= level.getMinY()) {
             FallingBlockEntity fallingBlockEntity = FallingBlockEntity.fall(level, pos, state);
@@ -71,9 +78,11 @@ public class SandyDirtBlockGrassy extends BaseSoilBlockFallable implements Falla
         }
     }
 
+    @Override
     protected void falling(FallingBlockEntity entity) {
     }
 
+    @Override
     protected int getDelayAfterPlace() {
         return 2;
     }
@@ -82,6 +91,7 @@ public class SandyDirtBlockGrassy extends BaseSoilBlockFallable implements Falla
         return state.isAir() || state.is(BlockTags.FIRE) || state.liquid() || state.canBeReplaced();
     }
 
+    @Override
     public void animateTick(BlockState state, Level level, BlockPos pos, RandomSource random) {
         if (random.nextInt(16) == 0) {
             BlockPos blockPos = pos.below();
@@ -92,6 +102,7 @@ public class SandyDirtBlockGrassy extends BaseSoilBlockFallable implements Falla
 
     }
 
+    @Override
     public int getDustColor(BlockState state, BlockGetter level, BlockPos pos) {
         return 0xd3b893;
     }

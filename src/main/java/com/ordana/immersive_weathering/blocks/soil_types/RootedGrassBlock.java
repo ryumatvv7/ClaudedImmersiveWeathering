@@ -1,5 +1,6 @@
 package com.ordana.immersive_weathering.blocks.soil_types;
 
+import net.minecraft.world.level.block.SpreadingSnowyBlock;
 import com.ordana.immersive_weathering.reg.ModBlocks;
 import com.ordana.immersive_weathering.util.WeatheringHelper;
 import net.minecraft.core.BlockPos;
@@ -35,7 +36,7 @@ public class RootedGrassBlock extends GrassBlock implements BonemealableBlock {
     }
 
     @Override
-    public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hitResult) {
+    protected InteractionResult useItemOn(ItemStack heldStack, BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hitResult) {
         ItemStack stack = player.getItemInHand(hand);
         Item item = stack.getItem();
         if (item instanceof ShovelItem && !state.getValue(SNOWY)) {
@@ -57,11 +58,11 @@ public class RootedGrassBlock extends GrassBlock implements BonemealableBlock {
             }
             return InteractionResult.SUCCESS;
         }
-        return super.use(state, level, pos, player, hand, hitResult);
+        return super.useItemOn(heldStack, state, level, pos, player, hand, hitResult);
     }
 
     @Override
-    public boolean isValidBonemealTarget(LevelReader level, BlockPos pos, BlockState state, boolean isClient) {
+    public boolean isValidBonemealTarget(LevelReader level, BlockPos pos, BlockState state) {
         boolean space = false;
         for (Direction dir : Direction.values()) {
             var targetState = level.getBlockState(pos.relative(dir));
@@ -86,7 +87,7 @@ public class RootedGrassBlock extends GrassBlock implements BonemealableBlock {
 
     @Override
     public void randomTick(BlockState state, ServerLevel level, BlockPos pos, RandomSource random) {
-        if (!canBeGrass(state, level, pos)) {
+        if (!SpreadingSnowyBlock.canStayAlive(state, level, pos)) {
             level.setBlockAndUpdate(pos, Blocks.ROOTED_DIRT.defaultBlockState());
         }
         else super.randomTick(state, level, pos, random);

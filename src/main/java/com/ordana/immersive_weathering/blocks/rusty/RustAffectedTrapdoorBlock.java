@@ -1,5 +1,7 @@
 package com.ordana.immersive_weathering.blocks.rusty;
 
+import net.minecraft.world.level.redstone.Orientation;
+import org.jetbrains.annotations.Nullable;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.RandomSource;
@@ -15,7 +17,7 @@ public class RustAffectedTrapdoorBlock extends TrapDoorBlock {
     private final Rustable.RustLevel rustLevel;
 
     public RustAffectedTrapdoorBlock(Rustable.RustLevel rustLevel, Properties properties, BlockSetType type) {
-        super(properties, type);
+        super(type, properties);
         this.rustLevel = rustLevel;
     }
 
@@ -24,7 +26,7 @@ public class RustAffectedTrapdoorBlock extends TrapDoorBlock {
     }
 
     @Override
-    public void neighborChanged(BlockState state, Level level, BlockPos pos, Block block, BlockPos fromPos, boolean notify) {
+    public void neighborChanged(BlockState state, Level level, BlockPos pos, Block block, @Nullable Orientation fromPos, boolean notify) {
         boolean hasPower = level.hasNeighborSignal(pos);
         if (hasPower != state.getValue(POWERED)) { // checks if redstone input has changed
             switch (this.getAge()) {

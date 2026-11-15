@@ -1,5 +1,7 @@
 package com.ordana.immersive_weathering.blocks.soil_types;
 
+import net.minecraft.world.level.ScheduledTickAccess;
+import net.minecraft.world.level.LevelReader;
 import com.ordana.immersive_weathering.reg.ModBlocks;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -28,6 +30,7 @@ public class PermafrostBlockGrassy extends BaseSoilBlockFallable {
         }
     }
 
+    @Override
     public void randomTick(BlockState state, ServerLevel level, BlockPos pos, RandomSource random) {
         if (canMelt(level, pos)) level.scheduleTick(pos, this, this.getDelayAfterPlace());
         if (!canBeGrass(state, level, pos)) {
@@ -65,10 +68,11 @@ public class PermafrostBlockGrassy extends BaseSoilBlockFallable {
     }
 
     @Override
-    public BlockState updateShape(BlockState state, Direction direction, BlockState neighborState, LevelAccessor level, BlockPos pos, BlockPos neighborPos) {
-        return super.updateShape(state, direction, neighborState, level, pos, neighborPos);
+    public BlockState updateShape(BlockState state, LevelReader level, ScheduledTickAccess tickAccess, BlockPos pos, Direction direction, BlockPos neighborPos, BlockState neighborState, RandomSource shapeRandom) {
+        return super.updateShape(state, level, tickAccess, pos, direction, neighborPos, neighborState, shapeRandom);
     }
 
+    @Override
     public void onLand(Level level, BlockPos pos, BlockState state, BlockState replaceableState, FallingBlockEntity fallingBlock) {
         if (level.getRandom().nextBoolean()) level.destroyBlock(pos, false);
     }

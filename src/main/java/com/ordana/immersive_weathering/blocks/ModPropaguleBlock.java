@@ -1,5 +1,7 @@
 package com.ordana.immersive_weathering.blocks;
 
+import net.minecraft.world.level.block.grower.TreeGrower;
+import net.minecraft.world.level.ScheduledTickAccess;
 import com.ordana.immersive_weathering.entities.FallingPropaguleEntity;
 import com.ordana.immersive_weathering.reg.ModTags;
 import net.minecraft.core.BlockPos;
@@ -21,16 +23,16 @@ import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.level.material.Fluids;
 
-import javax.swing.text.html.BlockView;
 import java.util.Random;
 
 public class ModPropaguleBlock extends MangrovePropaguleBlock implements Fallable {
     private static final BooleanProperty WATERLOGGED;
 
     public ModPropaguleBlock(Properties properties) {
-        super(properties);
+        super(TreeGrower.MANGROVE, properties);
     }
 
+    @Override
     public void onPlace(BlockState state, Level level, BlockPos pos, BlockState oldState, boolean notify) {
         level.scheduleTick(pos, this, this.getFallDelay());
     }
@@ -41,19 +43,20 @@ public class ModPropaguleBlock extends MangrovePropaguleBlock implements Fallabl
             || this.mayPlaceOn(level.getBlockState(pos.below()), level, pos)) : super.canSurvive(state, level, pos);
     }
 
+    @Override
     public void onLand(Level level, BlockPos pos, BlockState state, BlockState replaceableState, FallingBlockEntity fallingBlock) {
         level.setBlockAndUpdate(pos, state.setValue(HANGING, false));
     }
 
     @Override
-    public BlockState updateShape(BlockState state, Direction direction, BlockState neighborState, LevelAccessor level, BlockPos pos, BlockPos neighborPos) {
+    public BlockState updateShape(BlockState state, LevelReader level, ScheduledTickAccess tickAccess, BlockPos pos, Direction direction, BlockPos neighborPos, BlockState neighborState, RandomSource shapeRandom) {
         if (state.getValue(WATERLOGGED)) {
-            level.scheduleTick(pos, Fluids.WATER, Fluids.WATER.getTickDelay(level));
+            tickAccess.scheduleTick(pos, Fluids.WATER, Fluids.WATER.getTickDelay(level));
         }
         else if ((!state.getValue(HANGING) || (state.getValue(HANGING) && state.getValue(AGE) < 4)) && !state.canSurvive(level, pos)) {
-            level.removeBlock(pos, true);
+            return Blocks.AIR.defaultBlockState();
         }
-        level.scheduleTick(pos, this, this.getFallDelay());
+        tickAccess.scheduleTick(pos, this, this.getFallDelay());
         return state;
     }
 
@@ -87,10 +90,6 @@ public class ModPropaguleBlock extends MangrovePropaguleBlock implements Fallabl
             }
         }
 
-    }
-
-    public int color(BlockState state, BlockView level, BlockPos pos) {
-        return -16777216;
     }
 
     static {

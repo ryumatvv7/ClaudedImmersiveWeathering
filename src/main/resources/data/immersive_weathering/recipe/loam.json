@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "AC",
+    "SD"
+  ],
+  "key": {
+    "A": "#immersive_weathering:loam_sand",
+    "C": [
+      "minecraft:clay",
+      "immersive_weathering:earthen_clay"
+    ],
+    "S": [
+      "immersive_weathering:silt",
+      "minecraft:mud"
+    ],
+    "D": "minecraft:dirt"
+  },
+  "result": {
+    "id": "immersive_weathering:loam",
+    "count": 4
+  }
+}

@@ -1,5 +1,6 @@
 package com.ordana.immersive_weathering.blocks.soil_types;
 
+import net.minecraft.util.Util;
 import com.ordana.immersive_weathering.configs.CommonConfigs;
 import com.ordana.immersive_weathering.util.WeatheringHelper;
 import net.minecraft.core.BlockPos;
@@ -19,7 +20,6 @@ import net.minecraft.world.level.block.SnowyBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.levelgen.feature.ConfiguredFeature;
-import net.minecraft.world.level.levelgen.feature.configurations.RandomPatchConfiguration;
 import net.minecraft.world.level.levelgen.placement.PlacedFeature;
 import net.minecraft.world.level.lighting.LightEngine;
 
@@ -45,8 +45,8 @@ public class BaseSoilBlock extends SnowyBlock implements BonemealableBlock {
         } else if (blockstate.getFluidState().getAmount() == 8) {
             return false;
         } else {
-            int i = LightEngine.getLightBlockInto(levelReader, state, pos, blockstate, blockpos, Direction.UP, blockstate.getLightBlock(levelReader, blockpos));
-            return i < levelReader.getMaxLightLevel();
+            int i = LightEngine.getLightBlockInto(state, blockstate, Direction.UP, blockstate.getLightDampening());
+            return i < 15;
         }
     }
 
@@ -55,6 +55,7 @@ public class BaseSoilBlock extends SnowyBlock implements BonemealableBlock {
         return canBeGrass(state, level, pos) && !level.getFluidState(blockpos).is(FluidTags.WATER);
     }
 
+    @Override
     public void randomTick(BlockState state, ServerLevel level, BlockPos pos, RandomSource random) {
         if (level.getMaxLocalRawBrightness(pos.above()) >= 9 && canBeGrass(state, level, pos)) {
 
@@ -73,18 +74,20 @@ public class BaseSoilBlock extends SnowyBlock implements BonemealableBlock {
     }
 
     @Override
-    public boolean isValidBonemealTarget(LevelReader level, BlockPos pos, BlockState state, boolean isClient) {
+    public boolean isValidBonemealTarget(LevelReader level, BlockPos pos, BlockState state) {
         return level.getBlockState(pos.above()).isAir();
     }
 
+    @Override
     public boolean isBonemealSuccess(Level level, RandomSource randomSource, BlockPos blockPos, BlockState blockState) {
         return true;
     }
 
+    @Override
     public void performBonemeal(ServerLevel level, RandomSource random, BlockPos pos, BlockState state) {
         BlockPos blockPos = pos.above();
         BlockState blockState = Blocks.SHORT_GRASS.defaultBlockState();
-        Optional<Holder.Reference<PlacedFeature>> optional = level.registryAccess().registryOrThrow(Registries.PLACED_FEATURE).getHolder(VegetationPlacements.GRASS_BONEMEAL);
+        Optional<Holder.Reference<PlacedFeature>> optional = level.registryAccess().lookupOrThrow(Registries.PLACED_FEATURE).get(VegetationPlacements.GRASS_BONEMEAL);
 
         label49:
         for(int i = 0; i < 128; ++i) {
@@ -102,24 +105,15 @@ public class BaseSoilBlock extends SnowyBlock implements BonemealableBlock {
                 ((BonemealableBlock)blockState.getBlock()).performBonemeal(level, random, blockPos2, blockState2);
             }
 
-            if (blockState2.isAir()) {
-                Holder holder;
+            if (blockState2.isAir() && !level.isOutsideBuildHeight(blockPos2)) {
                 if (random.nextInt(8) == 0) {
-                    List<ConfiguredFeature<?, ?>> list = level.getBiome(blockPos2).value().getGenerationSettings().getFlowerFeatures();
-                    if (list.isEmpty()) {
-                        continue;
+                    List<ConfiguredFeature<?, ?>> list = level.getBiome(blockPos2).value().getGenerationSettings().getBoneMealFeatures();
+                    if (!list.isEmpty()) {
+                        Util.getRandom(list, random).place(level, level.getChunkSource().getGenerator(), random, blockPos2);
                     }
-
-                    holder = ((RandomPatchConfiguration)((ConfiguredFeature)list.get(0)).config()).feature();
-                } else {
-                    if (!optional.isPresent()) {
-                        continue;
-                    }
-
-                    holder = (Holder)optional.get();
+                } else if (optional.isPresent()) {
+                    optional.get().value().place(level, level.getChunkSource().getGenerator(), random, blockPos2);
                 }
-
-                ((PlacedFeature)holder.value()).place(level, level.getChunkSource().getGenerator(), random, blockPos2);
             }
         }
     }
