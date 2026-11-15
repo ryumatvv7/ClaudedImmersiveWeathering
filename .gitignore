@@ -41,3 +41,9 @@ replay_*.log
 
 # upstream reference checkout (original mod sources)
 upstream/
+
+# reference-only checkouts (decompiled MC, Moonlight API sources) - never committed or copied
+ref/
+
+build_log.txt
+errs.txt

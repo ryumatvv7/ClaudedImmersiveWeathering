@@ -1,1 +1,4 @@
 accessWidener	v2	official
+
+accessible	field	net/minecraft/world/level/block/state/BlockBehaviour$Properties	isRandomlyTicking	Z
+accessible	method	net/minecraft/world/level/biome/Biome	getTemperature	(Lnet/minecraft/core/BlockPos;I)F
