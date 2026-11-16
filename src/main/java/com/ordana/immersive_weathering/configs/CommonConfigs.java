@@ -77,6 +77,9 @@ public class CommonConfigs {
 
     public static final Supplier<Boolean> THIN_ICE_MELTING;
     public static final Supplier<Boolean> PUDDLES;
+    public static final Supplier<Boolean> WOOD_ROT;
+    public static final Supplier<Boolean> WOOD_MOSS;
+    public static final Supplier<Double> WOOD_SPEED;
 
     public static final Supplier<Boolean> VITRIFIED_LIGHTNING;
     public static final Supplier<Double> FULGURITE_CHANCE;
@@ -202,6 +205,11 @@ public class CommonConfigs {
         LEAF_PILES_BLACKLIST = builder.comment("leaves that wont spawn leaf piles").define("leaf_piles_blacklist", List.of());
         builder.pop();
 
+        builder.push("wood");
+        WOOD_ROT = builder.comment("wood in or next to water rots; rotten wood under water falls apart").define("rot", true);
+        WOOD_MOSS = builder.comment("moss grows on damp wood").define("moss", true);
+        builder.pop();
+
         builder.push("puddles");
         PUDDLES = builder.comment("puddles appear on the ground while it rains and dry up afterwards").define("enabled", true);
         builder.pop();
@@ -239,6 +247,7 @@ public class CommonConfigs {
         GROWTH_OTHER = builder.comment("everything else, including growths from datapacks").define("other", 1.0, 0, 100);
         MOSS_SPEED = builder.comment("moss spreading on stone / bricks").define("moss", 1.0, 0, 100);
         CRACK_SPEED = builder.comment("cracks spreading on bricks").define("cracks", 1.0, 0, 100);
+        WOOD_SPEED = builder.comment("wood rotting and moss on wood").define("wood", 1.0, 0, 100);
         RUST_SPEED = builder.comment("iron rusting (each rust stage)").define("rust", 1.0, 0, 100);
         builder.pop();
 

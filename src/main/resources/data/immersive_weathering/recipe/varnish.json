@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    "minecraft:glass_bottle",
+    "minecraft:resin_clump",
+    "minecraft:honeycomb"
+  ],
+  "result": {
+    "id": "immersive_weathering:varnish"
+  }
+}

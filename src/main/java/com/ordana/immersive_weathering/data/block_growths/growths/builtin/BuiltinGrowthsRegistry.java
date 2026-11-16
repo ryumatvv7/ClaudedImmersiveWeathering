@@ -23,6 +23,7 @@ public class BuiltinGrowthsRegistry {
         register("snowy_stones", SnowGrowth::new);
         register("sandy_stones", SandGrowth::new);
         register("sand_layer_seeping", SandLayerGrowth::new);
+        register("wood_weathering", WoodWeatheringGrowth::new);
     }
 
 

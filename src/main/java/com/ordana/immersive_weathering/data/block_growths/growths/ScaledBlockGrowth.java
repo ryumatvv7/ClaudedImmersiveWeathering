@@ -24,6 +24,7 @@ public record ScaledBlockGrowth(IBlockGrowth inner, Supplier<Double> category) i
     }
 
     private static Supplier<Double> categoryOf(String n) {
+        if (n.startsWith("wood")) return CommonConfigs.WOOD_SPEED;
         if (n.startsWith("soot") || n.startsWith("fire") || n.startsWith("magma")) return CommonConfigs.GROWTH_FIRE;
         if (n.startsWith("lightning")) return CommonConfigs.GROWTH_LIGHTNING;
         if (n.startsWith("frost") || n.contains("ice") || n.contains("icicle") || n.contains("snow")) return CommonConfigs.GROWTH_FROST;

@@ -125,6 +125,10 @@ public class ModItems {
 
     public static final Map<VanillaTypes.Wood, Item> BARK = new LinkedHashMap<>();
 
+    //port addition: protects wood from rot and moss
+    public static final Supplier<Item> VARNISH = regItem("varnish", com.ordana.immersive_weathering.items.VarnishItem::new,
+            () -> new Item.Properties().durability(32));
+
     public static final Supplier<Item> TALLOW = regItem("tallow", HoneycombItem::new, Item.Properties::new);
 
     public static final Supplier<Item> STEEL_WOOL = regItem("steel_wool", Item::new,

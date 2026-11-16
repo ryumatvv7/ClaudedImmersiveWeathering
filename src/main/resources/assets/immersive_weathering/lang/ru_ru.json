@@ -429,5 +429,12 @@
   "block.immersive_weathering.mossy_deepslate_tile_stairs": "Ступени из замшелой глубинносланцевой плитки",
   "block.immersive_weathering.mossy_deepslate_tile_slab": "Плита из замшелой глубинносланцевой плитки",
   "block.immersive_weathering.mossy_deepslate_tile_wall": "Стена из замшелой глубинносланцевой плитки",
-  "block.immersive_weathering.puddle": "Лужа"
+  "block.immersive_weathering.puddle": "Лужа",
+  "block.immersive_weathering.rotten_planks": "Гнилые доски",
+  "block.immersive_weathering.rotten_log": "Гнилое бревно",
+  "block.immersive_weathering.rotten_stairs": "Гнилые ступени",
+  "block.immersive_weathering.rotten_slab": "Гнилая плита",
+  "block.immersive_weathering.rotten_fence": "Гнилой забор",
+  "item.immersive_weathering.varnish": "Лак",
+  "message.immersive_weathering.already_varnished": "Этот блок уже покрыт лаком"
 }

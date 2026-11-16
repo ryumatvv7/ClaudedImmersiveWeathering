@@ -1,0 +1,10 @@
+{
+  "replace": false,
+  "values": [
+    "immersive_weathering:rotten_planks",
+    "immersive_weathering:rotten_log",
+    "immersive_weathering:rotten_stairs",
+    "immersive_weathering:rotten_slab",
+    "immersive_weathering:rotten_fence"
+  ]
+}

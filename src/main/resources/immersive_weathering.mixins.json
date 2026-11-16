@@ -24,6 +24,7 @@
     "SugarCaneBlockMixin",
     "SweetBerryBushMixin",
     "VegetationBlockMixin",
+    "WoodRandomTickMixin",
     "accessors.IceInvoker",
     "accessors.RandomBlockMatchTestAccessor"
   ],

@@ -289,6 +289,9 @@ public class ModCreativeTab {
 
 
         //port additions
+        after(e, Items.SHEARS, CreativeModeTabs.TOOLS_AND_UTILITIES, ModItems.VARNISH);
+        after(e, ModBlocks.CHARRED_FENCE_GATE.get().asItem(), CreativeModeTabs.BUILDING_BLOCKS,
+            ModBlocks.ROTTEN_LOG, ModBlocks.ROTTEN_PLANKS, ModBlocks.ROTTEN_STAIRS, ModBlocks.ROTTEN_SLAB, ModBlocks.ROTTEN_FENCE);
         after(e, Items.DEEPSLATE_BRICK_WALL, CreativeModeTabs.BUILDING_BLOCKS,
             ModBlocks.MOSSY_DEEPSLATE_BRICKS, ModBlocks.MOSSY_DEEPSLATE_BRICK_STAIRS, ModBlocks.MOSSY_DEEPSLATE_BRICK_SLAB, ModBlocks.MOSSY_DEEPSLATE_BRICK_WALL);
         after(e, Items.DEEPSLATE_TILE_WALL, CreativeModeTabs.BUILDING_BLOCKS,

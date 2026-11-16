@@ -56,6 +56,7 @@ public class ImmersiveWeathering implements ModInitializer {
         LeafDecayPayload.register();
         com.ordana.immersive_weathering.network.ConfigSyncPayload.register();
         com.ordana.immersive_weathering.commands.IWCommand.register();
+        com.ordana.immersive_weathering.util.Varnish.init();
 
         //events
         //fire and lightning events come from FireMixin / LightningBoltMixin
@@ -99,5 +100,7 @@ public class ImmersiveWeathering implements ModInitializer {
         }
         //leaf piles register their own flammability; weeds only had Forge-only methods in the original
         flammable.add(ModBlocks.WEEDS.get(), 60, 100);
+        for (var b : java.util.List.of(ModBlocks.ROTTEN_PLANKS, ModBlocks.ROTTEN_LOG, ModBlocks.ROTTEN_STAIRS,
+                ModBlocks.ROTTEN_SLAB, ModBlocks.ROTTEN_FENCE)) flammable.add(b.get(), 5, 20);
     }
 }

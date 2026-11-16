@@ -46,6 +46,8 @@ public class ModCompostable {
             compost.put(ModBlocks.WEEDS.get().asItem(), ContextIntProviders.COMPOSTABLE_LOW);
             compost.put(ModBlocks.IVY.get().asItem(), ContextIntProviders.COMPOSTABLE_LOW);
             compost.put(ModBlocks.DUNE_GRASS.get().asItem(), ContextIntProviders.COMPOSTABLE_LOW);
+            for (var b : java.util.List.of(ModBlocks.ROTTEN_PLANKS, ModBlocks.ROTTEN_LOG, ModBlocks.ROTTEN_STAIRS,
+                    ModBlocks.ROTTEN_SLAB, ModBlocks.ROTTEN_FENCE)) compost.put(b.get().asItem(), ContextIntProviders.COMPOSTABLE_MEDIUM);
             compost.forEach((item, chance) -> context.modify(item, b -> b.set(DataComponents.COMPOSTABLE, new Compostable(chance))));
 
             for (Map.Entry<Supplier<? extends ItemLike>, Integer> e : ModBlocks.FUELS.entrySet()) {

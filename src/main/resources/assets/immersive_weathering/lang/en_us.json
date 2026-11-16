@@ -545,5 +545,12 @@
   "block.immersive_weathering.mossy_deepslate_tile_stairs": "Mossy Deepslate Tile Stairs",
   "block.immersive_weathering.mossy_deepslate_tile_slab": "Mossy Deepslate Tile Slab",
   "block.immersive_weathering.mossy_deepslate_tile_wall": "Mossy Deepslate Tile Wall",
-  "block.immersive_weathering.puddle": "Puddle"
+  "block.immersive_weathering.puddle": "Puddle",
+  "block.immersive_weathering.rotten_planks": "Rotten Planks",
+  "block.immersive_weathering.rotten_log": "Rotten Log",
+  "block.immersive_weathering.rotten_stairs": "Rotten Stairs",
+  "block.immersive_weathering.rotten_slab": "Rotten Slab",
+  "block.immersive_weathering.rotten_fence": "Rotten Fence",
+  "item.immersive_weathering.varnish": "Varnish",
+  "message.immersive_weathering.already_varnished": "This block is already varnished"
 }

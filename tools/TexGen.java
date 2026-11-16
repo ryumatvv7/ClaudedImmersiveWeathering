@@ -125,6 +125,48 @@ public class TexGen {
                     }
                 write(o, args[4]);
             }
+            case "recolor_liquid" -> {
+                // recolor_liquid TEMPLATE PALETTE OUT: like recolor, but only bright warm pixels (the honey in a bottle)
+                BufferedImage t = read(args[1]);
+                List<Integer> warm = new ArrayList<>();
+                for (int y = 0; y < t.getHeight(); y++)
+                    for (int x = 0; x < t.getWidth(); x++) {
+                        int c = t.getRGB(x, y);
+                        if (a(c) > 128 && ((c >> 16) & 255) > 150 && (c & 255) < 110) warm.add(c);
+                    }
+                warm.sort((p, q) -> Double.compare(lum(p), lum(q)));
+                List<Integer> pal = sortedOpaque(read(args[2]));
+                BufferedImage o = new BufferedImage(t.getWidth(), t.getHeight(), BufferedImage.TYPE_INT_ARGB);
+                for (int y = 0; y < t.getHeight(); y++)
+                    for (int x = 0; x < t.getWidth(); x++) {
+                        int c = t.getRGB(x, y);
+                        boolean isWarm = a(c) > 128 && ((c >> 16) & 255) > 150 && (c & 255) < 110;
+                        o.setRGB(x, y, isWarm ? (c & 0xFF000000) | (pick(pal, rank(warm, c)) & 0xFFFFFF) : c);
+                    }
+                write(o, args[3]);
+            }
+            case "rot" -> {
+                // rot BASE OUT: dark, damp, slightly green wood with darker rot spots
+                BufferedImage base = read(args[1]);
+                List<Integer> bSorted = sortedOpaque(base);
+                int w = base.getWidth();
+                int[] dark = {0x24, 0x1e, 0x13}, light = {0x6e, 0x5f, 0x41}, moss = {0x4e, 0x5a, 0x2c};
+                BufferedImage o = new BufferedImage(base.getWidth(), base.getHeight(), BufferedImage.TYPE_INT_ARGB);
+                for (int y = 0; y < base.getHeight(); y++)
+                    for (int x = 0; x < base.getWidth(); x++) {
+                        int c = base.getRGB(x, y);
+                        if (a(c) == 0) continue;
+                        double q = rank(bSorted, c);
+                        double n = new Random(x * 131L + (y % w) * 71L).nextDouble();
+                        int[] hi = n > 0.82 ? moss : light;
+                        if (n < 0.12) q *= 0.4; // rot spots
+                        int r = (int) (dark[0] + (hi[0] - dark[0]) * q);
+                        int g = (int) (dark[1] + (hi[1] - dark[1]) * q);
+                        int b = (int) (dark[2] + (hi[2] - dark[2]) * q);
+                        o.setRGB(x, y, (c & 0xFF000000) | (r << 16) | (g << 8) | b);
+                    }
+                write(o, args[2]);
+            }
             case "preview" -> {
                 // preview OUT IMG...: the first 16x16 frame of every image, 8x scaled, side by side
                 int n = args.length - 2, s = 8;

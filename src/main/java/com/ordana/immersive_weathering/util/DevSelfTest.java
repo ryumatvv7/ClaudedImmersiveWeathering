@@ -145,6 +145,10 @@ public class DevSelfTest {
                 && com.ordana.immersive_weathering.blocks.mossy.Mossable.MOSS_LEVEL_INCREASES.get().get(Blocks.TUFF_BRICK_WALL) != null);
         check("mud bricks crack", com.ordana.immersive_weathering.blocks.cracked.Crackable.CRACK_LEVEL_INCREASES.get().get(Blocks.MUD_BRICK_STAIRS) != null);
         check("deepslate tiles get mossy", com.ordana.immersive_weathering.blocks.mossy.Mossable.MOSS_LEVEL_INCREASES.get().get(Blocks.DEEPSLATE_TILES) != null);
+        check("oak planks tick and rot", Blocks.OAK_PLANKS.defaultBlockState().isRandomlyTicking()
+                && WoodWeathering.getRotten(Blocks.OAK_STAIRS.defaultBlockState()).is(com.ordana.immersive_weathering.reg.ModBlocks.ROTTEN_STAIRS.get()));
+        check("crimson does not rot", WoodWeathering.getRotten(Blocks.CRIMSON_PLANKS.defaultBlockState()) == null);
+        check("stone does not tick", !Blocks.STONE_BRICKS.defaultBlockState().is(Blocks.OAK_PLANKS) && !WoodWeathering.isWeatherableWood(Blocks.OAK_DOOR));
         check("poplar leaves drop piles", WeatheringHelper.getFallenLeafPile(Blocks.RED_POPLAR_LEAVES.defaultBlockState()).isPresent());
         check("bark repairs stripped log", WeatheringHelper.getBarkForStrippedLog(Blocks.STRIPPED_OAK_LOG.defaultBlockState()).isPresent());
         interact(level, player, p, Blocks.OAK_LOG.defaultBlockState(), new ItemStack(Items.IRON_AXE),
@@ -177,6 +181,31 @@ public class DevSelfTest {
         for (int x = 0; x < 3; x++) for (int z = 0; z < 3; z++) if (level.getBlockState(p.offset(x, 0, z)).is(Blocks.MOSSY_STONE_BRICKS)) mossy++;
         ImmersiveWeathering.LOGGER.info("Self test: {} of 9 stone bricks are mossy after 2000 random ticks", mossy);
         for (int x = 0; x < 3; x++) for (int z = 0; z < 3; z++) for (int y = 0; y < 2; y++) level.setBlock(p.offset(x, y, z), Blocks.AIR.defaultBlockState(), 3);
+
+        // --- wood rotting in water (port addition)
+        guarded("wood rot ticks", () -> {
+            level.setBlock(p, Blocks.OAK_PLANKS.defaultBlockState(), 3);
+            level.setBlock(p.above(), Blocks.WATER.defaultBlockState(), 3);
+            for (int i = 0; i < 5000 && level.getBlockState(p).is(Blocks.OAK_PLANKS); i++) {
+                com.ordana.immersive_weathering.data.block_growths.BlockGrowthHandler.tickBlock(
+                        com.ordana.immersive_weathering.data.block_growths.TickSource.BLOCK_TICK, level.getBlockState(p), level, p);
+            }
+        });
+        check("oak planks under water rot", level.getBlockState(p).is(ModBlocks.ROTTEN_PLANKS.get()));
+        //varnished planks under water stay fresh
+        guarded("varnish ticks", () -> {
+            level.setBlock(p, Blocks.OAK_PLANKS.defaultBlockState(), 3);
+            com.ordana.immersive_weathering.util.Varnish.add(level, p);
+            for (int i = 0; i < 5000; i++) {
+                com.ordana.immersive_weathering.data.block_growths.BlockGrowthHandler.tickBlock(
+                        com.ordana.immersive_weathering.data.block_growths.TickSource.BLOCK_TICK, level.getBlockState(p), level, p);
+            }
+        });
+        check("varnished planks under water don't rot", level.getBlockState(p).is(Blocks.OAK_PLANKS));
+        com.ordana.immersive_weathering.util.Varnish.remove(level, p);
+        ImmersiveWeathering.LOGGER.info("Self test: varnished oak planks under water stayed {}", level.getBlockState(p));
+        level.setBlock(p.above(), Blocks.AIR.defaultBlockState(), 3);
+        level.setBlock(p, Blocks.AIR.defaultBlockState(), 3);
 
         // --- rust progression
         guarded("rusting ticks", () -> {

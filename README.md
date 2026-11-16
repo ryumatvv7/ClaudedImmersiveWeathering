@@ -44,6 +44,8 @@ Works in single player, LAN and on a dedicated server. The mod must be installed
 - **Mossy and cracked tuff bricks and mud bricks**, **mossy deepslate bricks and tiles** (with stairs, slabs and walls).
 - **Rain puddles**: appear on the ground while it rains, dry up afterwards, put out burning mobs (`puddles.enabled` in the config).
 - **Leaf fall depends on the biome**: more in deciduous forests and cherry groves, less in taigas, jungles, swamps and savannas.
+- **Wood rots and grows moss**: planks, logs, stairs, slabs and fences in or next to water rot into rotten wood (in wet biomes rain rots them slowly), rotten wood under water eventually falls apart; damp wood grows moss. Rotten wood → mulch / compost.
+- **Varnish** (glass bottle + resin clump + honeycomb, 32 uses): right-click wood to protect it from rot and moss.
 - **`/iw speed [name] [value]`** and **`/iw reload`** (operators): change the speed multipliers in game, saved and synced to players.
 - Server-side config synced to clients.
 
@@ -90,5 +92,6 @@ The jar appears in `build/libs/`. Dev server: `gradlew runServer`, client: `grad
 множители скорости всех механик в конфиге, кучи листьев и кора бледного дуба.
 С версии port.4: тополь (кора и кучи листьев), ржавые цепи и фонари, мшистые/потрескавшиеся туфовые и грязевые кирпичи,
 мшистые глубинносланцевые кирпичи и плитка, лужи после дождя, листопад по биомам, команды `/iw speed` и `/iw reload`.
+С версии port.5: дерево в воде гниёт и обрастает мхом, лак защищает его.
 
 Подробно: [PORTING_NOTES.md](PORTING_NOTES.md), сервер: [SERVER_SETUP.md](SERVER_SETUP.md).

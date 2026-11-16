@@ -625,6 +625,21 @@ public class ModBlocks {
     public static final Supplier<Block> DARK_PRISMARINE_WALL = regWithItem("dark_prismarine_wall", p ->
         new WallBlock(p), () -> Properties.ofFullCopy(Blocks.DARK_PRISMARINE));
 
+    //port addition: rotten wood (wood that sat in water too long)
+    private static Properties rottenWood() {
+        return Properties.ofFullCopy(Blocks.OAK_PLANKS).strength(1.0f, 1.5f)
+            .mapColor(net.minecraft.world.level.material.MapColor.TERRACOTTA_BROWN).randomTicks();
+    }
+    public static final Supplier<Block> ROTTEN_PLANKS = regWithItem("rotten_planks", Block::new, ModBlocks::rottenWood);
+    public static final Supplier<Block> ROTTEN_LOG = regWithItem("rotten_log",
+        net.minecraft.world.level.block.RotatedPillarBlock::new, ModBlocks::rottenWood);
+    public static final Supplier<Block> ROTTEN_STAIRS = regWithItem("rotten_stairs", p ->
+        new ModStairBlock(ROTTEN_PLANKS, p), ModBlocks::rottenWood);
+    public static final Supplier<Block> ROTTEN_SLAB = regWithItem("rotten_slab",
+        net.minecraft.world.level.block.SlabBlock::new, ModBlocks::rottenWood);
+    public static final Supplier<Block> ROTTEN_FENCE = regWithItem("rotten_fence",
+        net.minecraft.world.level.block.FenceBlock::new, ModBlocks::rottenWood);
+
     //port addition: rain puddles (no item)
     public static final Supplier<Block> PUDDLE = regBlock("puddle", com.ordana.immersive_weathering.blocks.PuddleBlock::new,
         () -> Properties.of().mapColor(net.minecraft.world.level.material.MapColor.WATER).replaceable().noCollision()

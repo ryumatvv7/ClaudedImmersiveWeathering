@@ -1,0 +1,8 @@
+{
+  "builtin": "wood_weathering",
+  "tick_sources": [
+    "block_tick"
+  ],
+  "growth_chance": 0.08,
+  "owners": "#minecraft:planks"
+}
