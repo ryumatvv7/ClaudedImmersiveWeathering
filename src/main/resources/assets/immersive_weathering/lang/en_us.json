@@ -544,5 +544,6 @@
   "block.immersive_weathering.mossy_deepslate_tiles": "Mossy Deepslate Tiles",
   "block.immersive_weathering.mossy_deepslate_tile_stairs": "Mossy Deepslate Tile Stairs",
   "block.immersive_weathering.mossy_deepslate_tile_slab": "Mossy Deepslate Tile Slab",
-  "block.immersive_weathering.mossy_deepslate_tile_wall": "Mossy Deepslate Tile Wall"
+  "block.immersive_weathering.mossy_deepslate_tile_wall": "Mossy Deepslate Tile Wall",
+  "block.immersive_weathering.puddle": "Puddle"
 }

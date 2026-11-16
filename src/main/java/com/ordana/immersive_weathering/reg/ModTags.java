@@ -67,6 +67,8 @@ public final class ModTags {
 
     //biomes
     public static final TagKey<Biome> ICY = registerBiomeTag("icy");
+    public static final TagKey<Biome> HEAVY_LEAF_FALL = registerBiomeTag("heavy_leaf_fall");
+    public static final TagKey<Biome> LIGHT_LEAF_FALL = registerBiomeTag("light_leaf_fall");
     public static final TagKey<Biome> HOT = registerBiomeTag("hot");
     public static final TagKey<Biome> WET = registerBiomeTag("wet");
 

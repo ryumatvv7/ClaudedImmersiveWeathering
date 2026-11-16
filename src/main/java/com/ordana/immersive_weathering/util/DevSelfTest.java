@@ -138,6 +138,13 @@ public class DevSelfTest {
         check("oak log gives bark", WeatheringHelper.getBarkToStrip(Blocks.OAK_LOG.defaultBlockState()) != null);
         check("pale oak log gives bark", WeatheringHelper.getBarkToStrip(Blocks.PALE_OAK_LOG.defaultBlockState()) != null);
         check("poplar log gives bark", WeatheringHelper.getBarkToStrip(Blocks.POPLAR_LOG.defaultBlockState()) != null);
+        check("iron chain rusts", Blocks.IRON_CHAIN instanceof com.ordana.immersive_weathering.blocks.rusty.Rustable
+                && com.ordana.immersive_weathering.blocks.rusty.Rustable.RUST_LEVEL_INCREASES.get().get(Blocks.IRON_CHAIN) != null);
+        check("lantern rusts", Blocks.LANTERN instanceof com.ordana.immersive_weathering.blocks.rusty.Rustable);
+        check("tuff bricks get mossy", Blocks.TUFF_BRICKS instanceof com.ordana.immersive_weathering.blocks.mossy.Mossable
+                && com.ordana.immersive_weathering.blocks.mossy.Mossable.MOSS_LEVEL_INCREASES.get().get(Blocks.TUFF_BRICK_WALL) != null);
+        check("mud bricks crack", com.ordana.immersive_weathering.blocks.cracked.Crackable.CRACK_LEVEL_INCREASES.get().get(Blocks.MUD_BRICK_STAIRS) != null);
+        check("deepslate tiles get mossy", com.ordana.immersive_weathering.blocks.mossy.Mossable.MOSS_LEVEL_INCREASES.get().get(Blocks.DEEPSLATE_TILES) != null);
         check("poplar leaves drop piles", WeatheringHelper.getFallenLeafPile(Blocks.RED_POPLAR_LEAVES.defaultBlockState()).isPresent());
         check("bark repairs stripped log", WeatheringHelper.getBarkForStrippedLog(Blocks.STRIPPED_OAK_LOG.defaultBlockState()).isPresent());
         interact(level, player, p, Blocks.OAK_LOG.defaultBlockState(), new ItemStack(Items.IRON_AXE),

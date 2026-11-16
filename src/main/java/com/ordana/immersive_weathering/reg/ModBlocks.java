@@ -625,6 +625,11 @@ public class ModBlocks {
     public static final Supplier<Block> DARK_PRISMARINE_WALL = regWithItem("dark_prismarine_wall", p ->
         new WallBlock(p), () -> Properties.ofFullCopy(Blocks.DARK_PRISMARINE));
 
+    //port addition: rain puddles (no item)
+    public static final Supplier<Block> PUDDLE = regBlock("puddle", com.ordana.immersive_weathering.blocks.PuddleBlock::new,
+        () -> Properties.of().mapColor(net.minecraft.world.level.material.MapColor.WATER).replaceable().noCollision()
+            .instabreak().noLootTable().sound(SoundType.EMPTY).pushReaction(net.minecraft.world.level.material.PushReaction.POPPED));
+
     //port addition: mossy / cracked tuff, mud and deepslate bricks
     public static final Supplier<Block> MOSSY_TUFF_BRICKS = regWithItem("mossy_tuff_bricks", p ->
         new MossyBlock(Mossable.MossLevel.MOSSY, p), () -> Properties.ofFullCopy(Blocks.TUFF_BRICKS));

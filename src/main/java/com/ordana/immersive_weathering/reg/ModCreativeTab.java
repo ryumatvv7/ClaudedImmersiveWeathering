@@ -287,6 +287,22 @@ public class ModCreativeTab {
             ModItems.FIRE, ModItems.SOUL_FIRE
         );
 
+
+        //port additions
+        after(e, Items.DEEPSLATE_BRICK_WALL, CreativeModeTabs.BUILDING_BLOCKS,
+            ModBlocks.MOSSY_DEEPSLATE_BRICKS, ModBlocks.MOSSY_DEEPSLATE_BRICK_STAIRS, ModBlocks.MOSSY_DEEPSLATE_BRICK_SLAB, ModBlocks.MOSSY_DEEPSLATE_BRICK_WALL);
+        after(e, Items.DEEPSLATE_TILE_WALL, CreativeModeTabs.BUILDING_BLOCKS,
+            ModBlocks.MOSSY_DEEPSLATE_TILES, ModBlocks.MOSSY_DEEPSLATE_TILE_STAIRS, ModBlocks.MOSSY_DEEPSLATE_TILE_SLAB, ModBlocks.MOSSY_DEEPSLATE_TILE_WALL);
+        after(e, Items.TUFF_BRICK_WALL, CreativeModeTabs.BUILDING_BLOCKS,
+            ModBlocks.MOSSY_TUFF_BRICKS, ModBlocks.MOSSY_TUFF_BRICK_STAIRS, ModBlocks.MOSSY_TUFF_BRICK_SLAB, ModBlocks.MOSSY_TUFF_BRICK_WALL,
+            ModBlocks.CRACKED_TUFF_BRICKS, ModBlocks.CRACKED_TUFF_BRICK_STAIRS, ModBlocks.CRACKED_TUFF_BRICK_SLAB, ModBlocks.CRACKED_TUFF_BRICK_WALL);
+        after(e, Items.MUD_BRICK_WALL, CreativeModeTabs.BUILDING_BLOCKS,
+            ModBlocks.MOSSY_MUD_BRICKS, ModBlocks.MOSSY_MUD_BRICK_STAIRS, ModBlocks.MOSSY_MUD_BRICK_SLAB, ModBlocks.MOSSY_MUD_BRICK_WALL,
+            ModBlocks.CRACKED_MUD_BRICKS, ModBlocks.CRACKED_MUD_BRICK_STAIRS, ModBlocks.CRACKED_MUD_BRICK_SLAB, ModBlocks.CRACKED_MUD_BRICK_WALL);
+        after(e, Items.IRON_CHAIN, CreativeModeTabs.BUILDING_BLOCKS,
+            ModBlocks.EXPOSED_IRON_CHAIN, ModBlocks.WEATHERED_IRON_CHAIN, ModBlocks.RUSTED_IRON_CHAIN);
+        after(e, Items.LANTERN, CreativeModeTabs.FUNCTIONAL_BLOCKS,
+            ModBlocks.EXPOSED_LANTERN, ModBlocks.WEATHERED_LANTERN, ModBlocks.RUSTED_LANTERN);
     }
 
     private static void after(ItemToTabEvent event, Item target,

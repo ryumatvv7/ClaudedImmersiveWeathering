@@ -103,6 +103,8 @@ public class ImmersiveWeatheringClient implements ClientModInitializer {
                 ModBlocks.FROSTY_GRASS.get(),
                 ModBlocks.FROSTY_FERN.get());
 
+        BlockColorRegistry.register(List.of(BlockTintSources.water()), ModBlocks.PUDDLE.get());
+
         ModBlocks.LEAF_PILES.forEach((type, pile) ->
                 BlockColorRegistry.register(List.of(new LeafPileTint(type)), pile));
     }

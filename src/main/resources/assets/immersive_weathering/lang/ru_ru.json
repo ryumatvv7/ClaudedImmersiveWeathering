@@ -428,5 +428,6 @@
   "block.immersive_weathering.mossy_deepslate_tiles": "Замшелая глубинносланцевая плитка",
   "block.immersive_weathering.mossy_deepslate_tile_stairs": "Ступени из замшелой глубинносланцевой плитки",
   "block.immersive_weathering.mossy_deepslate_tile_slab": "Плита из замшелой глубинносланцевой плитки",
-  "block.immersive_weathering.mossy_deepslate_tile_wall": "Стена из замшелой глубинносланцевой плитки"
+  "block.immersive_weathering.mossy_deepslate_tile_wall": "Стена из замшелой глубинносланцевой плитки",
+  "block.immersive_weathering.puddle": "Лужа"
 }

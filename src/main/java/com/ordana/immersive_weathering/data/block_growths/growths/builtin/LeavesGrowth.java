@@ -47,6 +47,12 @@ public class LeavesGrowth extends BuiltinBlockGrowth {
             var leafPile = WeatheringHelper.getFallenLeafPile(state).orElse(null);
             if (leafPile != null && level.getBlockState(pos.below()).isAir()) {
 
+                //port addition: leaves fall more in deciduous forests, less in evergreen / tropical ones
+                var leafBiome = level.getBiome(pos);
+                float skip = leafBiome.is(com.ordana.immersive_weathering.reg.ModTags.HEAVY_LEAF_FALL) ? 0f
+                        : leafBiome.is(com.ordana.immersive_weathering.reg.ModTags.LIGHT_LEAF_FALL) ? 0.65f : 0.25f;
+                if (random.nextFloat() < skip) return;
+
 
                 //also spawns icicles
                 //TODO: move out of here to data

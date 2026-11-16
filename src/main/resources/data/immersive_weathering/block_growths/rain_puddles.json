@@ -1,0 +1,27 @@
+{
+  "tick_sources": [
+    "rain"
+  ],
+  "growth_chance": 0.25,
+  "growth_for_face": [
+    {
+      "direction": "up",
+      "weight": 1,
+      "growth": [
+        {
+          "data": {
+            "block": {
+              "id": "immersive_weathering:puddle"
+            }
+          },
+          "weight": 1
+        }
+      ]
+    }
+  ],
+  "owners": "#immersive_weathering:puddle_surfaces",
+  "replacing_target": {
+    "block": "minecraft:air",
+    "predicate_type": "minecraft:block_match"
+  }
+}

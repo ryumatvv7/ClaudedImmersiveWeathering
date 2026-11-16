@@ -39,6 +39,12 @@ Works in single player, LAN and on a dedicated server. The mod must be installed
   lightning, leaf piles, nether, weeds, moss, cracks, rust). Applies to datapack block growths too.
 - Leaf piles and bark for **pale oak**. (Since 26.3: vanilla wood types only, modded wood types are not supported.)
 - **No Moonlight Lib dependency** since the 26.3 version.
+- **Poplar** (new in 26.3): bark and leaf piles for red, orange and yellow poplar leaves.
+- **Rusting iron chains and lanterns** (exposed → weathered → rusted; scrape with an axe).
+- **Mossy and cracked tuff bricks and mud bricks**, **mossy deepslate bricks and tiles** (with stairs, slabs and walls).
+- **Rain puddles**: appear on the ground while it rains, dry up afterwards, put out burning mobs (`puddles.enabled` in the config).
+- **Leaf fall depends on the biome**: more in deciduous forests and cherry groves, less in taigas, jungles, swamps and savannas.
+- **`/iw speed [name] [value]`** and **`/iw reload`** (operators): change the speed multipliers in game, saved and synced to players.
 - Server-side config synced to clients.
 
 Not ported: EMI, ModMenu config screen, Quark / Serene Seasons / Trinkets compat.
@@ -82,5 +88,7 @@ The jar appears in `build/libs/`. Dev server: `gradlew runServer`, client: `grad
 
 **Нового по сравнению с оригиналом:** пепел (остаётся после огня, смывается дождём, работает как удобрение),
 множители скорости всех механик в конфиге, кучи листьев и кора бледного дуба.
+С версии port.4: тополь (кора и кучи листьев), ржавые цепи и фонари, мшистые/потрескавшиеся туфовые и грязевые кирпичи,
+мшистые глубинносланцевые кирпичи и плитка, лужи после дождя, листопад по биомам, команды `/iw speed` и `/iw reload`.
 
 Подробно: [PORTING_NOTES.md](PORTING_NOTES.md), сервер: [SERVER_SETUP.md](SERVER_SETUP.md).

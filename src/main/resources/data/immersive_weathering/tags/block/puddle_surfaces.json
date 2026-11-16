@@ -1,0 +1,21 @@
+{
+  "replace": false,
+  "values": [
+    "minecraft:grass_block",
+    "minecraft:dirt",
+    "minecraft:coarse_dirt",
+    "minecraft:dirt_path",
+    "minecraft:podzol",
+    "minecraft:mud",
+    "minecraft:stone",
+    "minecraft:cobblestone",
+    "minecraft:gravel",
+    "minecraft:stone_bricks",
+    "minecraft:andesite",
+    "minecraft:granite",
+    "minecraft:diorite",
+    "immersive_weathering:loam",
+    "immersive_weathering:silt",
+    "immersive_weathering:rooted_grass_block"
+  ]
+}

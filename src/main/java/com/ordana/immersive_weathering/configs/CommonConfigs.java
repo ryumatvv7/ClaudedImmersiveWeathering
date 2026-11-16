@@ -76,6 +76,7 @@ public class CommonConfigs {
 
 
     public static final Supplier<Boolean> THIN_ICE_MELTING;
+    public static final Supplier<Boolean> PUDDLES;
 
     public static final Supplier<Boolean> VITRIFIED_LIGHTNING;
     public static final Supplier<Double> FULGURITE_CHANCE;
@@ -199,6 +200,10 @@ public class CommonConfigs {
         LEAF_PILES_REACH = builder.define("reach", 12, 1, 256);
         LEAF_PILE_MAX_HEIGHT = builder.define("max_pile_height", 3, 1, 8);
         LEAF_PILES_BLACKLIST = builder.comment("leaves that wont spawn leaf piles").define("leaf_piles_blacklist", List.of());
+        builder.pop();
+
+        builder.push("puddles");
+        PUDDLES = builder.comment("puddles appear on the ground while it rains and dry up afterwards").define("enabled", true);
         builder.pop();
 
         builder.push("thin_ice");
