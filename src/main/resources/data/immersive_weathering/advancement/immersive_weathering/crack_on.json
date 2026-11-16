@@ -14,7 +14,7 @@
     "announce_to_chat": true,
     "hidden": false
   },
-  "parent": "minecraft:husbandry/safely_harvest_honey",
+  "parent": "immersive_weathering:immersive_weathering/root",
   "criteria": {
     "wax_off": {
       "trigger": "minecraft:item_used_on_block",

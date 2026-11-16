@@ -552,5 +552,7 @@
   "block.immersive_weathering.rotten_slab": "Rotten Slab",
   "block.immersive_weathering.rotten_fence": "Rotten Fence",
   "item.immersive_weathering.varnish": "Varnish",
-  "message.immersive_weathering.already_varnished": "This block is already varnished"
+  "message.immersive_weathering.already_varnished": "This block is already varnished",
+  "advancements.immersive_weathering.root.title": "Immersive Weathering",
+  "advancements.immersive_weathering.root.description": "The world around you ages"
 }

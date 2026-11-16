@@ -53,6 +53,7 @@ public final class Abandonment {
             if (CommonConfigs.ABANDONMENT.get() && chunk.hasAttached(LAST_VISIT)) QUEUE.add(new Pending(level, chunk.getPos()));
         });
         ServerTickEvents.END_SERVER_TICK.register(Abandonment::tick);
+        net.fabricmc.fabric.api.event.lifecycle.v1.ServerLifecycleEvents.SERVER_STOPPED.register(s -> QUEUE.clear());
     }
 
     private static void tick(MinecraftServer server) {

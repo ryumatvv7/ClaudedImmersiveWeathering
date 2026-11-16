@@ -1,0 +1,26 @@
+{
+  "display": {
+    "icon": {
+      "id": "immersive_weathering:moss_clump"
+    },
+    "title": {
+      "translate": "advancements.immersive_weathering.root.title"
+    },
+    "description": {
+      "translate": "advancements.immersive_weathering.root.description"
+    },
+    "background": "minecraft:block/mossy_stone_bricks",
+    "show_toast": false,
+    "announce_to_chat": false
+  },
+  "criteria": {
+    "tick": {
+      "trigger": "minecraft:tick"
+    }
+  },
+  "requirements": [
+    [
+      "tick"
+    ]
+  ]
+}

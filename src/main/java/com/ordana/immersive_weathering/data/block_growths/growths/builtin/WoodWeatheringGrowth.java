@@ -78,7 +78,7 @@ public class WoodWeatheringGrowth extends BuiltinBlockGrowth {
                 level.setBlockAndUpdate(pos, state.getFluidState().createLegacyBlock());
                 return;
             }
-        } else if (CommonConfigs.WOOD_ROT.get()) {
+        } else if (damp && CommonConfigs.WOOD_ROT.get()) { //dry wood (e.g. under a roof in a swamp) only grows moss
             float rotChance = water ? 0.5f : 0.06f;
             if (random.nextFloat() < rotChance) {
                 BlockState r = WoodWeathering.getRotten(state);

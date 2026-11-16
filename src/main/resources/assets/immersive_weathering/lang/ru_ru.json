@@ -436,5 +436,7 @@
   "block.immersive_weathering.rotten_slab": "Гнилая плита",
   "block.immersive_weathering.rotten_fence": "Гнилой забор",
   "item.immersive_weathering.varnish": "Лак",
-  "message.immersive_weathering.already_varnished": "Этот блок уже покрыт лаком"
+  "message.immersive_weathering.already_varnished": "Этот блок уже покрыт лаком",
+  "advancements.immersive_weathering.root.title": "Immersive Weathering",
+  "advancements.immersive_weathering.root.description": "Мир вокруг стареет"
 }

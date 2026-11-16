@@ -1,5 +1,21 @@
 # Changelog
 
+## 🩺 v26.3-port.7 — "Health Check"
+
+> No new features. A stability and polish pass over the whole mod.
+
+### 🐛 Fixes
+- **🏆 Advancements now load alongside other mods.** They used to hang off vanilla advancement tabs, so mods that replace those tabs (like Matcha Flavoured) blocked all 22 of them. They now live in their own **Immersive Weathering** tab.
+- **🪵 Dry wood no longer rots in wet biomes.** Wood under a roof in a swamp or jungle could rot without rain or water nearby. Now it only grows moss there; rot still needs water or rain.
+- **🏚️ The abandonment queue is cleared when the server stops**, so nothing stale carries over to the next world load.
+
+### ✅ Checked
+- Dev server self test: 43,889 checks passed.
+- Client game test passed, with no missing models or textures.
+- Server and client logs are free of mod warnings, including with Matcha Flavoured installed.
+
+---
+
 ## 🏚️ v26.3-port.6 — "Abandoned"
 
 > Leave a place alone long enough and nature takes it back.

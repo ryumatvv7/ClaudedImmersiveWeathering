@@ -15,7 +15,7 @@
     "announce_to_chat": true,
     "hidden": true
   },
-  "parent": "minecraft:husbandry/root",
+  "parent": "immersive_weathering:immersive_weathering/root",
   "criteria": {
     "apple": {
       "trigger": "minecraft:consume_item",
