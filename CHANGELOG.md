@@ -1,43 +1,43 @@
 # Changelog
 
-## 🪵 v26.3-port.5 — «Сырость и гниль»
+## 🪵 v26.3-port.5 — "Damp & Decay"
 
-> Дерево больше не вечное. Причалы, мосты и сараи у воды теперь живут своей жизнью.
+> Wood isn't forever anymore. Docks, bridges and shacks by the water now age on their own.
 
-### ✨ Новое
-- **🍄 Гниение дерева.** Доски, брёвна, древесина, ступени, плиты и заборы (все ванильные породы, включая тополь и бамбук) гниют, если стоят **в воде, под водой или рядом с ней**. Под дождём во влажных биомах (болота, джунгли) гниют медленнее.
-  - Гнилой блок **сохраняет форму**: ступени остаются ступенями с тем же поворотом, плиты остаются плитами.
-  - Новые блоки: *гнилые доски, гнилое бревно, гнилые ступени, гнилая плита, гнилой забор*.
-  - Багровое и искажённое дерево не гниёт.
-- **🌊 Затопленное гнилое дерево разваливается.** Со временем от затонувшего причала ничего не остаётся.
-- **🌿 Мох на дереве.** На сыром дереве нарастает слой мха (под водой не растёт).
-- **🛡️ Лак.** `пустая бутылка + смола + соты`, 32 использования.
-  - ПКМ по деревянному блоку: блок **не гниёт и не обрастает мхом**, даже в воде.
-  - Лак невидим, проверка — повторный клик («Этот блок уже покрыт лаком»).
-  - Ломаешь блок — лак с этого места снимается.
-- **♻️ Гнилое дерево в дело.** Из него крафтится мульча и его можно компостировать.
+### ✨ New
+- **🍄 Wood rot.** Planks, logs, wood, stairs, slabs and fences (all vanilla wood types, including poplar and bamboo) rot when they're **in water, under water or next to it**. In the rain in wet biomes (swamps, jungles) they rot more slowly.
+  - Rotten blocks **keep their shape**: stairs stay stairs with the same rotation, slabs stay slabs.
+  - New blocks: *Rotten Planks, Rotten Log, Rotten Stairs, Rotten Slab, Rotten Fence*.
+  - Crimson and warped wood don't rot.
+- **🌊 Sunken rotten wood falls apart.** Give it time and a flooded dock disappears.
+- **🌿 Moss on wood.** Damp wood grows a layer of moss (not under water).
+- **🛡️ Varnish.** `Glass Bottle + Resin Clump + Honeycomb`, 32 uses.
+  - Right-click a wooden block and it **won't rot or grow moss**, even in water.
+  - Varnish is invisible. Click again to check ("This block is already varnished").
+  - Breaking the block removes the varnish from that spot.
+- **♻️ Put rotten wood to use.** Craft it into mulch or compost it.
 
-### ⚙️ Настройки
-- `wood.rot` / `wood.moss` включают и выключают гниение и мох.
-- `/iw speed wood <число>` задаёт скорость гниения (например, `0.3` — втрое медленнее).
+### ⚙️ Config
+- `wood.rot` / `wood.moss` turn rot and moss on or off.
+- `/iw speed wood <value>` sets the rot speed (e.g. `0.3` is about three times slower).
 
-### ⚠️ Для серверов
-Деревянные постройки у воды начнут **медленно** гнить. Важные постройки покройте лаком заранее или ослабьте гниение командой `/iw speed wood`.
+### ⚠️ For servers
+Wooden builds near water will start to rot **slowly**. Varnish important builds ahead of time, or slow rot down with `/iw speed wood`.
 
 ---
 
-## v26.3-port.4 — «Погода и ржавчина»
-- 🌳 Поддержка тополя (ванильная порода 26.3), в том числе разноцветной листвы.
-- ⛓️ Ржавеющие цепи и фонари.
-- 🧱 Мох и трещины на большем числе кирпичей: туф, грязь, глубинный сланец.
-- 💧 Лужи после дождя.
-- 🍂 Листопад зависит от биома.
-- 🛠️ Команды `/iw speed` и `/iw reload` (только для операторов, настройки синхронизируются с игроками).
+## v26.3-port.4 — "Weather & Rust"
+- 🌳 Poplar support (a vanilla 26.3 wood type), including its colored leaves.
+- ⛓️ Rusting chains and lanterns.
+- 🧱 Moss and cracks on more bricks: tuff, mud, deepslate.
+- 💧 Puddles after rain.
+- 🍂 Leaf fall depends on the biome.
+- 🛠️ `/iw speed` and `/iw reload` commands (operators only, synced to players).
 
 ## v26.3-port.3
-- 🐛 Исправлены сломанные названия предметов (`moss_clump` и др.).
+- 🐛 Fixed broken item names (`moss_clump` and others).
 
-## v26.3-port.2 — «Без Moonlight»
-- 🚀 Порт на Minecraft **26.3** (Fabric).
-- 🔌 Полностью убрана зависимость от Moonlight.
-- 🔄 Свой конфиг с **синхронизацией сервер → клиент**.
+## v26.3-port.2 — "No Moonlight"
+- 🚀 Ported to Minecraft **26.3** (Fabric).
+- 🔌 Moonlight dependency removed entirely.
+- 🔄 Custom config with **server → client sync**.
