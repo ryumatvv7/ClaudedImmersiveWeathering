@@ -1,6 +1,6 @@
 # Claude'd Immersive Weathering
 
-**Unofficial Fabric port of [Immersive Weathering](https://github.com/Silversmith-Mods/Immersive-Weathering) to Minecraft 26.1.2.**
+**Unofficial Fabric port of [Immersive Weathering](https://github.com/Silversmith-Mods/Immersive-Weathering) to Minecraft 26.3.**
 
 > 🤖 This port was made with the help of **Claude** (Anthropic's AI model, via Claude Code).
 > The code was migrated, fixed and tested by Claude; gameplay was checked in game by a human.
@@ -24,10 +24,9 @@ This port is based on the original **1.20.1 – 2.0.5** sources (commit `1bcc03b
 
 | | |
 |---|---|
-| Minecraft | **26.1.2** |
-| Loader | **Fabric Loader 0.19.3+** |
-| Fabric API | **0.155.3+26.1.2** |
-| Moonlight Lib | **26.1.2-4.2.2 (Fabric)** — required |
+| Minecraft | **26.3** |
+| Loader | **Fabric Loader 0.20.1+** |
+| Fabric API | **0.166.2+26.3** |
 | Java | **25** |
 
 Works in single player, LAN and on a dedicated server. The mod must be installed on the server **and** on every client.
@@ -38,7 +37,8 @@ Works in single player, LAN and on a dedicated server. The mod must be installed
   ash works as fertilizer; blazes drop ash.
 - **Speed config**: global and per-category multipliers (vegetation, frost & ice, fire & soot, sand, coral,
   lightning, leaf piles, nether, weeds, moss, cracks, rust). Applies to datapack block growths too.
-- Leaf piles and bark for **pale oak** (and dynamically for modded wood types).
+- Leaf piles and bark for **pale oak**. (Since 26.3: vanilla wood types only, modded wood types are not supported.)
+- **No Moonlight Lib dependency** since the 26.3 version.
 - Server-side config synced to clients.
 
 Not ported: EMI, ModMenu config screen, Quark / Serene Seasons / Trinkets compat.
@@ -46,8 +46,8 @@ Full details: [PORTING_NOTES.md](PORTING_NOTES.md) (Russian).
 
 ## Install
 
-1. Install Fabric Loader 0.19.3+ for Minecraft 26.1.2.
-2. Put into `mods`: Fabric API, Moonlight Lib (Fabric, 26.1.2) and the jar of this port.
+1. Install Fabric Loader 0.20.1+ for Minecraft 26.3.
+2. Put into `mods`: Fabric API and the jar of this port. Moonlight Lib is **no longer needed** (remove it if you had it).
 3. Same three files on the server. Server guide: [SERVER_SETUP.md](SERVER_SETUP.md) (Russian).
 
 Config: `config/immersive_weathering-common.json` (server, synced) and `immersive_weathering-client.json` (per player).
@@ -63,13 +63,12 @@ The jar appears in `build/libs/`. Dev server: `gradlew runServer`, client: `grad
 
 - Code: **LGPL-3.0**, same as the original — see [LICENSE](LICENSE). Sound attributions: [ATTRIBUTIONS](ATTRIBUTIONS).
 - Assets belong to the original authors.
-- **Moonlight Lib** is a separate mod under its own license and is **not** included here; this port only calls its public API.
 
 ---
 
 ## Русский
 
-**Неофициальный порт мода [Immersive Weathering](https://github.com/Silversmith-Mods/Immersive-Weathering) на Fabric для Minecraft 26.1.2.**
+**Неофициальный порт мода [Immersive Weathering](https://github.com/Silversmith-Mods/Immersive-Weathering) на Fabric для Minecraft 26.3.**
 
 > 🤖 Порт сделан с помощью **Claude** (ИИ от Anthropic, через Claude Code): перенос кода, исправления и
 > автотесты выполнил Claude, игру проверял человек.
@@ -77,7 +76,8 @@ The jar appears in `build/libs/`. Dev server: `gradlew runServer`, client: `grad
 Все заслуги за сам мод принадлежат оригинальным авторам (**Ordana, MehVahdJukaar, Keyberries** и др.).
 Это не официальная версия — об ошибках порта не пишите им.
 
-**Нужно:** Minecraft 26.1.2, Fabric Loader 0.19.3+, Fabric API 0.155.3+26.1.2, Moonlight 26.1.2-4.2.2 (Fabric), Java 25.
+**Нужно:** Minecraft 26.3, Fabric Loader 0.20.1+, Fabric API 0.166.2+26.3, Java 25. Moonlight больше не нужен.
+Версия для 26.1.2 (с Moonlight) — в релизе `26.1.2 Fabric`.
 Мод ставится и на сервер, и всем игрокам.
 
 **Нового по сравнению с оригиналом:** пепел (остаётся после огня, смывается дождём, работает как удобрение),
