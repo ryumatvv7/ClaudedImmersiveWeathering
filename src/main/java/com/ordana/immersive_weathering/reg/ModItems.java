@@ -111,7 +111,7 @@ public class ModItems {
             () -> new Item.Properties().humanoidArmor(FLOWER_CROWN_MATERIAL, ArmorType.HELMET).durability(64));
 
     public static final Supplier<Item> MOSS_CLUMP = regItem("moss_clump", p ->
-            new MossClumpItem(ModBlocks.MOSS.get(), p), () -> new Item.Properties()
+            new MossClumpItem(ModBlocks.MOSS.get(), p), () -> new Item.Properties().useBlockDescriptionPrefix()
             .food(ModFoods.MOSS_CLUMP, ModFoods.MOSS_CLUMP_CONSUMABLE));
 
     public static final Supplier<Item> GOLDEN_MOSS_CLUMP = regItem("golden_moss_clump", Item::new,

@@ -503,5 +503,12 @@
   "immersive_weathering.configuration.ash.ash_fertilizer": "Ash Fertilizer",
   "immersive_weathering.configuration.ash.ash_fertilizer.description": "ash works like bone meal",
   "immersive_weathering.configuration.ash.burns_grass": "Burns Grass",
-  "immersive_weathering.configuration.ash.burns_grass.description": "burning on grass turns it into dirt under the ash"
+  "immersive_weathering.configuration.ash.burns_grass.description": "burning on grass turns it into dirt under the ash",
+  "item.immersive_weathering.bamboo_bark": "Bamboo Bark",
+  "item.immersive_weathering.cherry_bark": "Cherry Bark",
+  "item.immersive_weathering.mangrove_bark": "Mangrove Bark",
+  "block.immersive_weathering.cherry_leaf_pile": "Cherry Leaf Pile",
+  "block.immersive_weathering.mangrove_leaf_pile": "Mangrove Leaf Pile",
+  "item.immersive_weathering.fire": "Fire",
+  "item.immersive_weathering.soul_fire": "Soul Fire"
 }
