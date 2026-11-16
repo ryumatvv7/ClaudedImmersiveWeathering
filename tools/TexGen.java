@@ -86,7 +86,8 @@ public class TexGen {
                         int r = b;
                         if (diff) {
                             if (args[0].equals("moss")) {
-                                r = m;
+                                int mr = (m >> 16) & 255, mg = (m >> 8) & 255, mb = m & 255;
+                                if (mg > mr + 8 && mg > mb + 8) r = m; //only the green moss pixels
                             } else if (lum(m) < lum(p)) {
                                 double k = Math.max(0.35, lum(m) / Math.max(1, lum(p)));
                                 r = (b & 0xFF000000) | ((int) (((b >> 16) & 255) * k) << 16)
@@ -103,20 +104,38 @@ public class TexGen {
                 List<Integer> bSorted = sortedOpaque(base);
                 int level = Integer.parseInt(args[3]);
                 double share = new double[]{0, 0.3, 0.6, 0.95}[level];
-                Random r = new Random(1234 + level);
+                int w = base.getWidth();
                 BufferedImage o = new BufferedImage(base.getWidth(), base.getHeight(), BufferedImage.TYPE_INT_ARGB);
                 for (int y = 0; y < base.getHeight(); y++)
                     for (int x = 0; x < base.getWidth(); x++) {
                         int c = base.getRGB(x, y);
                         if (a(c) == 0) continue;
-                        // rust grows in clumps: neighbours share part of the noise
-                        double noise = (r.nextDouble() + ((x * 7 + y * 13) % 5) / 5.0) / 2;
+                        int cr = (c >> 16) & 255, cg = (c >> 8) & 255, cb = c & 255;
+                        if (cr > 170 && cr > cb + 50) { //keep flames / light (lanterns)
+                            o.setRGB(x, y, c);
+                            continue;
+                        }
+                        // same noise in every animation frame; rust grows in clumps
+                        int fy = y % w;
+                        double noise = (new Random(x * 31L + fy * 17L).nextDouble() + ((x * 7 + fy * 13) % 5) / 5.0) / 2;
                         if (noise < share) {
                             int n = pick(rust, rank(bSorted, c));
                             o.setRGB(x, y, (c & 0xFF000000) | (n & 0xFFFFFF));
                         } else o.setRGB(x, y, c);
                     }
                 write(o, args[4]);
+            }
+            case "preview" -> {
+                // preview OUT IMG...: the first 16x16 frame of every image, 8x scaled, side by side
+                int n = args.length - 2, s = 8;
+                BufferedImage o = new BufferedImage(n * 16 * s + (n - 1) * 4, 16 * s, BufferedImage.TYPE_INT_ARGB);
+                for (int k = 0; k < n; k++) {
+                    BufferedImage im = read(args[k + 2]);
+                    for (int y = 0; y < 16 * s; y++)
+                        for (int x = 0; x < 16 * s; x++)
+                            o.setRGB(k * (16 * s + 4) + x, y, im.getRGB(x / s * im.getWidth() / 16, y / s * im.getWidth() / 16));
+                }
+                write(o, args[1]);
             }
             default -> throw new IllegalArgumentException(args[0]);
         }

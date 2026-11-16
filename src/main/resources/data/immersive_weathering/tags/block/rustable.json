@@ -3,6 +3,12 @@
   "values": [
     "#immersive_weathering:clean_iron",
     "#immersive_weathering:exposed_iron",
-    "#immersive_weathering:weathered_iron"
+    "#immersive_weathering:weathered_iron",
+    "minecraft:iron_chain",
+    "minecraft:lantern",
+    "immersive_weathering:exposed_iron_chain",
+    "immersive_weathering:exposed_lantern",
+    "immersive_weathering:weathered_iron_chain",
+    "immersive_weathering:weathered_lantern"
   ]
 }

@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/template_lantern",
+  "textures": {
+    "lantern": "immersive_weathering:block/exposed_lantern"
+  }
+}

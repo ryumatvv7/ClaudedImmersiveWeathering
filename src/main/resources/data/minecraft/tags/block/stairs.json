@@ -34,6 +34,12 @@
     "immersive_weathering:sandy_stone_stairs",
     "immersive_weathering:sandy_cobblestone_stairs",
     "immersive_weathering:sandy_stone_brick_stairs",
-    "immersive_weathering:charred_stairs"
+    "immersive_weathering:charred_stairs",
+    "immersive_weathering:mossy_tuff_brick_stairs",
+    "immersive_weathering:cracked_tuff_brick_stairs",
+    "immersive_weathering:mossy_mud_brick_stairs",
+    "immersive_weathering:cracked_mud_brick_stairs",
+    "immersive_weathering:mossy_deepslate_brick_stairs",
+    "immersive_weathering:mossy_deepslate_tile_stairs"
   ]
 }

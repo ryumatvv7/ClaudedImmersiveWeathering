@@ -570,6 +570,20 @@ public class ModBlocks {
         new RustableBarsBlock(Rustable.RustLevel.RUSTED, p), () -> Properties.ofFullCopy(Blocks.IRON_BARS));
 
     //waxed
+    //port addition: rusting chains and lanterns
+    public static final Supplier<Block> EXPOSED_IRON_CHAIN = regWithItem("exposed_iron_chain", p ->
+        new RustableChainBlock(Rustable.RustLevel.EXPOSED, p), () -> Properties.ofFullCopy(Blocks.IRON_CHAIN));
+    public static final Supplier<Block> WEATHERED_IRON_CHAIN = regWithItem("weathered_iron_chain", p ->
+        new RustableChainBlock(Rustable.RustLevel.WEATHERED, p), () -> Properties.ofFullCopy(Blocks.IRON_CHAIN));
+    public static final Supplier<Block> RUSTED_IRON_CHAIN = regWithItem("rusted_iron_chain", p ->
+        new RustableChainBlock(Rustable.RustLevel.RUSTED, p), () -> Properties.ofFullCopy(Blocks.IRON_CHAIN));
+    public static final Supplier<Block> EXPOSED_LANTERN = regWithItem("exposed_lantern", p ->
+        new RustableLanternBlock(Rustable.RustLevel.EXPOSED, p), () -> Properties.ofFullCopy(Blocks.LANTERN));
+    public static final Supplier<Block> WEATHERED_LANTERN = regWithItem("weathered_lantern", p ->
+        new RustableLanternBlock(Rustable.RustLevel.WEATHERED, p), () -> Properties.ofFullCopy(Blocks.LANTERN));
+    public static final Supplier<Block> RUSTED_LANTERN = regWithItem("rusted_lantern", p ->
+        new RustableLanternBlock(Rustable.RustLevel.RUSTED, p), () -> Properties.ofFullCopy(Blocks.LANTERN));
+
     public static final Supplier<Block> WAXED_IRON_DOOR = regWithItem("waxed_iron_door", p ->
         new RustAffectedDoorBlock(Rustable.RustLevel.UNAFFECTED, p), () -> noTick(Blocks.IRON_DOOR));
     public static final Supplier<Block> WAXED_EXPOSED_IRON_DOOR = regWithItem("waxed_exposed_iron_door", p ->
@@ -610,6 +624,56 @@ public class ModBlocks {
 
     public static final Supplier<Block> DARK_PRISMARINE_WALL = regWithItem("dark_prismarine_wall", p ->
         new WallBlock(p), () -> Properties.ofFullCopy(Blocks.DARK_PRISMARINE));
+
+    //port addition: mossy / cracked tuff, mud and deepslate bricks
+    public static final Supplier<Block> MOSSY_TUFF_BRICKS = regWithItem("mossy_tuff_bricks", p ->
+        new MossyBlock(Mossable.MossLevel.MOSSY, p), () -> Properties.ofFullCopy(Blocks.TUFF_BRICKS));
+    public static final Supplier<Block> MOSSY_TUFF_BRICK_STAIRS = regWithItem("mossy_tuff_brick_stairs", p ->
+        new MossyStairsBlock(Mossable.MossLevel.MOSSY, MOSSY_TUFF_BRICKS, p), () -> Properties.ofFullCopy(Blocks.TUFF_BRICKS));
+    public static final Supplier<Block> MOSSY_TUFF_BRICK_SLAB = regWithItem("mossy_tuff_brick_slab", p ->
+        new MossySlabBlock(Mossable.MossLevel.MOSSY, p), () -> Properties.ofFullCopy(Blocks.TUFF_BRICKS));
+    public static final Supplier<Block> MOSSY_TUFF_BRICK_WALL = regWithItem("mossy_tuff_brick_wall", p ->
+        new MossyWallBlock(Mossable.MossLevel.MOSSY, p), () -> Properties.ofFullCopy(Blocks.TUFF_BRICKS));
+    public static final Supplier<Block> CRACKED_TUFF_BRICKS = regWithItem("cracked_tuff_bricks", p ->
+        new CrackedBlock(Crackable.CrackLevel.CRACKED, () -> Items.TUFF, p), () -> Properties.ofFullCopy(Blocks.TUFF_BRICKS));
+    public static final Supplier<Block> CRACKED_TUFF_BRICK_STAIRS = regWithItem("cracked_tuff_brick_stairs", p ->
+        new CrackedStairsBlock(Crackable.CrackLevel.CRACKED, CRACKED_TUFF_BRICKS, () -> Items.TUFF, p), () -> Properties.ofFullCopy(Blocks.TUFF_BRICKS));
+    public static final Supplier<Block> CRACKED_TUFF_BRICK_SLAB = regWithItem("cracked_tuff_brick_slab", p ->
+        new CrackedSlabBlock(Crackable.CrackLevel.CRACKED, () -> Items.TUFF, p), () -> Properties.ofFullCopy(Blocks.TUFF_BRICKS));
+    public static final Supplier<Block> CRACKED_TUFF_BRICK_WALL = regWithItem("cracked_tuff_brick_wall", p ->
+        new CrackedWallBlock(Crackable.CrackLevel.CRACKED, () -> Items.TUFF, p), () -> Properties.ofFullCopy(Blocks.TUFF_BRICKS));
+    public static final Supplier<Block> MOSSY_MUD_BRICKS = regWithItem("mossy_mud_bricks", p ->
+        new MossyBlock(Mossable.MossLevel.MOSSY, p), () -> Properties.ofFullCopy(Blocks.MUD_BRICKS));
+    public static final Supplier<Block> MOSSY_MUD_BRICK_STAIRS = regWithItem("mossy_mud_brick_stairs", p ->
+        new MossyStairsBlock(Mossable.MossLevel.MOSSY, MOSSY_MUD_BRICKS, p), () -> Properties.ofFullCopy(Blocks.MUD_BRICKS));
+    public static final Supplier<Block> MOSSY_MUD_BRICK_SLAB = regWithItem("mossy_mud_brick_slab", p ->
+        new MossySlabBlock(Mossable.MossLevel.MOSSY, p), () -> Properties.ofFullCopy(Blocks.MUD_BRICKS));
+    public static final Supplier<Block> MOSSY_MUD_BRICK_WALL = regWithItem("mossy_mud_brick_wall", p ->
+        new MossyWallBlock(Mossable.MossLevel.MOSSY, p), () -> Properties.ofFullCopy(Blocks.MUD_BRICKS));
+    public static final Supplier<Block> CRACKED_MUD_BRICKS = regWithItem("cracked_mud_bricks", p ->
+        new CrackedBlock(Crackable.CrackLevel.CRACKED, () -> Items.PACKED_MUD, p), () -> Properties.ofFullCopy(Blocks.MUD_BRICKS));
+    public static final Supplier<Block> CRACKED_MUD_BRICK_STAIRS = regWithItem("cracked_mud_brick_stairs", p ->
+        new CrackedStairsBlock(Crackable.CrackLevel.CRACKED, CRACKED_MUD_BRICKS, () -> Items.PACKED_MUD, p), () -> Properties.ofFullCopy(Blocks.MUD_BRICKS));
+    public static final Supplier<Block> CRACKED_MUD_BRICK_SLAB = regWithItem("cracked_mud_brick_slab", p ->
+        new CrackedSlabBlock(Crackable.CrackLevel.CRACKED, () -> Items.PACKED_MUD, p), () -> Properties.ofFullCopy(Blocks.MUD_BRICKS));
+    public static final Supplier<Block> CRACKED_MUD_BRICK_WALL = regWithItem("cracked_mud_brick_wall", p ->
+        new CrackedWallBlock(Crackable.CrackLevel.CRACKED, () -> Items.PACKED_MUD, p), () -> Properties.ofFullCopy(Blocks.MUD_BRICKS));
+    public static final Supplier<Block> MOSSY_DEEPSLATE_BRICKS = regWithItem("mossy_deepslate_bricks", p ->
+        new MossyBlock(Mossable.MossLevel.MOSSY, p), () -> Properties.ofFullCopy(Blocks.DEEPSLATE_BRICKS));
+    public static final Supplier<Block> MOSSY_DEEPSLATE_BRICK_STAIRS = regWithItem("mossy_deepslate_brick_stairs", p ->
+        new MossyStairsBlock(Mossable.MossLevel.MOSSY, MOSSY_DEEPSLATE_BRICKS, p), () -> Properties.ofFullCopy(Blocks.DEEPSLATE_BRICKS));
+    public static final Supplier<Block> MOSSY_DEEPSLATE_BRICK_SLAB = regWithItem("mossy_deepslate_brick_slab", p ->
+        new MossySlabBlock(Mossable.MossLevel.MOSSY, p), () -> Properties.ofFullCopy(Blocks.DEEPSLATE_BRICKS));
+    public static final Supplier<Block> MOSSY_DEEPSLATE_BRICK_WALL = regWithItem("mossy_deepslate_brick_wall", p ->
+        new MossyWallBlock(Mossable.MossLevel.MOSSY, p), () -> Properties.ofFullCopy(Blocks.DEEPSLATE_BRICKS));
+    public static final Supplier<Block> MOSSY_DEEPSLATE_TILES = regWithItem("mossy_deepslate_tiles", p ->
+        new MossyBlock(Mossable.MossLevel.MOSSY, p), () -> Properties.ofFullCopy(Blocks.DEEPSLATE_TILES));
+    public static final Supplier<Block> MOSSY_DEEPSLATE_TILE_STAIRS = regWithItem("mossy_deepslate_tile_stairs", p ->
+        new MossyStairsBlock(Mossable.MossLevel.MOSSY, MOSSY_DEEPSLATE_TILES, p), () -> Properties.ofFullCopy(Blocks.DEEPSLATE_TILES));
+    public static final Supplier<Block> MOSSY_DEEPSLATE_TILE_SLAB = regWithItem("mossy_deepslate_tile_slab", p ->
+        new MossySlabBlock(Mossable.MossLevel.MOSSY, p), () -> Properties.ofFullCopy(Blocks.DEEPSLATE_TILES));
+    public static final Supplier<Block> MOSSY_DEEPSLATE_TILE_WALL = regWithItem("mossy_deepslate_tile_wall", p ->
+        new MossyWallBlock(Mossable.MossLevel.MOSSY, p), () -> Properties.ofFullCopy(Blocks.DEEPSLATE_TILES));
 
     public static final Supplier<Block> TINTED_GLASS_PANE = regWithItem("tinted_glass_pane", p ->
         new TintedGlassPane(p), () -> Properties.of().strength(0.3F).sound(SoundType.GLASS).noOcclusion().isRedstoneConductor(NEVER).isSuffocating(NEVER).isViewBlocking(NEVER_VIEW));

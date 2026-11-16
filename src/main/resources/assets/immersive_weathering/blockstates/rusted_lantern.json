@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "hanging=false": {
+      "model": "immersive_weathering:block/rusted_lantern"
+    },
+    "hanging=true": {
+      "model": "immersive_weathering:block/rusted_lantern_hanging"
+    }
+  }
+}

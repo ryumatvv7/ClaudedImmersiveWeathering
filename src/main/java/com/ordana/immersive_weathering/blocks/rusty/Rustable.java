@@ -51,6 +51,13 @@ public interface Rustable extends ChangeOverTimeBlock<Rustable.RustLevel> {
             .put(ModBlocks.EXPOSED_IRON_BARS.get(), ModBlocks.WEATHERED_IRON_BARS.get())
             .put(ModBlocks.WEATHERED_IRON_BARS.get(), ModBlocks.RUSTED_IRON_BARS.get())
 
+            .put(Blocks.IRON_CHAIN, ModBlocks.EXPOSED_IRON_CHAIN.get())
+            .put(ModBlocks.EXPOSED_IRON_CHAIN.get(), ModBlocks.WEATHERED_IRON_CHAIN.get())
+            .put(ModBlocks.WEATHERED_IRON_CHAIN.get(), ModBlocks.RUSTED_IRON_CHAIN.get())
+            .put(Blocks.LANTERN, ModBlocks.EXPOSED_LANTERN.get())
+            .put(ModBlocks.EXPOSED_LANTERN.get(), ModBlocks.WEATHERED_LANTERN.get())
+            .put(ModBlocks.WEATHERED_LANTERN.get(), ModBlocks.RUSTED_LANTERN.get())
+
             .put(ModBlocks.WAXED_IRON_DOOR.get(), ModBlocks.WAXED_EXPOSED_IRON_DOOR.get())
             .put(ModBlocks.WAXED_EXPOSED_IRON_DOOR.get(), ModBlocks.WAXED_WEATHERED_IRON_DOOR.get())
             .put(ModBlocks.WAXED_WEATHERED_IRON_DOOR.get(), ModBlocks.WAXED_RUSTED_IRON_DOOR.get())

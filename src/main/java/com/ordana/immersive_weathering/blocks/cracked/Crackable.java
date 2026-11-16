@@ -63,7 +63,15 @@ public interface Crackable extends Weatherable {
             .put(Blocks.END_STONE_BRICKS, ModBlocks.CRACKED_END_STONE_BRICKS.get())
             .put(Blocks.END_STONE_BRICK_STAIRS, ModBlocks.CRACKED_END_STONE_BRICK_STAIRS.get())
             .put(Blocks.END_STONE_BRICK_SLAB, ModBlocks.CRACKED_END_STONE_BRICK_SLAB.get())
-            .put(Blocks.END_STONE_BRICK_WALL, ModBlocks.CRACKED_END_STONE_BRICK_WALL.get());
+            .put(Blocks.END_STONE_BRICK_WALL, ModBlocks.CRACKED_END_STONE_BRICK_WALL.get())
+            .put(Blocks.TUFF_BRICKS, ModBlocks.CRACKED_TUFF_BRICKS.get())
+            .put(Blocks.TUFF_BRICK_STAIRS, ModBlocks.CRACKED_TUFF_BRICK_STAIRS.get())
+            .put(Blocks.TUFF_BRICK_SLAB, ModBlocks.CRACKED_TUFF_BRICK_SLAB.get())
+            .put(Blocks.TUFF_BRICK_WALL, ModBlocks.CRACKED_TUFF_BRICK_WALL.get())
+            .put(Blocks.MUD_BRICKS, ModBlocks.CRACKED_MUD_BRICKS.get())
+            .put(Blocks.MUD_BRICK_STAIRS, ModBlocks.CRACKED_MUD_BRICK_STAIRS.get())
+            .put(Blocks.MUD_BRICK_SLAB, ModBlocks.CRACKED_MUD_BRICK_SLAB.get())
+            .put(Blocks.MUD_BRICK_WALL, ModBlocks.CRACKED_MUD_BRICK_WALL.get());
 
         IWPlatformStuff.addExtraCrackedBlocks(builder);
 

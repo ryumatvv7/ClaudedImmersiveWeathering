@@ -40,7 +40,23 @@ public interface Mossable extends Weatherable {
                 .put(Blocks.BRICKS, ModBlocks.MOSSY_BRICKS.get())
                 .put(Blocks.BRICK_STAIRS, ModBlocks.MOSSY_BRICK_STAIRS.get())
                 .put(Blocks.BRICK_SLAB, ModBlocks.MOSSY_BRICK_SLAB.get())
-                .put(Blocks.BRICK_WALL, ModBlocks.MOSSY_BRICK_WALL.get());
+                .put(Blocks.BRICK_WALL, ModBlocks.MOSSY_BRICK_WALL.get())
+                .put(Blocks.TUFF_BRICKS, ModBlocks.MOSSY_TUFF_BRICKS.get())
+                .put(Blocks.TUFF_BRICK_STAIRS, ModBlocks.MOSSY_TUFF_BRICK_STAIRS.get())
+                .put(Blocks.TUFF_BRICK_SLAB, ModBlocks.MOSSY_TUFF_BRICK_SLAB.get())
+                .put(Blocks.TUFF_BRICK_WALL, ModBlocks.MOSSY_TUFF_BRICK_WALL.get())
+                .put(Blocks.MUD_BRICKS, ModBlocks.MOSSY_MUD_BRICKS.get())
+                .put(Blocks.MUD_BRICK_STAIRS, ModBlocks.MOSSY_MUD_BRICK_STAIRS.get())
+                .put(Blocks.MUD_BRICK_SLAB, ModBlocks.MOSSY_MUD_BRICK_SLAB.get())
+                .put(Blocks.MUD_BRICK_WALL, ModBlocks.MOSSY_MUD_BRICK_WALL.get())
+                .put(Blocks.DEEPSLATE_BRICKS, ModBlocks.MOSSY_DEEPSLATE_BRICKS.get())
+                .put(Blocks.DEEPSLATE_BRICK_STAIRS, ModBlocks.MOSSY_DEEPSLATE_BRICK_STAIRS.get())
+                .put(Blocks.DEEPSLATE_BRICK_SLAB, ModBlocks.MOSSY_DEEPSLATE_BRICK_SLAB.get())
+                .put(Blocks.DEEPSLATE_BRICK_WALL, ModBlocks.MOSSY_DEEPSLATE_BRICK_WALL.get())
+                .put(Blocks.DEEPSLATE_TILES, ModBlocks.MOSSY_DEEPSLATE_TILES.get())
+                .put(Blocks.DEEPSLATE_TILE_STAIRS, ModBlocks.MOSSY_DEEPSLATE_TILE_STAIRS.get())
+                .put(Blocks.DEEPSLATE_TILE_SLAB, ModBlocks.MOSSY_DEEPSLATE_TILE_SLAB.get())
+                .put(Blocks.DEEPSLATE_TILE_WALL, ModBlocks.MOSSY_DEEPSLATE_TILE_WALL.get());
         WeatheringHelper.addOptional(builder, "quark:vertical_brick_slab", "immersive_weathering:vertical_mossy_brick_slab");
         WeatheringHelper.addOptional(builder, "quark:vertical_cobblestone_slab", "quark:vertical_mossy_cobblestone_slab");
         WeatheringHelper.addOptional(builder, "quark:vertical_stone_brick_slab", "quark:vertical_mossy_stone_brick_slab");

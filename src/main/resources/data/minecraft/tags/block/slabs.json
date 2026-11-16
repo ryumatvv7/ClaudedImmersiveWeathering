@@ -34,6 +34,12 @@
     "immersive_weathering:sandy_stone_slab",
     "immersive_weathering:sandy_cobblestone_slab",
     "immersive_weathering:sandy_stone_brick_slab",
-    "immersive_weathering:charred_slab"
+    "immersive_weathering:charred_slab",
+    "immersive_weathering:mossy_tuff_brick_slab",
+    "immersive_weathering:cracked_tuff_brick_slab",
+    "immersive_weathering:mossy_mud_brick_slab",
+    "immersive_weathering:cracked_mud_brick_slab",
+    "immersive_weathering:mossy_deepslate_brick_slab",
+    "immersive_weathering:mossy_deepslate_tile_slab"
   ]
 }

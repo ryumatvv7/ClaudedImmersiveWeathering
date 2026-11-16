@@ -32,6 +32,14 @@
     "minecraft:deepslate_brick_wall",
     "minecraft:deepslate_tile_wall",
     "immersive_weathering:prismarine_brick_wall",
-    "minecraft:end_stone_brick_wall"
+    "minecraft:end_stone_brick_wall",
+    "minecraft:tuff_bricks",
+    "minecraft:tuff_brick_stairs",
+    "minecraft:tuff_brick_slab",
+    "minecraft:tuff_brick_wall",
+    "minecraft:mud_bricks",
+    "minecraft:mud_brick_stairs",
+    "minecraft:mud_brick_slab",
+    "minecraft:mud_brick_wall"
   ]
 }

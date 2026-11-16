@@ -9,6 +9,8 @@
     "immersive_weathering:weathered_cut_iron_slab",
     "immersive_weathering:weathered_iron_door",
     "immersive_weathering:weathered_iron_trapdoor",
-    "immersive_weathering:weathered_iron_bars"
+    "immersive_weathering:weathered_iron_bars",
+    "immersive_weathering:weathered_iron_chain",
+    "immersive_weathering:weathered_lantern"
   ]
 }

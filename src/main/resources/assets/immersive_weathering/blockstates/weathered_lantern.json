@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "hanging=false": {
+      "model": "immersive_weathering:block/weathered_lantern"
+    },
+    "hanging=true": {
+      "model": "immersive_weathering:block/weathered_lantern_hanging"
+    }
+  }
+}

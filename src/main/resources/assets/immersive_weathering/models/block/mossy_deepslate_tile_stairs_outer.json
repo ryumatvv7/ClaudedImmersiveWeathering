@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/outer_stairs",
+  "textures": {
+    "bottom": "immersive_weathering:block/mossy_deepslate_tiles",
+    "side": "immersive_weathering:block/mossy_deepslate_tiles",
+    "top": "immersive_weathering:block/mossy_deepslate_tiles"
+  }
+}
