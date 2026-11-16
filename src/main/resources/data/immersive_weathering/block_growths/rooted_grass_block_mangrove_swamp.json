@@ -12,7 +12,7 @@
       "biomes": [
         "minecraft:mangrove_swamp"
       ],
-     "type": "biome_match"
+      "type": "biome_match"
     }
   ],
   "growth_chance": 0.01,
@@ -23,7 +23,7 @@
         {
           "data": {
             "block": {
-              "Name": "minecraft:mangrove_propagule"
+              "id": "minecraft:mangrove_propagule"
             }
           },
           "weight": 1

@@ -19,13 +19,6 @@ import net.minecraft.world.level.block.state.BlockState;
 
 public class PermafrostBlock extends FallingBlock {
 
-    public static final MapCodec<PermafrostBlock> CODEC = simpleCodec(PermafrostBlock::new);
-
-    @Override
-    protected MapCodec<? extends FallingBlock> codec() {
-        return CODEC;
-    }
-
     @Override
     public int getDustColor(BlockState state, BlockGetter level, BlockPos pos) {
         return state.getMapColor(level, pos).col;

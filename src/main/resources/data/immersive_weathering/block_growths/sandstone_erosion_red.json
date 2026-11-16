@@ -2,7 +2,9 @@
   "growth_chance": 0.005,
   "area_condition": {
     "must_have": {
-      "fluids": ["minecraft:flowing_water"],
+      "fluids": [
+        "minecraft:flowing_water"
+      ],
       "predicate_type": "immersive_weathering:fluid_match"
     },
     "radiusX": 1,
@@ -19,7 +21,7 @@
         {
           "data": {
             "block": {
-              "Name": "immersive_weathering:red_sand_layer_block"
+              "id": "immersive_weathering:red_sand_layer_block"
             }
           },
           "weight": 1

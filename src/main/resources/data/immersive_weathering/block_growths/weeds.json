@@ -22,8 +22,8 @@
         {
           "data": {
             "block": {
-              "Name": "immersive_weathering:weeds",
-              "Properties": {
+              "id": "immersive_weathering:weeds",
+              "properties": {
                 "age": "0"
               }
             }

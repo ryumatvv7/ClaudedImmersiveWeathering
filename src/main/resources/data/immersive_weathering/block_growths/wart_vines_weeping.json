@@ -15,7 +15,7 @@
         {
           "data": {
             "block": {
-              "Name": "minecraft:weeping_vines"
+              "id": "minecraft:weeping_vines"
             }
           },
           "weight": 1

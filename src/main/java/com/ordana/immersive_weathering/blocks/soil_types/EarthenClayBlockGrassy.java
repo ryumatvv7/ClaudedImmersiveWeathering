@@ -16,7 +16,6 @@ import net.minecraft.util.RandomSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.HoeItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.BlockPlaceContext;
@@ -110,8 +109,8 @@ public class EarthenClayBlockGrassy extends BaseSoilBlock implements SimpleWater
     protected InteractionResult useItemOn(ItemStack heldStack, BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hitResult) {
         ItemStack stack = player.getItemInHand(hand);
         Item item = stack.getItem();
-        if (item instanceof HoeItem) {
-            level.playSound(player, pos, SoundEvents.HOE_TILL, SoundSource.BLOCKS, 1.0f, 1.0f);
+        if (item.getDefaultInstance().is(net.minecraft.tags.ItemTags.HOES)) {
+            level.playSound(player, pos, SoundEvents.HOE_TILL.value(), SoundSource.BLOCKS, 1.0f, 1.0f);
             stack.hurtAndBreak(1, player, hand);
             if (player instanceof ServerPlayer) {
                 if (state.getValue(WATERLOGGED)) level.setBlockAndUpdate(pos, ModBlocks.EARTHEN_CLAY_FARMLAND.get().defaultBlockState().setValue(BlockStateProperties.MOISTURE, 7));

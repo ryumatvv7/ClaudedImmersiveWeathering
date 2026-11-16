@@ -34,7 +34,7 @@ public class BlockPropertyTest extends RuleTest {
     }
 
     @Override
-    public boolean test(BlockState state, RandomSource random) {
+    public boolean test(BlockState state, net.minecraft.core.BlockPos pos, RandomSource random) {
         for(var p : propPredicates){
             if(!p.test(state))return false;
         }

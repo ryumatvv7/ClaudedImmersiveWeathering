@@ -1,5 +1,7 @@
 package com.ordana.immersive_weathering.reg;
 
+import com.mojang.serialization.MapCodec;
+
 import com.ordana.immersive_weathering.IWPlatformStuff;
 import com.ordana.immersive_weathering.ImmersiveWeathering;
 import com.ordana.immersive_weathering.features.IcicleClusterFeature;
@@ -15,9 +17,8 @@ import java.util.function.Supplier;
 
 public class ModFeatures {
 
-    public static final Supplier<Feature<IcicleClusterFeatureConfig>> ICICLE_FEATURE = com.ordana.immersive_weathering.platform.Reg.feature(
-            ImmersiveWeathering.res("icicle_cluster"), () ->
-                    new IcicleClusterFeature(IcicleClusterFeatureConfig.CODEC));
+    public static final Supplier<MapCodec<IcicleClusterFeature>> ICICLE_FEATURE = com.ordana.immersive_weathering.platform.Reg.featureType(
+            ImmersiveWeathering.res("icicle_cluster"), () -> IcicleClusterFeature.CODEC);
 
     public static void init() {
 

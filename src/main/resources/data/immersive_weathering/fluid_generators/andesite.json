@@ -3,7 +3,7 @@
   "fluid": "minecraft:lava",
   "priority": 1,
   "generate": {
-    "Name": "minecraft:andesite"
+    "id": "minecraft:andesite"
   },
   "adjacent_blocks": {
     "sides": [
@@ -15,7 +15,7 @@
     "any": [
       {
         "block_state": {
-          "Name": "minecraft:diorite"
+          "id": "minecraft:diorite"
         },
         "predicate_type": "minecraft:blockstate_match"
       }

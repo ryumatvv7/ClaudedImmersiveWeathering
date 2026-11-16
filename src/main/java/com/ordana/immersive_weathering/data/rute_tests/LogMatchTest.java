@@ -16,7 +16,7 @@ public class LogMatchTest extends RuleTest {
     public static final Codec<LogMatchTest> CODEC = MapCodec.unit(() -> INSTANCE).codec();
 
     @Override
-    public boolean test(BlockState state, RandomSource random) {
+    public boolean test(BlockState state, net.minecraft.core.BlockPos pos, RandomSource random) {
         return WeatheringHelper.isLog(state);
     }
 

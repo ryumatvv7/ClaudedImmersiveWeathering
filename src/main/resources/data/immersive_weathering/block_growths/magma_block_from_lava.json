@@ -2,11 +2,15 @@
   "growth_chance": 0.003,
   "area_condition": {
     "must_have": {
-      "fluids": ["minecraft:lava"],
+      "fluids": [
+        "minecraft:lava"
+      ],
       "predicate_type": "immersive_weathering:fluid_match"
     },
     "must_not_have": {
-      "fluids": ["minecraft:water"],
+      "fluids": [
+        "minecraft:water"
+      ],
       "predicate_type": "immersive_weathering:fluid_match"
     },
     "radiusX": 3,
@@ -21,7 +25,7 @@
         {
           "data": {
             "block": {
-              "Name": "minecraft:magma_block"
+              "id": "minecraft:magma_block"
             }
           },
           "weight": 1
@@ -29,7 +33,9 @@
       ]
     }
   ],
-  "owners": [ "minecraft:magma_block"],
+  "owners": [
+    "minecraft:magma_block"
+  ],
   "replacing_target": {
     "block": "minecraft:netherrack",
     "predicate_type": "minecraft:block_match",

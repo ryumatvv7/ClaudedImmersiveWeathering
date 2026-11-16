@@ -15,8 +15,8 @@
         {
           "data": {
             "block": {
-              "Name": "immersive_weathering:hanging_roots_wall",
-              "Properties": {
+              "id": "immersive_weathering:hanging_roots_wall",
+              "properties": {
                 "facing": "north"
               }
             }
@@ -32,8 +32,8 @@
         {
           "data": {
             "block": {
-              "Name": "immersive_weathering:hanging_roots_wall",
-              "Properties": {
+              "id": "immersive_weathering:hanging_roots_wall",
+              "properties": {
                 "facing": "east"
               }
             }
@@ -49,8 +49,8 @@
         {
           "data": {
             "block": {
-              "Name": "immersive_weathering:hanging_roots_wall",
-              "Properties": {
+              "id": "immersive_weathering:hanging_roots_wall",
+              "properties": {
                 "facing": "south"
               }
             }
@@ -66,8 +66,8 @@
         {
           "data": {
             "block": {
-              "Name": "immersive_weathering:hanging_roots_wall",
-              "Properties": {
+              "id": "immersive_weathering:hanging_roots_wall",
+              "properties": {
                 "facing": "west"
               }
             }
@@ -83,7 +83,7 @@
         {
           "data": {
             "block": {
-              "Name": "minecraft:hanging_roots"
+              "id": "minecraft:hanging_roots"
             }
           },
           "weight": 1

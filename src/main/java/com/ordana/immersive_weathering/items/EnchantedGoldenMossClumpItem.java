@@ -2,7 +2,7 @@ package com.ordana.immersive_weathering.items;
 
 import com.ordana.immersive_weathering.blocks.mossy.Mossable;
 import com.ordana.immersive_weathering.configs.CommonConfigs;
-import net.minecraft.advancements.CriteriaTriggers;
+import net.minecraft.advancements.triggers.CriteriaTriggers;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;

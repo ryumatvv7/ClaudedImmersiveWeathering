@@ -44,8 +44,8 @@ record NeighborCheck(RuleTest mustHavePredicate, RuleTest mustNotHavePredicate,
         for (Direction dir : list) {
             BlockPos p = pos.relative(dir);
             BlockState state = level.getBlockState(p);
-            if (mustHavePredicate.test(state, random)) count += 1;
-            else if (mustNotHavePredicate != AlwaysTrueTest.INSTANCE && mustNotHavePredicate.test(state, random))
+            if (mustHavePredicate.test(state, p, random)) count += 1;
+            else if (mustNotHavePredicate != AlwaysTrueTest.INSTANCE && mustNotHavePredicate.test(state, p, random))
                 return false;
             if (count >= this.requiredAmount) return true;
         }

@@ -60,7 +60,7 @@ public final class IWUtils {
 
     public static int getFlammability(BlockState state) {
         var entry = FlammableBlockRegistry.getDefaultInstance().get(state.getBlock());
-        return entry == null ? 0 : entry.getBurnChance();
+        return entry == null ? 0 : entry.getBurnOdds();
     }
 
     private static void particle(Level level, ParticleOptions p, double x, double y, double z, double dx, double dy, double dz) {

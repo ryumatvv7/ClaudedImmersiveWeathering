@@ -8,8 +8,10 @@
   },
   "position_predicates": [
     {
-      "biomes": ["minecraft:warm_ocean"],
-     "type": "biome_match"
+      "biomes": [
+        "minecraft:warm_ocean"
+      ],
+      "type": "biome_match"
     }
   ],
   "growth_chance": 0.0005,
@@ -21,11 +23,11 @@
         {
           "data": {
             "block": {
-              "Properties": {
+              "id": "minecraft:fire_coral_wall_fan",
+              "properties": {
                 "waterlogged": "true",
                 "facing": "north"
-              },
-              "Name": "minecraft:fire_coral_wall_fan"
+              }
             }
           },
           "weight": 50
@@ -33,7 +35,7 @@
         {
           "data": {
             "block": {
-              "Name": "minecraft:wet_sponge"
+              "id": "minecraft:wet_sponge"
             }
           },
           "weight": 1
@@ -47,11 +49,11 @@
         {
           "data": {
             "block": {
-              "Properties": {
+              "id": "minecraft:fire_coral_wall_fan",
+              "properties": {
                 "waterlogged": "true",
                 "facing": "east"
-              },
-              "Name": "minecraft:fire_coral_wall_fan"
+              }
             }
           },
           "weight": 50
@@ -59,7 +61,7 @@
         {
           "data": {
             "block": {
-              "Name": "minecraft:wet_sponge"
+              "id": "minecraft:wet_sponge"
             }
           },
           "weight": 1
@@ -73,11 +75,11 @@
         {
           "data": {
             "block": {
-              "Properties": {
+              "id": "minecraft:fire_coral_wall_fan",
+              "properties": {
                 "waterlogged": "true",
                 "facing": "south"
-              },
-              "Name": "minecraft:fire_coral_wall_fan"
+              }
             }
           },
           "weight": 50
@@ -85,7 +87,7 @@
         {
           "data": {
             "block": {
-              "Name": "minecraft:wet_sponge"
+              "id": "minecraft:wet_sponge"
             }
           },
           "weight": 1
@@ -99,11 +101,11 @@
         {
           "data": {
             "block": {
-              "Properties": {
+              "id": "minecraft:fire_coral_wall_fan",
+              "properties": {
                 "waterlogged": "true",
                 "facing": "west"
-              },
-              "Name": "minecraft:fire_coral_wall_fan"
+              }
             }
           },
           "weight": 50
@@ -111,7 +113,7 @@
         {
           "data": {
             "block": {
-              "Name": "minecraft:wet_sponge"
+              "id": "minecraft:wet_sponge"
             }
           },
           "weight": 1
@@ -125,10 +127,10 @@
         {
           "data": {
             "block": {
-              "Properties": {
+              "id": "minecraft:fire_coral_fan",
+              "properties": {
                 "waterlogged": "true"
-              },
-              "Name": "minecraft:fire_coral_fan"
+              }
             }
           },
           "weight": 25
@@ -136,10 +138,10 @@
         {
           "data": {
             "block": {
-              "Properties": {
+              "id": "minecraft:fire_coral",
+              "properties": {
                 "waterlogged": "true"
-              },
-              "Name": "minecraft:fire_coral"
+              }
             }
           },
           "weight": 25
@@ -147,7 +149,7 @@
         {
           "data": {
             "block": {
-              "Name": "minecraft:wet_sponge"
+              "id": "minecraft:wet_sponge"
             }
           },
           "weight": 1
@@ -155,7 +157,9 @@
       ]
     }
   ],
-  "owners": ["minecraft:fire_coral_block"],
+  "owners": [
+    "minecraft:fire_coral_block"
+  ],
   "replacing_target": {
     "block": "minecraft:water",
     "predicate_type": "minecraft:random_block_match",

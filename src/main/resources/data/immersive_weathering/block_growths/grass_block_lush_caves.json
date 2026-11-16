@@ -13,8 +13,10 @@
   },
   "position_predicates": [
     {
-      "biomes": ["minecraft:lush_caves"],
-     "type": "biome_match"
+      "biomes": [
+        "minecraft:lush_caves"
+      ],
+      "type": "biome_match"
     }
   ],
   "growth_chance": 0.001,
@@ -25,7 +27,7 @@
         {
           "data": {
             "block": {
-              "Name": "minecraft:azalea"
+              "id": "minecraft:azalea"
             }
           },
           "weight": 1
@@ -33,7 +35,7 @@
         {
           "data": {
             "block": {
-              "Name": "minecraft:flowering_azalea"
+              "id": "minecraft:flowering_azalea"
             }
           },
           "weight": 1
@@ -41,7 +43,7 @@
         {
           "data": {
             "block": {
-              "Name": "minecraft:short_grass"
+              "id": "minecraft:short_grass"
             }
           },
           "weight": 10

@@ -16,7 +16,7 @@ public class BurnableTest extends RuleTest {
 
     public static final Codec<BurnableTest> CODEC = MapCodec.unit(() -> INSTANCE).codec();
 
-    public boolean test(BlockState state, RandomSource random) {
+    public boolean test(BlockState state, net.minecraft.core.BlockPos pos, RandomSource random) {
         //hack since we don't have world and pos. hopefully mods aren't using those lol
         try {
             return IWUtils.getFlammability(state) != 0;

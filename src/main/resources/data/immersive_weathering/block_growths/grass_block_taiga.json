@@ -17,7 +17,7 @@
         "minecraft:taiga",
         "minecraft:snowy_taiga"
       ],
-     "type": "biome_match"
+      "type": "biome_match"
     }
   ],
   "growth_chance": 0.001,
@@ -28,7 +28,7 @@
         {
           "data": {
             "block": {
-              "Name": "minecraft:fern"
+              "id": "minecraft:fern"
             }
           },
           "weight": 100
@@ -36,7 +36,7 @@
         {
           "data": {
             "block": {
-              "Name": "minecraft:sweet_berry_bush"
+              "id": "minecraft:sweet_berry_bush"
             }
           },
           "weight": 30
@@ -44,7 +44,7 @@
         {
           "data": {
             "block": {
-              "Name": "minecraft:short_grass"
+              "id": "minecraft:short_grass"
             }
           },
           "weight": 80

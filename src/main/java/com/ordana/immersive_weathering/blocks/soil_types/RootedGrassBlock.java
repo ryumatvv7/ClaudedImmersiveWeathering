@@ -39,8 +39,8 @@ public class RootedGrassBlock extends GrassBlock implements BonemealableBlock {
     protected InteractionResult useItemOn(ItemStack heldStack, BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hitResult) {
         ItemStack stack = player.getItemInHand(hand);
         Item item = stack.getItem();
-        if (item instanceof ShovelItem && !state.getValue(SNOWY)) {
-            level.playSound(player, pos, SoundEvents.HOE_TILL, SoundSource.BLOCKS, 1.0f, 1.0f);
+        if (item.getDefaultInstance().is(net.minecraft.tags.ItemTags.SHOVELS) && !state.getValue(SNOWY)) {
+            level.playSound(player, pos, SoundEvents.HOE_TILL.value(), SoundSource.BLOCKS, 1.0f, 1.0f);
             stack.hurtAndBreak(1, player, hand);
             if (player instanceof ServerPlayer) {
                 level.setBlockAndUpdate(pos, Blocks.DIRT_PATH.defaultBlockState());
@@ -48,8 +48,8 @@ public class RootedGrassBlock extends GrassBlock implements BonemealableBlock {
             }
             return InteractionResult.SUCCESS;
         }
-        if (item instanceof HoeItem) {
-            level.playSound(player, pos, SoundEvents.HOE_TILL, SoundSource.BLOCKS, 1.0f, 1.0f);
+        if (item.getDefaultInstance().is(net.minecraft.tags.ItemTags.HOES)) {
+            level.playSound(player, pos, SoundEvents.HOE_TILL.value(), SoundSource.BLOCKS, 1.0f, 1.0f);
             stack.hurtAndBreak(1, player, hand);
             if (player instanceof ServerPlayer) {
                 level.setBlockAndUpdate(pos, Blocks.GRASS_BLOCK.withPropertiesOf(state));
@@ -62,7 +62,7 @@ public class RootedGrassBlock extends GrassBlock implements BonemealableBlock {
     }
 
     @Override
-    public boolean isValidBonemealTarget(LevelReader level, BlockPos pos, BlockState state) {
+    public boolean isValidBonemealTarget(LevelReader level, BlockPos pos, BlockState state, net.minecraft.world.level.block.BonemealSource source) {
         boolean space = false;
         for (Direction dir : Direction.values()) {
             var targetState = level.getBlockState(pos.relative(dir));
@@ -75,14 +75,14 @@ public class RootedGrassBlock extends GrassBlock implements BonemealableBlock {
     }
 
     @Override
-    public boolean isBonemealSuccess(Level level, RandomSource random, BlockPos pos, BlockState state) {
+    public boolean isBonemealSuccess(Level level, RandomSource random, BlockPos pos, BlockState state, net.minecraft.world.level.block.BonemealSource source) {
         return true;
     }
 
     @Override
-    public void performBonemeal(ServerLevel level, RandomSource random, BlockPos pos, BlockState state) {
+    public void performBonemeal(ServerLevel level, RandomSource random, BlockPos pos, BlockState state, net.minecraft.world.level.block.BonemealSource source) {
         WeatheringHelper.growHangingRoots(level, random, pos);
-        super.performBonemeal(level, random, pos, state);
+        super.performBonemeal(level, random, pos, state, net.minecraft.world.level.block.BonemealSource.INTERACTION);
     }
 
     @Override

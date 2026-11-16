@@ -8,7 +8,9 @@
   },
   "position_predicates": [
     {
-      "biomes": ["minecraft:river"],
+      "biomes": [
+        "minecraft:river"
+      ],
       "type": "biome_match"
     }
   ],
@@ -20,7 +22,7 @@
         {
           "data": {
             "block": {
-              "Name": "minecraft:sugar_cane"
+              "id": "minecraft:sugar_cane"
             }
           },
           "weight": 1

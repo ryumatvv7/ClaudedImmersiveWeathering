@@ -79,12 +79,12 @@ public class IvyBlock extends MultifaceBlock implements BonemealableBlock {
 	}
 
 	@Override
-	public boolean isValidBonemealTarget(LevelReader level, BlockPos pos, BlockState state) {
+	public boolean isValidBonemealTarget(LevelReader level, BlockPos pos, BlockState state, net.minecraft.world.level.block.BonemealSource source) {
 		return state.getValue(AGE) < 0 || Stream.of(DIRECTIONS).anyMatch(direction -> this.isValidStateForPlacement(level, state, pos, direction.getOpposite()));
 	}
 
 	@Override
-	public boolean isBonemealSuccess(Level level, RandomSource random, BlockPos pos, BlockState state) {
+	public boolean isBonemealSuccess(Level level, RandomSource random, BlockPos pos, BlockState state, net.minecraft.world.level.block.BonemealSource source) {
 		return true;//this.canGrowPseudoAdjacent(level, pos, state) || this.canGrowAdjacent(level, pos, state) || this.canGrowExternal(level, pos, state);
 	}
 
@@ -146,7 +146,7 @@ public class IvyBlock extends MultifaceBlock implements BonemealableBlock {
 	}
 
 	@Override
-	public void performBonemeal(ServerLevel level, RandomSource r, BlockPos pos, BlockState state) {
+	public void performBonemeal(ServerLevel level, RandomSource r, BlockPos pos, BlockState state, net.minecraft.world.level.block.BonemealSource source) {
 		level.setBlockAndUpdate(pos, state.getBlock().withPropertiesOf(state).setValue(AGE, 0));
 		Random random = new Random(r.nextLong());
 		int method = r.nextInt(3);

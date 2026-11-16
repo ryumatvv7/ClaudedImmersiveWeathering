@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:disk",
+  "state_provider": {
+    "type": "minecraft:rule_based",
+    "fallback": {
+      "id": "immersive_weathering:silt"
+    },
+    "rules": []
+  },
+  "target": {
+    "type": "minecraft:matching_blocks",
+    "blocks": "#minecraft:base_stone_overworld"
+  },
+  "radius": {
+    "type": "minecraft:uniform",
+    "min_inclusive": 2,
+    "max_inclusive": 4
+  },
+  "half_height": 1
+}

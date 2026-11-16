@@ -39,7 +39,7 @@
         {
           "data": {
             "block": {
-              "Name": "minecraft:ice"
+              "id": "minecraft:ice"
             }
           },
           "weight": 1
@@ -47,9 +47,13 @@
       ]
     }
   ],
-  "owners": ["immersive_weathering:thin_ice"],
+  "owners": [
+    "immersive_weathering:thin_ice"
+  ],
   "replacing_target": {
-    "fluids": ["minecraft:water"],
+    "fluids": [
+      "minecraft:water"
+    ],
     "predicate_type": "immersive_weathering:fluid_match"
   }
 }

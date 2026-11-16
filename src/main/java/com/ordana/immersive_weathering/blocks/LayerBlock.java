@@ -33,13 +33,6 @@ import java.util.Collections;
 
 public class LayerBlock extends FallingBlock {
 
-    public static final MapCodec<LayerBlock> CODEC = simpleCodec(LayerBlock::new);
-
-    @Override
-    protected MapCodec<? extends FallingBlock> codec() {
-        return CODEC;
-    }
-
     @Override
     public int getDustColor(BlockState state, BlockGetter level, BlockPos pos) {
         return state.getMapColor(level, pos).col;

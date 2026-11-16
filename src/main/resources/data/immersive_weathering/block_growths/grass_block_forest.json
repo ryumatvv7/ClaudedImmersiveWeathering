@@ -17,7 +17,7 @@
         "minecraft:forest",
         "minecraft:windswept_forest"
       ],
-     "type": "biome_match"
+      "type": "biome_match"
     }
   ],
   "growth_chance": 0.002,
@@ -28,7 +28,7 @@
         {
           "data": {
             "block": {
-              "Name": "minecraft:poppy"
+              "id": "minecraft:poppy"
             }
           },
           "weight": 10
@@ -36,7 +36,7 @@
         {
           "data": {
             "block": {
-              "Name": "minecraft:lily_of_the_valley"
+              "id": "minecraft:lily_of_the_valley"
             }
           },
           "weight": 10
@@ -44,7 +44,7 @@
         {
           "data": {
             "block": {
-              "Name": "minecraft:azure_bluet"
+              "id": "minecraft:azure_bluet"
             }
           },
           "weight": 10
@@ -52,14 +52,14 @@
         {
           "data": {
             "block": {
-              "Name": "minecraft:peony",
-              "Properties": {
+              "id": "minecraft:peony",
+              "properties": {
                 "half": "lower"
               }
             },
-            "above_block":{
-              "Name": "minecraft:peony",
-              "Properties": {
+            "above_block": {
+              "id": "minecraft:peony",
+              "properties": {
                 "half": "upper"
               }
             }
@@ -69,7 +69,7 @@
         {
           "data": {
             "block": {
-              "Name": "minecraft:short_grass"
+              "id": "minecraft:short_grass"
             }
           },
           "weight": 100

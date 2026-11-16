@@ -3,27 +3,27 @@
   "fluid": "minecraft:lava",
   "priority": 0,
   "generate": {
-    "Name": "minecraft:calcite"
+    "id": "minecraft:calcite"
   },
   "adjacent_blocks": {
     "any": [
       {
         "block_state": {
-          "Name": "minecraft:magma_block"
+          "id": "minecraft:magma_block"
         },
         "predicate_type": "minecraft:blockstate_match"
       },
       {
         "block_state": {
-          "Name": "minecraft:blue_ice"
+          "id": "minecraft:blue_ice"
         },
         "predicate_type": "minecraft:blockstate_match"
       }
     ],
     "down": {
       "block_state": {
-        "Name": "minecraft:bone_block",
-        "Properties": {
+        "id": "minecraft:bone_block",
+        "properties": {
           "axis": "y"
         }
       },

@@ -8,7 +8,7 @@ import net.minecraft.core.Direction;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.block.state.properties.DripstoneThickness;
+import net.minecraft.world.level.block.state.properties.SpeleothemThickness;
 
 import java.util.function.Consumer;
 
@@ -22,19 +22,19 @@ public class IcicleHelper {
 
     protected static void getIcicleThickness(Direction direction, int height, boolean merge, Consumer<BlockState> callback) {
         if (height >= 3) {
-            callback.accept(getState(direction, DripstoneThickness.BASE));
+            callback.accept(getState(direction, SpeleothemThickness.BASE));
 
             for (int i = 0; i < height - 3; ++i) {
-                callback.accept(getState(direction, DripstoneThickness.MIDDLE));
+                callback.accept(getState(direction, SpeleothemThickness.MIDDLE));
             }
         }
 
         if (height >= 2) {
-            callback.accept(getState(direction, DripstoneThickness.FRUSTUM));
+            callback.accept(getState(direction, SpeleothemThickness.FRUSTUM));
         }
 
         if (height >= 1) {
-            callback.accept(getState(direction, merge ? DripstoneThickness.TIP_MERGE : DripstoneThickness.TIP));
+            callback.accept(getState(direction, merge ? SpeleothemThickness.TIP_MERGE : SpeleothemThickness.TIP));
         }
 
     }
@@ -63,7 +63,7 @@ public class IcicleHelper {
         }
     }
 
-    private static BlockState getState(Direction direction, DripstoneThickness thickness) {
+    private static BlockState getState(Direction direction, SpeleothemThickness thickness) {
         return ModBlocks.ICICLE.get().defaultBlockState().setValue(IcicleBlock.TIP_DIRECTION, direction).setValue(IcicleBlock.THICKNESS, thickness);
     }
 

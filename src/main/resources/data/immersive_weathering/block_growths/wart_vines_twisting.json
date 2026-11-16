@@ -15,7 +15,7 @@
         {
           "data": {
             "block": {
-              "Name": "minecraft:twisting_vines"
+              "id": "minecraft:twisting_vines"
             }
           },
           "weight": 1

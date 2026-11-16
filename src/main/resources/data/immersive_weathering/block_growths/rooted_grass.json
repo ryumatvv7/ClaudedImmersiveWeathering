@@ -19,8 +19,8 @@
         {
           "data": {
             "block": {
-              "Name": "immersive_weathering:rooted_grass_block",
-              "Properties": {
+              "id": "immersive_weathering:rooted_grass_block",
+              "properties": {
                 "snowy": "false",
                 "fertile": "true"
               }
@@ -37,8 +37,8 @@
         {
           "data": {
             "block": {
-              "Name": "immersive_weathering:rooted_grass_block",
-              "Properties": {
+              "id": "immersive_weathering:rooted_grass_block",
+              "properties": {
                 "snowy": "false",
                 "fertile": "true"
               }
@@ -55,8 +55,8 @@
         {
           "data": {
             "block": {
-              "Name": "immersive_weathering:rooted_grass_block",
-              "Properties": {
+              "id": "immersive_weathering:rooted_grass_block",
+              "properties": {
                 "snowy": "false",
                 "fertile": "true"
               }
@@ -73,8 +73,8 @@
         {
           "data": {
             "block": {
-              "Name": "immersive_weathering:rooted_grass_block",
-              "Properties": {
+              "id": "immersive_weathering:rooted_grass_block",
+              "properties": {
                 "snowy": "false",
                 "fertile": "true"
               }
@@ -91,8 +91,8 @@
         {
           "data": {
             "block": {
-              "Name": "immersive_weathering:rooted_grass_block",
-              "Properties": {
+              "id": "immersive_weathering:rooted_grass_block",
+              "properties": {
                 "snowy": "false",
                 "fertile": "true"
               }
@@ -109,8 +109,8 @@
         {
           "data": {
             "block": {
-              "Name": "immersive_weathering:rooted_grass_block",
-              "Properties": {
+              "id": "immersive_weathering:rooted_grass_block",
+              "properties": {
                 "snowy": "false",
                 "fertile": "true"
               }

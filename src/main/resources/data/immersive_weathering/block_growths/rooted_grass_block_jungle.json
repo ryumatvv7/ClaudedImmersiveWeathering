@@ -13,7 +13,7 @@
         "minecraft:jungle",
         "minecraft:sparse_jungle"
       ],
-     "type": "biome_match"
+      "type": "biome_match"
     }
   ],
   "growth_chance": 0.01,
@@ -24,7 +24,7 @@
         {
           "data": {
             "block": {
-              "Name": "minecraft:jungle_sapling"
+              "id": "minecraft:jungle_sapling"
             }
           },
           "weight": 5
@@ -32,7 +32,7 @@
         {
           "data": {
             "block": {
-              "Name": "minecraft:bamboo_sapling"
+              "id": "minecraft:bamboo_sapling"
             }
           },
           "weight": 1

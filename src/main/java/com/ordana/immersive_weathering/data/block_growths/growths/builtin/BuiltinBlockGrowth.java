@@ -9,7 +9,7 @@ import com.ordana.immersive_weathering.data.block_growths.growths.IBlockGrowth;
 import com.ordana.immersive_weathering.util.StrOpt;
 import net.minecraft.core.Holder;
 import net.minecraft.core.HolderSet;
-import net.minecraft.core.RegistryCodecs;
+import net.minecraft.core.registries.codec.RegistryCodecs;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.world.level.block.Block;
 import org.jetbrains.annotations.Nullable;
@@ -31,7 +31,7 @@ public abstract class BuiltinBlockGrowth implements IBlockGrowth {
                         MapCodec<BuiltinBlockGrowth> codec = RecordCodecBuilder.mapCodec(i -> i.group(
                                 StrOpt.of(TickSource.CODEC.listOf(), "tick_sources", List.of(TickSource.BLOCK_TICK))
                                         .forGetter(b -> b.sources),
-                                StrOpt.of(RegistryCodecs.homogeneousList(Registries.BLOCK), "owners")
+                                StrOpt.of(RegistryCodecs.holderSet(Registries.BLOCK), "owners")
                                         .forGetter(b -> Optional.ofNullable(b.owners)),
                                 StrOpt.of(Codec.FLOAT, "growth_chance", 1f).forGetter(b -> b.growthChance)
                         ).apply(i, (o, s, c) -> factory.create(n, s.orElse(null), o, c)));

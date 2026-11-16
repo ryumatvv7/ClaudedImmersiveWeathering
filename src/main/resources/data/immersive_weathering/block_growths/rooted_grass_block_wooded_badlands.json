@@ -15,7 +15,7 @@
         "minecraft:savanna_plateau",
         "minecraft:windswept_savanna"
       ],
-     "type": "biome_match"
+      "type": "biome_match"
     }
   ],
   "growth_chance": 0.001,
@@ -26,7 +26,7 @@
         {
           "data": {
             "block": {
-              "Name": "minecraft:acacia_sapling"
+              "id": "minecraft:acacia_sapling"
             }
           },
           "weight": 1

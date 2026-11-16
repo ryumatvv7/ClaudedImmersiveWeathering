@@ -13,8 +13,10 @@
   },
   "position_predicates": [
     {
-      "biomes": ["minecraft:swamp"],
-     "type": "biome_match"
+      "biomes": [
+        "minecraft:swamp"
+      ],
+      "type": "biome_match"
     }
   ],
   "growth_chance": 0.001,
@@ -25,7 +27,7 @@
         {
           "data": {
             "block": {
-              "Name": "minecraft:blue_orchid"
+              "id": "minecraft:blue_orchid"
             }
           },
           "weight": 1
@@ -33,7 +35,7 @@
         {
           "data": {
             "block": {
-              "Name": "minecraft:short_grass"
+              "id": "minecraft:short_grass"
             }
           },
           "weight": 100

@@ -13,7 +13,7 @@
         "minecraft:taiga",
         "minecraft:snowy_taiga"
       ],
-     "type": "biome_match"
+      "type": "biome_match"
     }
   ],
   "growth_chance": 0.01,
@@ -24,7 +24,7 @@
         {
           "data": {
             "block": {
-              "Name": "minecraft:spruce_sapling"
+              "id": "minecraft:spruce_sapling"
             }
           },
           "weight": 1

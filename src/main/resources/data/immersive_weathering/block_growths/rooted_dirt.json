@@ -19,7 +19,7 @@
         {
           "data": {
             "block": {
-              "Name": "minecraft:rooted_dirt"
+              "id": "minecraft:rooted_dirt"
             }
           },
           "weight": 1
@@ -33,7 +33,7 @@
         {
           "data": {
             "block": {
-              "Name": "minecraft:rooted_dirt"
+              "id": "minecraft:rooted_dirt"
             }
           },
           "weight": 1
@@ -47,7 +47,7 @@
         {
           "data": {
             "block": {
-              "Name": "minecraft:rooted_dirt"
+              "id": "minecraft:rooted_dirt"
             }
           },
           "weight": 1
@@ -61,7 +61,7 @@
         {
           "data": {
             "block": {
-              "Name": "minecraft:rooted_dirt"
+              "id": "minecraft:rooted_dirt"
             }
           },
           "weight": 1
@@ -75,7 +75,7 @@
         {
           "data": {
             "block": {
-              "Name": "minecraft:rooted_dirt"
+              "id": "minecraft:rooted_dirt"
             }
           },
           "weight": 1
@@ -89,7 +89,7 @@
         {
           "data": {
             "block": {
-              "Name": "minecraft:rooted_dirt"
+              "id": "minecraft:rooted_dirt"
             }
           },
           "weight": 1

@@ -2,7 +2,7 @@
   "growth_chance": 0.005,
   "position_predicates": [
     {
-      "biomes":"#minecraft:is_nether",
+      "biomes": "#minecraft:is_nether",
       "type": "biome_match"
     }
   ],
@@ -14,7 +14,7 @@
         {
           "data": {
             "block": {
-              "Name": "minecraft:dead_bush"
+              "id": "minecraft:dead_bush"
             }
           },
           "weight": 1

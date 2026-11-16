@@ -142,7 +142,7 @@ public class SelfFluidGenerator implements IFluidGenerator {
                 for (var d : Direction.values()) {
                     BlockPos side = pos.relative(d);
                     BlockState state = neighborCache.computeIfAbsent(d, p -> level.getBlockState(side));
-                    if (r.test(state, level.getRandom())) {
+                    if (r.test(state, side, level.getRandom())) {
                         if (extraCheck.isPresent() && !extraCheck.get().test(b, side, level)) continue;
                         atLeastOnceSuccess = true;
                         break;
@@ -157,7 +157,7 @@ public class SelfFluidGenerator implements IFluidGenerator {
                     if (d.getAxis().isHorizontal()) {
                         BlockPos side = pos.relative(d);
                         BlockState state = neighborCache.computeIfAbsent(d, p -> level.getBlockState(side));
-                        if (r.test(state, level.getRandom())) {
+                        if (r.test(state, side, level.getRandom())) {
                             if (extraCheck.isPresent() && !extraCheck.get().test(b, side, level)) continue;
                             atLeastOnceSuccess = true;
                             break;
@@ -182,7 +182,7 @@ public class SelfFluidGenerator implements IFluidGenerator {
                                   Optional<IPositionRuleTest> extraCheck, Supplier<Holder<Biome>> biome, Direction dir) {
             BlockPos target = pos.relative(dir);
             BlockState state = neighborCache.computeIfAbsent(dir, p -> level.getBlockState(target));
-            if (!test.test(state, level.getRandom())) return true;
+            if (!test.test(state, target, level.getRandom())) return true;
             return extraCheck.isPresent() && !extraCheck.get().test(biome, target, level);
         }
 

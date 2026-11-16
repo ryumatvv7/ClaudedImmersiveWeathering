@@ -7,7 +7,7 @@ import com.ordana.immersive_weathering.util.StrOpt;
 import com.ordana.immersive_weathering.util.WeatheringHelper;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderSet;
-import net.minecraft.core.RegistryCodecs;
+import net.minecraft.core.registries.codec.RegistryCodecs;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
@@ -32,7 +32,7 @@ record AreaCheck(int rX, int rY, int rZ, int requiredAmount, Optional<Integer> y
             StrOpt.of(Codec.INT, "yOffset").forGetter(AreaCheck::yOffset),
             StrOpt.of(RuleTest.CODEC, "must_have").forGetter(AreaCheck::mustHavePredicate),
             StrOpt.of(RuleTest.CODEC, "must_not_have").forGetter(AreaCheck::mustNotHavePredicate),
-            StrOpt.of(RegistryCodecs.homogeneousList(Registries.BLOCK), "includes").forGetter(AreaCheck::extraIncluded)
+            StrOpt.of(RegistryCodecs.holderSet(Registries.BLOCK), "includes").forGetter(AreaCheck::extraIncluded)
     ).apply(instance, AreaCheck::new));
     static final AreaConditionType<AreaCheck> TYPE = new AreaConditionType<>(AreaCheck.CODEC, AreaCheck.NAME);
 
@@ -55,13 +55,13 @@ record AreaCheck(int rX, int rY, int rZ, int requiredAmount, Optional<Integer> y
             if (config.getPossibleBlocks().contains(state.getBlock()) ||
                     (extraIncluded.isPresent() && state.is(extraIncluded.get()))) count += 1;
             if (!hasRequirement &&
-                    mustHavePredicate.get().test(state, random)) {
+                    mustHavePredicate.get().test(state, p, random)) {
                 hasRequirement = true;
                 // if -1 means it can accept any number so we exit early
                 if (requiredAmount == -1) {
                     break;
                 }
-            } else if (mustNotHavePredicate.isPresent() && mustNotHavePredicate.get().test(state, random)) {
+            } else if (mustNotHavePredicate.isPresent() && mustNotHavePredicate.get().test(state, p, random)) {
                 return false;
             }
             if (count >= requiredAmount) return false;

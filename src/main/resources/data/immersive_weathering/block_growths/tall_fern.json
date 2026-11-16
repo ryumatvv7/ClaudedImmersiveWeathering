@@ -16,14 +16,14 @@
         {
           "data": {
             "block": {
-              "Name": "minecraft:large_fern",
-              "Properties": {
+              "id": "minecraft:large_fern",
+              "properties": {
                 "half": "lower"
               }
             },
             "above_block": {
-              "Name": "minecraft:large_fern",
-              "Properties": {
+              "id": "minecraft:large_fern",
+              "properties": {
                 "half": "upper"
               }
             }
@@ -33,7 +33,9 @@
       ]
     }
   ],
-  "owners": ["minecraft:fern"],
+  "owners": [
+    "minecraft:fern"
+  ],
   "replacing_target": {
     "block": "minecraft:air",
     "predicate_type": "minecraft:random_block_match",

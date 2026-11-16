@@ -18,7 +18,7 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.levelgen.feature.Feature;
-import net.minecraft.world.level.levelgen.feature.configurations.FeatureConfiguration;
+import com.mojang.serialization.MapCodec;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -99,8 +99,8 @@ public final class Reg {
                 new BlockEntityType<>(factory, Set.of(block.get()))));
     }
 
-    public static <C extends FeatureConfiguration, F extends Feature<C>> Entry<F> feature(Identifier id, Supplier<F> feature) {
-        return add(30, () -> Registry.register(BuiltInRegistries.FEATURE, id, feature.get()));
+    public static <F extends Feature> Entry<MapCodec<F>> featureType(Identifier id, Supplier<MapCodec<F>> codec) {
+        return add(30, () -> Registry.register(BuiltInRegistries.FEATURE_TYPE, id, codec.get()));
     }
 
     public static Entry<CreativeModeTab> creativeTab(Identifier id, Supplier<CreativeModeTab> tab) {

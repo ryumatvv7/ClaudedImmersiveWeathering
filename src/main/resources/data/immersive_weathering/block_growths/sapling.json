@@ -16,7 +16,7 @@
         {
           "data": {
             "block": {
-              "Name": "minecraft:dead_bush"
+              "id": "minecraft:dead_bush"
             }
           },
           "weight": 1

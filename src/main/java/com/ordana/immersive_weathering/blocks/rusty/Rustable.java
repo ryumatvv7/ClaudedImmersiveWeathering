@@ -125,7 +125,7 @@ public interface Rustable extends ChangeOverTimeBlock<Rustable.RustLevel> {
         int j = 0;
         int k = 0;
         int affectingDistance = this.getInfluenceRadius();
-        for (BlockPos blockpos : BlockPos.withinManhattan(pos, affectingDistance, affectingDistance, affectingDistance)) {
+        for (BlockPos blockpos : BlockPos.withinBoxByManhattanDistance(pos, affectingDistance, affectingDistance, affectingDistance)) {
             int distance = blockpos.distManhattan(pos);
             if (distance > affectingDistance) {
                 break;
@@ -179,7 +179,7 @@ public interface Rustable extends ChangeOverTimeBlock<Rustable.RustLevel> {
                     if (level.isRainingAt(pos.above())) {
                         canWeather = true;
                     } else if (CommonConfigs.RUST_STREAKING.get() && level.isRainingAt(targetPos) && level.getBlockState(pos.above()).is(ModTags.WEATHERED_IRON) && random.nextFloat() < (CommonConfigs.RUSTING_RATE.get() * Math.sqrt(CommonConfigs.RUST_SPEED.get())) / 3) {
-                        if (BlockPos.withinManhattanStream(pos, 2, 2, 2)
+                        if (java.util.stream.StreamSupport.stream(BlockPos.withinBoxByManhattanDistance(pos, 2, 2, 2).spliterator(), false)
                                 .map(level::getBlockState)
                                 .filter(b -> b.is(ModTags.WEATHERED_IRON))
                                 .toList().size() <= 9) {

@@ -14,7 +14,7 @@
         "minecraft:windswept_forest",
         "minecraft:flower_forest"
       ],
-     "type": "biome_match"
+      "type": "biome_match"
     }
   ],
   "growth_chance": 0.01,
@@ -25,7 +25,7 @@
         {
           "data": {
             "block": {
-              "Name": "minecraft:oak_sapling"
+              "id": "minecraft:oak_sapling"
             }
           },
           "weight": 10
@@ -33,7 +33,7 @@
         {
           "data": {
             "block": {
-              "Name": "minecraft:birch_sapling"
+              "id": "minecraft:birch_sapling"
             }
           },
           "weight": 1

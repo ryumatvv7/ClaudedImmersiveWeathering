@@ -5,7 +5,7 @@ import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
 import net.minecraft.core.HolderSet;
-import net.minecraft.core.RegistryCodecs;
+import net.minecraft.core.registries.codec.RegistryCodecs;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.biome.Biome;
@@ -16,7 +16,7 @@ record BiomeSetMatchTest(HolderSet<Biome> biomes) implements IPositionRuleTest {
 
     public static final String NAME = "biome_match";
     public static final Codec<BiomeSetMatchTest> CODEC = RecordCodecBuilder.create(instance -> instance.group(
-            RegistryCodecs.homogeneousList(Registries.BIOME).fieldOf("biomes").forGetter(BiomeSetMatchTest::biomes)
+            RegistryCodecs.holderSet(Registries.BIOME).fieldOf("biomes").forGetter(BiomeSetMatchTest::biomes)
     ).apply(instance, BiomeSetMatchTest::new));
 
     static final Type<BiomeSetMatchTest> TYPE =

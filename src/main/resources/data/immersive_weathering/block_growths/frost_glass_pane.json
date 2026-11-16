@@ -11,7 +11,7 @@
   "position_predicates": [
     {
       "biomes": "#immersive_weathering:icy",
-     "type": "biome_match"
+      "type": "biome_match"
     },
     {
       "type": "day_test",
@@ -26,8 +26,8 @@
         {
           "data": {
             "block": {
-              "Name": "immersive_weathering:frosty_glass_pane",
-              "Properties": {
+              "id": "immersive_weathering:frosty_glass_pane",
+              "properties": {
                 "natural": "true"
               }
             }

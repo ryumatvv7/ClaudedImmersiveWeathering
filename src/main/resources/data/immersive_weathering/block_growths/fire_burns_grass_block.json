@@ -13,7 +13,7 @@
         {
           "data": {
             "block": {
-              "Name": "minecraft:dirt"
+              "id": "minecraft:dirt"
             }
           },
           "weight": 1

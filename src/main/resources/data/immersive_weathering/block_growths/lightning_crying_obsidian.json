@@ -12,7 +12,7 @@
         {
           "data": {
             "block": {
-              "Name": "minecraft:crying_obsidian"
+              "id": "minecraft:crying_obsidian"
             }
           },
           "weight": 1

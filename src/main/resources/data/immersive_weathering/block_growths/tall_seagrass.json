@@ -16,14 +16,14 @@
         {
           "data": {
             "block": {
-              "Name": "minecraft:tall_seagrass",
-              "Properties": {
+              "id": "minecraft:tall_seagrass",
+              "properties": {
                 "half": "lower"
               }
             },
             "above_block": {
-              "Name": "minecraft:tall_seagrass",
-              "Properties": {
+              "id": "minecraft:tall_seagrass",
+              "properties": {
                 "half": "upper"
               }
             }

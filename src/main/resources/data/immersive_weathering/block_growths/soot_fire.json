@@ -14,10 +14,10 @@
         {
           "data": {
             "block": {
-              "Properties": {
+              "id": "immersive_weathering:soot",
+              "properties": {
                 "down": "true"
-              },
-              "Name": "immersive_weathering:soot"
+              }
             }
           },
           "weight": 1
@@ -31,10 +31,10 @@
         {
           "data": {
             "block": {
-              "Properties": {
+              "id": "immersive_weathering:soot",
+              "properties": {
                 "down": "true"
-              },
-              "Name": "immersive_weathering:soot"
+              }
             }
           },
           "weight": 1
@@ -48,10 +48,10 @@
         {
           "data": {
             "block": {
-              "Properties": {
+              "id": "immersive_weathering:soot",
+              "properties": {
                 "down": "true"
-              },
-              "Name": "immersive_weathering:soot"
+              }
             }
           },
           "weight": 1
@@ -65,10 +65,10 @@
         {
           "data": {
             "block": {
-              "Properties": {
+              "id": "immersive_weathering:soot",
+              "properties": {
                 "down": "true"
-              },
-              "Name": "immersive_weathering:soot"
+              }
             }
           },
           "weight": 1

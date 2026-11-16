@@ -1,5 +1,7 @@
 {
-  "tick_sources": ["snow"],
+  "tick_sources": [
+    "snow"
+  ],
   "growth_chance": 0.08,
   "target_self": true,
   "area_condition": {
@@ -17,8 +19,8 @@
         {
           "data": {
             "block": {
-              "Name": "immersive_weathering:frosty_fern",
-              "Properties": {
+              "id": "immersive_weathering:frosty_fern",
+              "properties": {
                 "natural": "true"
               }
             }

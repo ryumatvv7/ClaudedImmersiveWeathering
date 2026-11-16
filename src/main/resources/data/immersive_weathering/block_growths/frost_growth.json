@@ -28,8 +28,8 @@
         {
           "data": {
             "block": {
-              "Name": "immersive_weathering:frost",
-              "Properties": {
+              "id": "immersive_weathering:frost",
+              "properties": {
                 "natural": "true",
                 "down": "true"
               }

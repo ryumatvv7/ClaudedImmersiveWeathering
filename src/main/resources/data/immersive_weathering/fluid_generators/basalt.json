@@ -3,16 +3,16 @@
   "fluid": "minecraft:lava",
   "fluid_type": "flowing",
   "generate": {
-    "Name": "minecraft:basalt",
-    "Properties": {
+    "id": "minecraft:basalt",
+    "properties": {
       "axis": "y"
     }
   },
   "adjacent_blocks": {
     "down": {
       "block_state": {
-        "Name": "minecraft:basalt",
-        "Properties": {
+        "id": "minecraft:basalt",
+        "properties": {
           "axis": "y"
         }
       },

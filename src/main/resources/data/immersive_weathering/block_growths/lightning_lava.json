@@ -12,8 +12,8 @@
         {
           "data": {
             "block": {
-              "Name": "minecraft:lava",
-              "Properties": {
+              "id": "minecraft:lava",
+              "properties": {
                 "level": 15
               }
             }

@@ -99,7 +99,7 @@ public class BlockGrowthHandler extends RegistryJsonReloadListener {
                     Biome.Precipitation precipitation = biome.getPrecipitationAt(targetPos, level.getSeaLevel());
                     source = precipitation == Biome.Precipitation.SNOW ? TickSource.SNOW : TickSource.RAIN;
                 }
-                tickBlock(source, state, level, new BlockPos(targetPos));
+                tickBlock(source, state, level, targetPos.immutable());
             }
             chance--;
         } while (chance > 0);

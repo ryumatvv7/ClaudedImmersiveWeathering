@@ -22,7 +22,7 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
-import net.minecraft.world.level.block.state.properties.DripstoneThickness;
+import net.minecraft.world.level.block.state.properties.SpeleothemThickness;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
@@ -52,7 +52,7 @@ public class IceGrowth extends BuiltinBlockGrowth {
                     if (level.getFluidState(pos.above()).is(FluidTags.WATER) || (level.isBrightOutside() && !level.isRaining() && !level.isThundering())) {
                         level.setBlockAndUpdate(icePos, ModBlocks.ICICLE.get().defaultBlockState()
                                 .setValue(BlockStateProperties.VERTICAL_DIRECTION, Direction.DOWN)
-                                .setValue(IcicleBlock.THICKNESS, DripstoneThickness.TIP));
+                                .setValue(IcicleBlock.THICKNESS, SpeleothemThickness.TIP));
                     }
                 }
             }

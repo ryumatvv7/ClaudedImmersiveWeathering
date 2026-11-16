@@ -9,7 +9,6 @@ import net.minecraft.stats.Stats;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.HoeItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
@@ -26,8 +25,8 @@ public class SiltBlock extends Block {
     protected InteractionResult useItemOn(ItemStack heldStack, BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hitResult) {
         ItemStack stack = player.getItemInHand(hand);
         Item item = stack.getItem();
-        if (item instanceof HoeItem) {
-            level.playSound(player, pos, SoundEvents.HOE_TILL, SoundSource.BLOCKS, 1.0f, 1.0f);
+        if (item.getDefaultInstance().is(net.minecraft.tags.ItemTags.HOES)) {
+            level.playSound(player, pos, SoundEvents.HOE_TILL.value(), SoundSource.BLOCKS, 1.0f, 1.0f);
             stack.hurtAndBreak(1, player, hand);
             if (player instanceof ServerPlayer) {
                 level.setBlockAndUpdate(pos, ModBlocks.SILTY_FARMLAND.get().withPropertiesOf(state));

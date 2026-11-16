@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:ore",
+  "size": 32,
+  "discard_chance_on_air_exposure": 0,
+  "targets": [
+    {
+      "target": {
+        "predicate_type": "minecraft:block_match",
+        "block": "minecraft:water"
+      },
+      "state": {
+        "id": "immersive_weathering:earthen_clay",
+        "properties": {
+          "waterlogged": "true"
+        }
+      }
+    }
+  ]
+}

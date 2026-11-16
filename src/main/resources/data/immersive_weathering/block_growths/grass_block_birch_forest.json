@@ -17,7 +17,7 @@
         "minecraft:birch_forest",
         "minecraft:old_growth_birch_forest"
       ],
-     "type": "biome_match"
+      "type": "biome_match"
     }
   ],
   "growth_chance": 0.001,
@@ -28,7 +28,7 @@
         {
           "data": {
             "block": {
-              "Name": "minecraft:dandelion"
+              "id": "minecraft:dandelion"
             }
           },
           "weight": 10
@@ -36,7 +36,7 @@
         {
           "data": {
             "block": {
-              "Name": "minecraft:lily_of_the_valley"
+              "id": "minecraft:lily_of_the_valley"
             }
           },
           "weight": 10
@@ -44,7 +44,7 @@
         {
           "data": {
             "block": {
-              "Name": "immersive_weathering:weeds"
+              "id": "immersive_weathering:weeds"
             }
           },
           "weight": 10
@@ -52,7 +52,7 @@
         {
           "data": {
             "block": {
-              "Name": "minecraft:brown_mushroom"
+              "id": "minecraft:brown_mushroom"
             }
           },
           "weight": 10
@@ -60,7 +60,7 @@
         {
           "data": {
             "block": {
-              "Name": "minecraft:cornflower"
+              "id": "minecraft:cornflower"
             }
           },
           "weight": 10
@@ -68,14 +68,14 @@
         {
           "data": {
             "block": {
-              "Name": "minecraft:lilac",
-              "Properties": {
+              "id": "minecraft:lilac",
+              "properties": {
                 "half": "lower"
               }
             },
             "above_block": {
-              "Name": "minecraft:lilac",
-              "Properties": {
+              "id": "minecraft:lilac",
+              "properties": {
                 "half": "upper"
               }
             }
@@ -85,7 +85,7 @@
         {
           "data": {
             "block": {
-              "Name": "minecraft:short_grass"
+              "id": "minecraft:short_grass"
             }
           },
           "weight": 100

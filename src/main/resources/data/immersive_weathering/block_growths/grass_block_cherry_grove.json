@@ -16,7 +16,7 @@
       "biomes": [
         "minecraft:cherry_grove"
       ],
-     "type": "biome_match"
+      "type": "biome_match"
     }
   ],
   "growth_chance": 0.001,
@@ -27,8 +27,8 @@
         {
           "data": {
             "block": {
-              "Name": "minecraft:pink_petals",
-              "Properties": {
+              "id": "minecraft:pink_petals",
+              "properties": {
                 "facing": "west"
               }
             }
@@ -38,8 +38,8 @@
         {
           "data": {
             "block": {
-              "Name": "minecraft:pink_petals",
-              "Properties": {
+              "id": "minecraft:pink_petals",
+              "properties": {
                 "facing": "east"
               }
             }
@@ -49,8 +49,8 @@
         {
           "data": {
             "block": {
-              "Name": "minecraft:pink_petals",
-              "Properties": {
+              "id": "minecraft:pink_petals",
+              "properties": {
                 "facing": "north"
               }
             }
@@ -60,8 +60,8 @@
         {
           "data": {
             "block": {
-              "Name": "minecraft:pink_petals",
-              "Properties": {
+              "id": "minecraft:pink_petals",
+              "properties": {
                 "facing": "south"
               }
             }
@@ -71,8 +71,8 @@
         {
           "data": {
             "block": {
-              "Name": "minecraft:short_grass",
-              "Properties": {
+              "id": "minecraft:short_grass",
+              "properties": {
                 "facing": "west"
               }
             }

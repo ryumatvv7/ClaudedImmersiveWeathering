@@ -2,10 +2,9 @@
   "type": "target_other",
   "fluid": "minecraft:lava",
   "generate": {
-    "Name": "immersive_weathering:vitrified_sand"
+    "id": "immersive_weathering:vitrified_sand"
   },
-  "target":
-  {
+  "target": {
     "predicate_type": "minecraft:tag_match",
     "tag": "minecraft:sand"
   }

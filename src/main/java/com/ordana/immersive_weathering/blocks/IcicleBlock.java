@@ -23,7 +23,7 @@ import net.minecraft.world.level.LightLayer;
 import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.block.state.properties.DripstoneThickness;
+import net.minecraft.world.level.block.state.properties.SpeleothemThickness;
 import net.minecraft.world.level.gameevent.GameEventListener;
 import net.minecraft.world.level.material.Fluid;
 import net.minecraft.world.level.material.Fluids;
@@ -37,13 +37,13 @@ import java.util.function.Predicate;
 public class IcicleBlock extends PointedDripstoneBlock implements EntityBlock {
 
     public IcicleBlock(Properties settings) {
-        super(settings);
+        super(net.minecraft.world.level.block.Blocks.ICE.defaultBlockState(), settings);
     }
 
     @Nullable
     @Override
     public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
-        if (state.getValue(TIP_DIRECTION) == Direction.DOWN && state.getValue(THICKNESS) == DripstoneThickness.TIP) {
+        if (state.getValue(TIP_DIRECTION) == Direction.DOWN && state.getValue(THICKNESS) == SpeleothemThickness.TIP) {
             return new IcicleBlockEntity(pos, state);
         }
         return null;
@@ -90,8 +90,8 @@ public class IcicleBlock extends PointedDripstoneBlock implements EntityBlock {
 
                 return state;
             } else {
-                boolean flag = state.getValue(THICKNESS) == DripstoneThickness.TIP_MERGE;
-                DripstoneThickness dripstonethickness = calculateIcicleThickness(level, pos, direction, flag);
+                boolean flag = state.getValue(THICKNESS) == SpeleothemThickness.TIP_MERGE;
+                SpeleothemThickness dripstonethickness = calculateIcicleThickness(level, pos, direction, flag);
                 return state.setValue(THICKNESS, dripstonethickness);
             }
         }
@@ -99,7 +99,7 @@ public class IcicleBlock extends PointedDripstoneBlock implements EntityBlock {
 
     @Override
     public void fallOn(Level level, BlockState state, BlockPos pos, Entity entity, double fallDistance) {
-        if (state.getValue(TIP_DIRECTION) == Direction.UP && state.getValue(THICKNESS) == DripstoneThickness.TIP) {
+        if (state.getValue(TIP_DIRECTION) == Direction.UP && state.getValue(THICKNESS) == SpeleothemThickness.TIP) {
             entity.causeFallDamage(fallDistance + 2.0F, 3.5F, level.damageSources().fall());
 
         } else {
@@ -137,7 +137,7 @@ public class IcicleBlock extends PointedDripstoneBlock implements EntityBlock {
     public void randomTick(BlockState state, ServerLevel level, BlockPos pos, RandomSource random) {
         maybeFillCauldron(state, level, pos, random.nextFloat());
         if (random.nextFloat() < 0.2F && isIcicleTip(state, level, pos)) {
-            growStalactiteOrStalagmiteIfPossible(state, level, pos, random);
+            growIcicleIfPossible(state, level, pos, random);
         }
         var biome = level.getBiome(pos);
         if ((level.getBrightness(LightLayer.BLOCK, pos) > 13 - state.getLightDampening()) || (level.dimension() == Level.NETHER) || (!biome.is(ModTags.ICY) && level.isBrightOutside() && !level.isRaining())) {
@@ -157,7 +157,7 @@ public class IcicleBlock extends PointedDripstoneBlock implements EntityBlock {
                 }
 
                 if (!(dripChance >= f)) {
-                    BlockPos blockPos = findTip(state, level, pos, 11, false);
+                    BlockPos blockPos = findIcicleTip(state, level, pos, 11, false);
                     if (blockPos != null) {
                         BlockPos blockPos2 = getCauldronPos(level, blockPos);
                         if (blockPos2 != null) {
@@ -184,7 +184,7 @@ public class IcicleBlock extends PointedDripstoneBlock implements EntityBlock {
             return null;
         } else {
             boolean bl = !ctx.isSecondaryUseActive();
-            DripstoneThickness thickness = calculateIcicleThickness(levelAccess, blockPos, direction2, bl);
+            SpeleothemThickness thickness = calculateIcicleThickness(levelAccess, blockPos, direction2, bl);
             return thickness == null ? null : this.defaultBlockState().setValue(TIP_DIRECTION, direction2).setValue(THICKNESS, thickness).setValue(WATERLOGGED, levelAccess.getFluidState(blockPos).getType() == Fluids.WATER);
         }
     }
@@ -225,11 +225,11 @@ public class IcicleBlock extends PointedDripstoneBlock implements EntityBlock {
         }
     }
 
-    public static void growStalactiteOrStalagmiteIfPossible(BlockState state, ServerLevel level, BlockPos pos, RandomSource random) {
+    public static void growIcicleIfPossible(BlockState state, ServerLevel level, BlockPos pos, RandomSource random) {
         BlockState blockState = level.getBlockState(pos.above(1));
         BlockState blockState2 = level.getBlockState(pos.above(2));
         if (canGrow(blockState, blockState2) && level.isBrightOutside() && !level.isRaining() && !level.isThundering()) {
-            BlockPos blockPos = findTip(state, level, pos, 7, false);
+            BlockPos blockPos = findIcicleTip(state, level, pos, 7, false);
             if (blockPos != null) {
                 BlockState blockState3 = level.getBlockState(blockPos);
                 if (canDrip(blockState3) && canTipGrow(blockState3, level, blockPos)) {
@@ -272,12 +272,12 @@ public class IcicleBlock extends PointedDripstoneBlock implements EntityBlock {
         if (isUnmergedTipWithDirection(blockState, direction.getOpposite())) {
             createMergedTips(blockState, level, blockPos);
         } else if (blockState.isAir() || blockState.is(Blocks.WATER)) {
-            createIcicle(level, blockPos, direction, DripstoneThickness.TIP);
+            createIcicle(level, blockPos, direction, SpeleothemThickness.TIP);
         }
 
     }
 
-    private static void createIcicle(LevelAccessor level, BlockPos pos, Direction direction, DripstoneThickness thickness) {
+    private static void createIcicle(LevelAccessor level, BlockPos pos, Direction direction, SpeleothemThickness thickness) {
         BlockState blockState = ModBlocks.ICICLE.get().defaultBlockState().setValue(TIP_DIRECTION, direction).setValue(THICKNESS, thickness).setValue(WATERLOGGED, level.getFluidState(pos).getType() == Fluids.WATER);
         level.setBlock(pos, blockState, 3);
     }
@@ -293,8 +293,8 @@ public class IcicleBlock extends PointedDripstoneBlock implements EntityBlock {
             blockPos = pos.below();
         }
 
-        createIcicle(level, blockPos2, Direction.DOWN, DripstoneThickness.TIP_MERGE);
-        createIcicle(level, blockPos, Direction.UP, DripstoneThickness.TIP_MERGE);
+        createIcicle(level, blockPos2, Direction.DOWN, SpeleothemThickness.TIP_MERGE);
+        createIcicle(level, blockPos, Direction.UP, SpeleothemThickness.TIP_MERGE);
     }
 
     private static void spawnDripParticle(Level level, BlockPos pos, BlockState state, Fluid fluid) {
@@ -307,7 +307,7 @@ public class IcicleBlock extends PointedDripstoneBlock implements EntityBlock {
     }
 
     @Nullable
-    private static BlockPos findTip(BlockState state, LevelAccessor level, BlockPos pos, int range, boolean allowMerged) {
+    private static BlockPos findIcicleTip(BlockState state, LevelAccessor level, BlockPos pos, int range, boolean allowMerged) {
         if (isTip(state, allowMerged)) {
             return pos;
         } else {
@@ -333,26 +333,26 @@ public class IcicleBlock extends PointedDripstoneBlock implements EntityBlock {
         return direction2;
     }
 
-    private static DripstoneThickness calculateIcicleThickness(LevelReader level, BlockPos pos, Direction direction, boolean tryMerge) {
+    private static SpeleothemThickness calculateIcicleThickness(LevelReader level, BlockPos pos, Direction direction, boolean tryMerge) {
         Direction direction2 = direction.getOpposite();
         BlockState blockState = level.getBlockState(pos.relative(direction));
         if (isIcicleFacingDirection(blockState, direction2)) {
-            return !tryMerge && blockState.getValue(THICKNESS) != DripstoneThickness.TIP_MERGE ? DripstoneThickness.TIP : DripstoneThickness.TIP_MERGE;
+            return !tryMerge && blockState.getValue(THICKNESS) != SpeleothemThickness.TIP_MERGE ? SpeleothemThickness.TIP : SpeleothemThickness.TIP_MERGE;
         } else if (!isIcicleFacingDirection(blockState, direction)) {
-            return DripstoneThickness.TIP;
+            return SpeleothemThickness.TIP;
         } else {
-            DripstoneThickness thickness = blockState.getValue(THICKNESS);
-            if (thickness != DripstoneThickness.TIP && thickness != DripstoneThickness.TIP_MERGE) {
+            SpeleothemThickness thickness = blockState.getValue(THICKNESS);
+            if (thickness != SpeleothemThickness.TIP && thickness != SpeleothemThickness.TIP_MERGE) {
                 BlockState blockState2 = level.getBlockState(pos.relative(direction2));
-                return !isIcicleFacingDirection(blockState2, direction) ? DripstoneThickness.BASE : DripstoneThickness.MIDDLE;
+                return !isIcicleFacingDirection(blockState2, direction) ? SpeleothemThickness.BASE : SpeleothemThickness.MIDDLE;
             } else {
-                return DripstoneThickness.FRUSTUM;
+                return SpeleothemThickness.FRUSTUM;
             }
         }
     }
 
     public static boolean canDrip(BlockState state) {
-        return isIcicle(state) && state.getValue(THICKNESS) == DripstoneThickness.TIP && !(Boolean) state.getValue(WATERLOGGED);
+        return isIcicle(state) && state.getValue(THICKNESS) == SpeleothemThickness.TIP && !(Boolean) state.getValue(WATERLOGGED);
     }
 
     private static boolean canTipGrow(BlockState state, ServerLevel level, BlockPos pos) {
@@ -382,8 +382,8 @@ public class IcicleBlock extends PointedDripstoneBlock implements EntityBlock {
         if (!state.is(ModBlocks.ICICLE.get())) {
             return false;
         } else {
-            DripstoneThickness thickness = state.getValue(THICKNESS);
-            return thickness == DripstoneThickness.TIP || allowMerged && thickness == DripstoneThickness.TIP_MERGE;
+            SpeleothemThickness thickness = state.getValue(THICKNESS);
+            return thickness == SpeleothemThickness.TIP || allowMerged && thickness == SpeleothemThickness.TIP_MERGE;
         }
     }
 

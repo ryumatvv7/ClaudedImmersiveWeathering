@@ -6,8 +6,8 @@
   "area_condition": {
     "must_have": {
       "block_state": {
-        "Name": "immersive_weathering:weeds",
-        "Properties": {
+        "id": "immersive_weathering:weeds",
+        "properties": {
           "age": "7"
         }
       },
@@ -27,8 +27,8 @@
         {
           "data": {
             "block": {
-              "Name": "immersive_weathering:weeds",
-              "Properties": {
+              "id": "immersive_weathering:weeds",
+              "properties": {
                 "age": "0"
               }
             }

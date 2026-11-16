@@ -13,8 +13,10 @@
   },
   "position_predicates": [
     {
-      "biomes": ["minecraft:plains"],
-     "type": "biome_match"
+      "biomes": [
+        "minecraft:plains"
+      ],
+      "type": "biome_match"
     }
   ],
   "growth_chance": 0.001,
@@ -25,7 +27,7 @@
         {
           "data": {
             "block": {
-              "Name": "minecraft:dandelion"
+              "id": "minecraft:dandelion"
             }
           },
           "weight": 10
@@ -33,7 +35,7 @@
         {
           "data": {
             "block": {
-              "Name": "minecraft:azure_bluet"
+              "id": "minecraft:azure_bluet"
             }
           },
           "weight": 10
@@ -41,7 +43,7 @@
         {
           "data": {
             "block": {
-              "Name": "minecraft:oxeye_daisy"
+              "id": "minecraft:oxeye_daisy"
             }
           },
           "weight": 10
@@ -49,7 +51,7 @@
         {
           "data": {
             "block": {
-              "Name": "minecraft:cornflower"
+              "id": "minecraft:cornflower"
             }
           },
           "weight": 10
@@ -57,7 +59,7 @@
         {
           "data": {
             "block": {
-              "Name": "minecraft:pumpkin"
+              "id": "minecraft:pumpkin"
             }
           },
           "weight": 1
@@ -65,8 +67,8 @@
         {
           "data": {
             "block": {
-              "Name": "immersive_weathering:weeds",
-              "Properties": {
+              "id": "immersive_weathering:weeds",
+              "properties": {
                 "age": "0"
               }
             }
@@ -76,7 +78,7 @@
         {
           "data": {
             "block": {
-              "Name": "minecraft:short_grass"
+              "id": "minecraft:short_grass"
             }
           },
           "weight": 100

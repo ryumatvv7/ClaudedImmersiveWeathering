@@ -49,7 +49,7 @@ public class ConfigurableBlockGrowth implements IBlockGrowth {
             RuleTest.CODEC.fieldOf("replacing_target").forGetter(ConfigurableBlockGrowth::getTargetPredicate),
             StrOpt.of(AreaCondition.CODEC, "area_condition", AreaCondition.EMPTY).forGetter(ConfigurableBlockGrowth::getAreaCondition),
             DirectionalList.CODEC.listOf().fieldOf("growth_for_face").forGetter(ConfigurableBlockGrowth::encodeRandomLists),
-            StrOpt.of(RegistryCodecs.homogeneousList(Registries.BLOCK),"owners").forGetter(b -> Optional.ofNullable(b.owners)),
+            StrOpt.of(net.minecraft.core.registries.codec.RegistryCodecs.holderSet(Registries.BLOCK),"owners").forGetter(b -> Optional.ofNullable(b.owners)),
             StrOpt.of(IPositionRuleTest.CODEC.listOf(),"position_predicates", List.of()).forGetter(ConfigurableBlockGrowth::getPositionTests),
             StrOpt.of(Codec.BOOL, "target_self", false).forGetter(ConfigurableBlockGrowth::targetSelf),
             StrOpt.of(Codec.BOOL, "destroy_target", false).forGetter(ConfigurableBlockGrowth::destroyTarget)
@@ -209,7 +209,7 @@ public class ConfigurableBlockGrowth implements IBlockGrowth {
             BlockPos targetPos = targetSelf ? pos : pos.relative(dir);
             BlockState target = level.getBlockState(targetPos);
 
-            if (targetSelf || targetPredicate.test(target, seed)) {
+            if (targetSelf || targetPredicate.test(target, targetPos, seed)) {
                 if (targetSelf && targetPredicate instanceof RandomBlockMatchTestAccessor rbm) {
                     //hack to get a probability here for self target
                     if ((seed.nextFloat() >= rbm.getProbability())) return; //TODO: use AW here
@@ -225,7 +225,7 @@ public class ConfigurableBlockGrowth implements IBlockGrowth {
                             targetPos2 = targetPos.relative(dir);
                             target2 = level.getBlockState(targetPos2);
                             seed = RandomSource.create(Mth.getSeed(pos));
-                            if (!targetPredicate.test(target2, seed)) {
+                            if (!targetPredicate.test(target2, targetPos2, seed)) {
                                 return;
                             }
                         }

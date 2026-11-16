@@ -27,10 +27,10 @@ public class AshItem extends BlockItem {
         BlockPos pos = context.getClickedPos();
         BlockState state = level.getBlockState(pos);
         if (CommonConfigs.ASH_FERTILIZER.get() && state.getBlock() instanceof BonemealableBlock b
-                && b.isValidBonemealTarget(level, pos, state)) {
+                && b.isValidBonemealTarget(level, pos, state, net.minecraft.world.level.block.BonemealSource.INTERACTION)) {
             if (level instanceof ServerLevel serverLevel) {
-                if (b.isBonemealSuccess(level, level.getRandom(), pos, state)) {
-                    b.performBonemeal(serverLevel, level.getRandom(), pos, state);
+                if (b.isBonemealSuccess(level, level.getRandom(), pos, state, net.minecraft.world.level.block.BonemealSource.INTERACTION)) {
+                    b.performBonemeal(serverLevel, level.getRandom(), pos, state, net.minecraft.world.level.block.BonemealSource.INTERACTION);
                 }
                 context.getItemInHand().consume(1, context.getPlayer());
                 level.levelEvent(1505, pos, 15); //bone meal particles

@@ -12,7 +12,6 @@ import com.ordana.immersive_weathering.reg.*;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.event.player.UseBlockCallback;
 import net.fabricmc.fabric.api.registry.FlammableBlockRegistry;
-import net.fabricmc.fabric.api.registry.FuelValueEvents;
 import net.fabricmc.fabric.api.registry.OxidizableBlocksRegistry;
 import net.minecraft.resources.Identifier;
 import net.minecraft.world.level.block.Blocks;
@@ -78,10 +77,8 @@ public class ImmersiveWeathering implements ModInitializer {
 
         //dev only smoke test, does nothing unless -Diw.selfTest=true
         com.ordana.immersive_weathering.util.DevSelfTest.register();
-
-        //burn times (replaces Moonlight's old FuelBlockItem)
-        FuelValueEvents.BUILD.register((builder, context) ->
-                ModBlocks.FUELS.forEach((item, time) -> builder.add(item.get(), time)));
+        //composting chances and burn times (item components)
+        ModCompostable.register();
     }
 
     public static void setup() {
@@ -92,8 +89,6 @@ public class ImmersiveWeathering implements ModInitializer {
         }
         ModPositionRuleTests.register();
         ModFluidGenerators.register();
-        ModCompostable.register();
-
         ModWaxables.getValues().forEach(OxidizableBlocksRegistry::registerWaxable);
 
         FlammableBlockRegistry flammable = FlammableBlockRegistry.getDefaultInstance();

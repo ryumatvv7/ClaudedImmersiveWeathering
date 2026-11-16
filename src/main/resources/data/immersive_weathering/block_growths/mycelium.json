@@ -14,7 +14,7 @@
         {
           "data": {
             "block": {
-              "Name": "minecraft:red_mushroom"
+              "id": "minecraft:red_mushroom"
             }
           },
           "weight": 10
@@ -22,7 +22,7 @@
         {
           "data": {
             "block": {
-              "Name": "minecraft:brown_mushroom"
+              "id": "minecraft:brown_mushroom"
             }
           },
           "weight": 10

@@ -16,7 +16,7 @@
       "biomes": [
         "minecraft:dark_forest"
       ],
-     "type": "biome_match"
+      "type": "biome_match"
     }
   ],
   "growth_chance": 0.001,
@@ -27,7 +27,7 @@
         {
           "data": {
             "block": {
-              "Name": "minecraft:red_mushroom"
+              "id": "minecraft:red_mushroom"
             }
           },
           "weight": 1000
@@ -35,7 +35,7 @@
         {
           "data": {
             "block": {
-              "Name": "minecraft:brown_mushroom"
+              "id": "minecraft:brown_mushroom"
             }
           },
           "weight": 1000
@@ -43,7 +43,7 @@
         {
           "data": {
             "block": {
-              "Name": "minecraft:poppy"
+              "id": "minecraft:poppy"
             }
           },
           "weight": 1000
@@ -51,14 +51,14 @@
         {
           "data": {
             "block": {
-              "Name": "minecraft:rose_bush",
-              "Properties": {
+              "id": "minecraft:rose_bush",
+              "properties": {
                 "half": "lower"
               }
             },
             "above_block": {
-              "Name": "minecraft:rose_bush",
-              "Properties": {
+              "id": "minecraft:rose_bush",
+              "properties": {
                 "half": "upper"
               }
             }
@@ -68,25 +68,11 @@
         {
           "data": {
             "block": {
-              "Name": "minecraft:dark_oak_fence"
-            },
-            "above_block":{
-              "Name": "minecraft:carved_pumpkin",
-              "Properties": {
-                "facing": "north"
-              }
-            }
-          },
-          "weight": 1
-        },
-        {
-          "data": {
-            "block": {
-              "Name": "minecraft:dark_oak_fence"
+              "id": "minecraft:dark_oak_fence"
             },
             "above_block": {
-              "Name": "minecraft:carved_pumpkin",
-              "Properties": {
+              "id": "minecraft:carved_pumpkin",
+              "properties": {
                 "facing": "north"
               }
             }
@@ -96,11 +82,11 @@
         {
           "data": {
             "block": {
-              "Name": "minecraft:dark_oak_fence"
+              "id": "minecraft:dark_oak_fence"
             },
             "above_block": {
-              "Name": "minecraft:carved_pumpkin",
-              "Properties": {
+              "id": "minecraft:carved_pumpkin",
+              "properties": {
                 "facing": "north"
               }
             }
@@ -110,11 +96,25 @@
         {
           "data": {
             "block": {
-              "Name": "minecraft:dark_oak_fence"
+              "id": "minecraft:dark_oak_fence"
             },
-            "above_block":{
-              "Name": "minecraft:carved_pumpkin",
-              "Properties": {
+            "above_block": {
+              "id": "minecraft:carved_pumpkin",
+              "properties": {
+                "facing": "north"
+              }
+            }
+          },
+          "weight": 1
+        },
+        {
+          "data": {
+            "block": {
+              "id": "minecraft:dark_oak_fence"
+            },
+            "above_block": {
+              "id": "minecraft:carved_pumpkin",
+              "properties": {
                 "facing": "west"
               }
             }
@@ -124,11 +124,11 @@
         {
           "data": {
             "block": {
-              "Name": "minecraft:dark_oak_fence"
+              "id": "minecraft:dark_oak_fence"
             },
-            "above_block":{
-              "Name": "minecraft:jack_o_lantern",
-              "Properties": {
+            "above_block": {
+              "id": "minecraft:jack_o_lantern",
+              "properties": {
                 "facing": "north"
               }
             }
@@ -138,11 +138,11 @@
         {
           "data": {
             "block": {
-              "Name": "minecraft:dark_oak_fence"
+              "id": "minecraft:dark_oak_fence"
             },
-            "above_block":{
-              "Name": "minecraft:jack_o_lantern",
-              "Properties": {
+            "above_block": {
+              "id": "minecraft:jack_o_lantern",
+              "properties": {
                 "facing": "south"
               }
             }
@@ -152,11 +152,11 @@
         {
           "data": {
             "block": {
-              "Name": "minecraft:dark_oak_fence"
+              "id": "minecraft:dark_oak_fence"
             },
-            "above_block":{
-              "Name": "minecraft:jack_o_lantern",
-              "Properties": {
+            "above_block": {
+              "id": "minecraft:jack_o_lantern",
+              "properties": {
                 "facing": "east"
               }
             }
@@ -166,11 +166,11 @@
         {
           "data": {
             "block": {
-              "Name": "minecraft:dark_oak_fence"
+              "id": "minecraft:dark_oak_fence"
             },
-            "above_block":{
-              "Name": "minecraft:jack_o_lantern",
-              "Properties": {
+            "above_block": {
+              "id": "minecraft:jack_o_lantern",
+              "properties": {
                 "facing": "west"
               }
             }
@@ -180,7 +180,7 @@
         {
           "data": {
             "block": {
-              "Name": "minecraft:short_grass"
+              "id": "minecraft:short_grass"
             }
           },
           "weight": 0

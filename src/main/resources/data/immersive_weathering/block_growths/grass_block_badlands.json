@@ -17,7 +17,7 @@
         "minecraft:eroded_badlands",
         "minecraft:desert"
       ],
-     "type": "biome_match"
+      "type": "biome_match"
     }
   ],
   "growth_chance": 0.001,
@@ -28,7 +28,7 @@
         {
           "data": {
             "block": {
-              "Name": "immersive_weathering:dune_grass"
+              "id": "immersive_weathering:dune_grass"
             }
           },
           "weight": 5
@@ -36,7 +36,7 @@
         {
           "data": {
             "block": {
-              "Name": "minecraft:dead_bush"
+              "id": "minecraft:dead_bush"
             }
           },
           "weight": 1
@@ -44,7 +44,7 @@
         {
           "data": {
             "block": {
-              "Name": "minecraft:short_grass"
+              "id": "minecraft:short_grass"
             }
           },
           "weight": 0

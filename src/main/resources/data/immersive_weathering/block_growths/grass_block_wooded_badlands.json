@@ -19,7 +19,7 @@
         "minecraft:savanna_plateau",
         "minecraft:windswept_savanna"
       ],
-     "type": "biome_match"
+      "type": "biome_match"
     }
   ],
   "growth_chance": 0.0005,
@@ -30,7 +30,7 @@
         {
           "data": {
             "block": {
-              "Name": "immersive_weathering:dune_grass"
+              "id": "immersive_weathering:dune_grass"
             }
           },
           "weight": 50
@@ -38,7 +38,7 @@
         {
           "data": {
             "block": {
-              "Name": "minecraft:dead_bush"
+              "id": "minecraft:dead_bush"
             }
           },
           "weight": 30
@@ -46,7 +46,7 @@
         {
           "data": {
             "block": {
-              "Name": "minecraft:short_grass"
+              "id": "minecraft:short_grass"
             }
           },
           "weight": 100

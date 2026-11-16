@@ -92,16 +92,17 @@ public class ModBlocks {
     }
 
     private static final BlockBehaviour.StateArgumentPredicate<EntityType<?>> CAN_SPAWN_ON_LEAVES = (a, b, c, t) ->
-        t == EntityType.OCELOT || t == EntityType.PARROT;
+        t == net.minecraft.world.entity.EntityTypes.OCELOT || t == net.minecraft.world.entity.EntityTypes.PARROT;
 
     private static final BlockBehaviour.StatePredicate NEVER = (s, w, p) -> false;
+    private static final BlockBehaviour.StateArgumentPredicate<net.minecraft.world.phys.AABB> NEVER_VIEW = (s, w, p, b) -> false;
 
 
     public static Properties leafPileProperties() {
         return Properties.of()
         .randomTicks().instabreak().sound(SoundType.GRASS)
         .noOcclusion().isValidSpawn(CAN_SPAWN_ON_LEAVES)
-        .isSuffocating(NEVER).isViewBlocking(NEVER);
+        .isSuffocating(NEVER).isViewBlocking(NEVER_VIEW);
     }
 
 
@@ -124,17 +125,17 @@ public class ModBlocks {
     public static final Supplier<Block> SAND_LAYER_BLOCK = regWithItem("sand_layer_block", p ->
         new SandLayerBlock(14406560, p), () -> Properties.ofFullCopy(Blocks.SAND).strength(0.5f)
             .sound(SoundType.SAND).isSuffocating(NEVER)
-            .isViewBlocking((blockState, blockView, blockPos) -> blockState.getValue(LayerBlock.LAYERS_8) >= 8)
+            .isViewBlocking((blockState, blockView, blockPos, nearBox) -> blockState.getValue(LayerBlock.LAYERS_8) >= 8)
             .noOcclusion().requiresCorrectToolForDrops());
     public static final Supplier<Block> ASH_LAYER_BLOCK = regBlock("ash_layer_block", p ->
         new com.ordana.immersive_weathering.blocks.AshLayerBlock(p), () -> Properties.of().mapColor(net.minecraft.world.level.material.MapColor.COLOR_GRAY)
             .strength(0.1f).sound(SoundType.SAND).randomTicks().replaceable().isSuffocating(NEVER)
-            .isViewBlocking((blockState, blockView, blockPos) -> blockState.getValue(LayerBlock.LAYERS_8) >= 8));
+            .isViewBlocking((blockState, blockView, blockPos, nearBox) -> blockState.getValue(LayerBlock.LAYERS_8) >= 8));
 
     public static final Supplier<Block> RED_SAND_LAYER_BLOCK = regWithItem("red_sand_layer_block", p ->
         new SandLayerBlock(11098145, p), () -> Properties.ofFullCopy(Blocks.RED_SAND).strength(0.5f)
             .sound(SoundType.SAND).isSuffocating(NEVER)
-            .isViewBlocking((blockState, blockView, blockPos) -> blockState.getValue(LayerBlock.LAYERS_8) >= 8)
+            .isViewBlocking((blockState, blockView, blockPos, nearBox) -> blockState.getValue(LayerBlock.LAYERS_8) >= 8)
             .noOcclusion().requiresCorrectToolForDrops());
 
 
@@ -339,7 +340,7 @@ public class ModBlocks {
     public static final Supplier<Block> VITRIFIED_SAND = regWithItem("vitrified_sand", p ->
         new TransparentBlock(p), () -> Properties.ofFullCopy(Blocks.GLASS)
             .strength(2f, 6f).sound(SoundType.TUFF)
-            .requiresCorrectToolForDrops().noOcclusion().isViewBlocking((s, l, p) -> false));
+            .requiresCorrectToolForDrops().noOcclusion().isViewBlocking((s, l, p, nearBox) -> false));
 
 
     //soil blocks
@@ -395,7 +396,7 @@ public class ModBlocks {
             .sound(SoundType.GLASS).noOcclusion().dynamicShape());
     public static final Supplier<Block> THIN_ICE = regBlock("thin_ice", p ->
         new ThinIceBlock(p), () -> Properties.ofFullCopy(Blocks.ICE)
-            .isViewBlocking(NEVER).isSuffocating(NEVER).isViewBlocking(NEVER));
+            .isViewBlocking(NEVER_VIEW).isSuffocating(NEVER).isViewBlocking(NEVER_VIEW));
 
     public static final Supplier<Block> FROST = regBlock("frost", p ->
         new FrostBlock(p), () -> Properties.ofFullCopy(Blocks.SNOW)
@@ -611,7 +612,7 @@ public class ModBlocks {
         new WallBlock(p), () -> Properties.ofFullCopy(Blocks.DARK_PRISMARINE));
 
     public static final Supplier<Block> TINTED_GLASS_PANE = regWithItem("tinted_glass_pane", p ->
-        new TintedGlassPane(p), () -> Properties.of().strength(0.3F).sound(SoundType.GLASS).noOcclusion().isRedstoneConductor(NEVER).isSuffocating(NEVER).isViewBlocking(NEVER));
+        new TintedGlassPane(p), () -> Properties.of().strength(0.3F).sound(SoundType.GLASS).noOcclusion().isRedstoneConductor(NEVER).isSuffocating(NEVER).isViewBlocking(NEVER_VIEW));
 
 
     /** Called after registration: fills {@link #LEAF_PILES}. */

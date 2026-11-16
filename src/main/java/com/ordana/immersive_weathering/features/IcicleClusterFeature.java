@@ -1,5 +1,7 @@
 package com.ordana.immersive_weathering.features;
 
+import com.mojang.serialization.MapCodec;
+
 import com.mojang.serialization.Codec;
 import com.ordana.immersive_weathering.reg.ModBlocks;
 import net.minecraft.core.BlockPos;
@@ -16,23 +18,31 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.levelgen.Column;
 import net.minecraft.world.level.levelgen.feature.Feature;
-import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
 
 import java.util.Iterator;
 import java.util.Optional;
 import java.util.OptionalInt;
 
-public class IcicleClusterFeature extends Feature<IcicleClusterFeatureConfig> {
-    public IcicleClusterFeature(Codec<IcicleClusterFeatureConfig> codec) {
-        super(codec);
+public class IcicleClusterFeature implements Feature {
+
+    public static final MapCodec<IcicleClusterFeature> CODEC =
+            IcicleClusterFeatureConfig.CODEC.xmap(IcicleClusterFeature::new, f -> f.config);
+
+    private final IcicleClusterFeatureConfig config;
+
+    public IcicleClusterFeature(IcicleClusterFeatureConfig config) {
+        this.config = config;
     }
 
     @Override
-    public boolean place(FeaturePlaceContext<IcicleClusterFeatureConfig> context) {
-        WorldGenLevel structureWorldAccess = context.level();
-        BlockPos blockPos = context.origin();
-        IcicleClusterFeatureConfig icicleClusterFeatureConfig = context.config();
-        RandomSource random = context.random();
+    public MapCodec<IcicleClusterFeature> codec() {
+        return CODEC;
+    }
+
+    @Override
+    public boolean place(WorldGenLevel structureWorldAccess, net.minecraft.world.level.chunk.ChunkGenerator chunkGenerator,
+                         RandomSource random, BlockPos blockPos) {
+        IcicleClusterFeatureConfig icicleClusterFeatureConfig = this.config;
         if (!IcicleHelper.canGenerate(structureWorldAccess, blockPos)) {
             return false;
         } else {

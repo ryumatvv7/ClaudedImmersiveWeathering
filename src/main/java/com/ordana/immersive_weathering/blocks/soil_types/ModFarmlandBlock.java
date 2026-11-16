@@ -18,7 +18,7 @@ import java.util.Iterator;
 public class ModFarmlandBlock extends FarmlandBlock {
 
     public ModFarmlandBlock(Properties properties) {
-        super(properties);
+        super(net.minecraft.world.level.block.Blocks.DIRT, properties);
         this.registerDefaultState(this.stateDefinition.any().setValue(MOISTURE, 0));
     }
 
@@ -30,7 +30,7 @@ public class ModFarmlandBlock extends FarmlandBlock {
     @Override
     public void tick(BlockState blockState, ServerLevel serverLevel, BlockPos blockPos, RandomSource randomSource) {
         if (!blockState.canSurvive(serverLevel, blockPos)) {
-            turnToDirt(null, blockState, serverLevel, blockPos);
+            turnToBaseBlock(null, blockState, serverLevel, blockPos);
         }
     }
 
@@ -73,7 +73,7 @@ public class ModFarmlandBlock extends FarmlandBlock {
             if (i > 0) {
                 serverLevel.setBlock(blockPos, blockState.setValue(MOISTURE, i - 1), 2);
             } else if (!isUnderCrops(serverLevel, blockPos)) {
-                turnToDirt(null, blockState, serverLevel, blockPos);
+                turnToBaseBlock(null, blockState, serverLevel, blockPos);
             }
         } else if (i < MAX_MOISTURE) {
             serverLevel.setBlock(blockPos, blockState.setValue(MOISTURE, MAX_MOISTURE), 2);

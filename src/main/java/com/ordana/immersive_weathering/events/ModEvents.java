@@ -15,7 +15,7 @@ import com.ordana.immersive_weathering.data.block_growths.TickSource;
 import com.ordana.immersive_weathering.reg.*;
 import com.ordana.immersive_weathering.util.Weatherable;
 import com.ordana.immersive_weathering.util.WeatheringHelper;
-import net.minecraft.advancements.CriteriaTriggers;
+import net.minecraft.advancements.triggers.CriteriaTriggers;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.BlockParticleOption;
 import net.minecraft.core.particles.ParticleTypes;
@@ -114,10 +114,10 @@ public class ModEvents {
                                                   Player player, Level level, InteractionHand hand, BlockHitResult hitResult) {
         if (CommonConfigs.AXE_SCRAPING.get()) {
 
-            if (item instanceof AxeItem && state.getBlock() instanceof Rustable rustable && !state.is(ModTags.WAXED_BLOCKS)) {
+            if (item.getDefaultInstance().is(net.minecraft.tags.ItemTags.AXES) && state.getBlock() instanceof Rustable rustable && !state.is(ModTags.WAXED_BLOCKS)) {
                 Rustable.RustLevel rustLevel = rustable.getAge();
                 if (!rustLevel.canScrape()) {
-                    level.playSound(player, pos, SoundEvents.AXE_SCRAPE, SoundSource.BLOCKS, 1.0f, 1.0f);
+                    level.playSound(player, pos, SoundEvents.AXE_SCRAPE.value(), SoundSource.BLOCKS, 1.0f, 1.0f);
                     level.playSound(player, pos, SoundEvents.SHIELD_BREAK.value(), SoundSource.BLOCKS, 1.0f, 1.0f);
                     ParticleUtils.spawnParticlesOnBlockFaces(level, pos, ModParticles.SCRAPE_RUST.get(), UniformInt.of(3, 5));
                     if (level.isClientSide()) ParticleUtils.spawnParticlesOnBlockFaces(level, pos, ParticleTypes.SMOKE, UniformInt.of(3, 5));
@@ -131,7 +131,7 @@ public class ModEvents {
 
                 if (rustLevel != Rustable.RustLevel.UNAFFECTED) {
                     ParticleUtils.spawnParticlesOnBlockFaces(level, pos, ModParticles.SCRAPE_RUST.get(), UniformInt.of(3, 5));
-                    level.playSound(player, pos, SoundEvents.AXE_SCRAPE, SoundSource.BLOCKS, 1.0f, 1.0f);
+                    level.playSound(player, pos, SoundEvents.AXE_SCRAPE.value(), SoundSource.BLOCKS, 1.0f, 1.0f);
 
                     if (player instanceof ServerPlayer serverPlayer) {
                         stack.hurtAndBreak(1, player, hand);
@@ -145,7 +145,7 @@ public class ModEvents {
                 if (state.getBlock() instanceof Rustable rustable && !state.is(ModTags.WAXED_BLOCKS)) {
                     Rustable.RustLevel rustLevel = rustable.getAge();
                     if (rustLevel != Rustable.RustLevel.UNAFFECTED) {
-                        level.playSound(player, pos, SoundEvents.AXE_SCRAPE, SoundSource.BLOCKS, 1.0f, 1.0f);
+                        level.playSound(player, pos, SoundEvents.AXE_SCRAPE.value(), SoundSource.BLOCKS, 1.0f, 1.0f);
                         ParticleUtils.spawnParticlesOnBlockFaces(level, pos, ModParticles.SCRAPE_RUST.get(), UniformInt.of(3, 5));
                         if (player instanceof ServerPlayer serverPlayer) {
                             stack.hurtAndBreak(1, player, hand);
@@ -158,7 +158,7 @@ public class ModEvents {
                 }
 
                 if (state.is(ModTags.WAXED_BLOCKS)) {
-                    level.playSound(player, pos, SoundEvents.AXE_WAX_OFF, SoundSource.BLOCKS, 1.0f, 1.0f);
+                    level.playSound(player, pos, SoundEvents.AXE_WAX_OFF.value(), SoundSource.BLOCKS, 1.0f, 1.0f);
                     ParticleUtils.spawnParticlesOnBlockFaces(level, pos, ParticleTypes.WAX_OFF, UniformInt.of(3, 5));
                     if (player instanceof ServerPlayer serverPlayer) {
                         stack.hurtAndBreak(1, player, hand);
@@ -169,7 +169,7 @@ public class ModEvents {
                     return InteractionResult.SUCCESS;
                 }
                 if (state.is(ModTags.COPPER)) {
-                    level.playSound(player, pos, SoundEvents.AXE_SCRAPE, SoundSource.BLOCKS, 1.0f, 1.0f);
+                    level.playSound(player, pos, SoundEvents.AXE_SCRAPE.value(), SoundSource.BLOCKS, 1.0f, 1.0f);
                     ParticleUtils.spawnParticlesOnBlockFaces(level, pos, ParticleTypes.SCRAPE, UniformInt.of(3, 5));
                     if (player instanceof ServerPlayer serverPlayer) {
                         stack.hurtAndBreak(1, player, hand);
@@ -314,11 +314,11 @@ public class ModEvents {
 
     private static InteractionResult axeStripping(Item item, ItemStack stack, BlockPos pos, BlockState state,
                                                   Player player, Level level, InteractionHand hand, BlockHitResult hitResult) {
-        if (item instanceof AxeItem && CommonConfigs.AXE_STRIPPING.get()) {
+        if (item.getDefaultInstance().is(net.minecraft.tags.ItemTags.AXES) && CommonConfigs.AXE_STRIPPING.get()) {
             Item bark = WeatheringHelper.getBarkToStrip(state);
             if (bark != null) {
                 if (level.isClientSide()) {
-                    level.playSound(player, pos, SoundEvents.AXE_STRIP, SoundSource.BLOCKS, 1.0f, 1.0f);
+                    level.playSound(player, pos, SoundEvents.AXE_STRIP.value(), SoundSource.BLOCKS, 1.0f, 1.0f);
                     var barkParticle = new BlockParticleOption(ParticleTypes.BLOCK, state);
                     ParticleUtils.spawnParticlesOnBlockFaces(level, pos, barkParticle, UniformInt.of(3, 5));
                 } else {

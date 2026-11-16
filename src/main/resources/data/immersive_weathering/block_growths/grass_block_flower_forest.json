@@ -13,8 +13,10 @@
   },
   "position_predicates": [
     {
-      "biomes": ["minecraft:flower_forest"],
-     "type": "biome_match"
+      "biomes": [
+        "minecraft:flower_forest"
+      ],
+      "type": "biome_match"
     }
   ],
   "growth_chance": 0.001,
@@ -25,7 +27,7 @@
         {
           "data": {
             "block": {
-              "Name": "minecraft:red_tulip"
+              "id": "minecraft:red_tulip"
             }
           },
           "weight": 10
@@ -33,7 +35,7 @@
         {
           "data": {
             "block": {
-              "Name": "minecraft:white_tulip"
+              "id": "minecraft:white_tulip"
             }
           },
           "weight": 10
@@ -41,7 +43,7 @@
         {
           "data": {
             "block": {
-              "Name": "minecraft:orange_tulip"
+              "id": "minecraft:orange_tulip"
             }
           },
           "weight": 10
@@ -49,7 +51,7 @@
         {
           "data": {
             "block": {
-              "Name": "minecraft:pink_tulip"
+              "id": "minecraft:pink_tulip"
             }
           },
           "weight": 10
@@ -57,7 +59,7 @@
         {
           "data": {
             "block": {
-              "Name": "minecraft:lily_of_the_valley"
+              "id": "minecraft:lily_of_the_valley"
             }
           },
           "weight": 10
@@ -65,7 +67,7 @@
         {
           "data": {
             "block": {
-              "Name": "minecraft:allium"
+              "id": "minecraft:allium"
             }
           },
           "weight": 10
@@ -73,14 +75,14 @@
         {
           "data": {
             "block": {
-              "Name": "minecraft:peony",
-              "Properties": {
+              "id": "minecraft:peony",
+              "properties": {
                 "half": "lower"
               }
             },
             "above_block": {
-              "Name": "minecraft:peony",
-              "Properties": {
+              "id": "minecraft:peony",
+              "properties": {
                 "half": "upper"
               }
             }
@@ -90,14 +92,14 @@
         {
           "data": {
             "block": {
-              "Name": "minecraft:lilac",
-              "Properties": {
+              "id": "minecraft:lilac",
+              "properties": {
                 "half": "lower"
               }
             },
             "above_block": {
-              "Name": "minecraft:lilac",
-              "Properties": {
+              "id": "minecraft:lilac",
+              "properties": {
                 "half": "upper"
               }
             }
@@ -107,14 +109,14 @@
         {
           "data": {
             "block": {
-              "Name": "minecraft:rose_bush",
-              "Properties": {
+              "id": "minecraft:rose_bush",
+              "properties": {
                 "half": "lower"
               }
             },
-            "above_block":{
-              "Name": "minecraft:rose_bush",
-              "Properties": {
+            "above_block": {
+              "id": "minecraft:rose_bush",
+              "properties": {
                 "half": "upper"
               }
             }
@@ -124,7 +126,7 @@
         {
           "data": {
             "block": {
-              "Name": "minecraft:short_grass"
+              "id": "minecraft:short_grass"
             }
           },
           "weight": 100

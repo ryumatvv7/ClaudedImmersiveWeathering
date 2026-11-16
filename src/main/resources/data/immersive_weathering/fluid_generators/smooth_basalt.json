@@ -2,7 +2,7 @@
   "type": "target_self",
   "fluid": "minecraft:lava",
   "generate": {
-    "Name": "minecraft:smooth_basalt"
+    "id": "minecraft:smooth_basalt"
   },
   "adjacent_blocks": {
     "sides": [
@@ -14,14 +14,14 @@
     "any": [
       {
         "block_state": {
-          "Name": "minecraft:blue_ice"
+          "id": "minecraft:blue_ice"
         },
         "predicate_type": "minecraft:blockstate_match"
       }
     ],
     "down": {
       "block_state": {
-        "Name": "minecraft:soul_soil"
+        "id": "minecraft:soul_soil"
       },
       "predicate_type": "minecraft:blockstate_match"
     }

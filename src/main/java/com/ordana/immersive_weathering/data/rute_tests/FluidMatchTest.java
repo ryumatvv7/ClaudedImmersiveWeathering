@@ -5,7 +5,7 @@ import com.mojang.serialization.codecs.RecordCodecBuilder;
 import com.ordana.immersive_weathering.reg.ModRuleTests;
 import com.ordana.immersive_weathering.util.StrOpt;
 import net.minecraft.core.HolderSet;
-import net.minecraft.core.RegistryCodecs;
+import net.minecraft.core.registries.codec.RegistryCodecs;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.block.state.BlockState;
@@ -16,7 +16,7 @@ import net.minecraft.world.level.material.Fluid;
 public class FluidMatchTest extends RuleTest {
 
     public static final Codec<FluidMatchTest> CODEC = RecordCodecBuilder.create(instance -> instance.group(
-            RegistryCodecs.homogeneousList(Registries.FLUID).fieldOf("fluids").forGetter(b -> b.fluids),
+            RegistryCodecs.holderSet(Registries.FLUID).fieldOf("fluids").forGetter(b -> b.fluids),
             StrOpt.of(Codec.FLOAT,"probability",1f).forGetter(b->b.probability)
     ).apply(instance, FluidMatchTest::new));
 
@@ -30,7 +30,7 @@ public class FluidMatchTest extends RuleTest {
     }
 
     @Override
-    public boolean test(BlockState state, RandomSource random) {
+    public boolean test(BlockState state, net.minecraft.core.BlockPos pos, RandomSource random) {
         return state.getFluidState().is(fluids) && random.nextFloat() < this.probability;
     }
 

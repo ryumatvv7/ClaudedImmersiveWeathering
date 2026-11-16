@@ -21,7 +21,7 @@ public class EntityTest implements IPositionRuleTest {
 
     public static final String NAME = "entity_test";
     public static final Codec<EntityTest> CODEC = RecordCodecBuilder.create((i) -> i.group(
-            RegistryCodecs.homogeneousList(Registries.ENTITY_TYPE).fieldOf("targets").forGetter(EntityTest::getTargets),
+            net.minecraft.core.registries.codec.RegistryCodecs.holderSet(Registries.ENTITY_TYPE).fieldOf("targets").forGetter(EntityTest::getTargets),
             IntProviders.codec(0, 100).fieldOf("count").forGetter(EntityTest::getIntProvider),
             Codec.intRange(0, 64).fieldOf("radius").forGetter(EntityTest::getSize),
             StrOpt.of(Codec.BOOL,"less_than").forGetter(EntityTest::isLessThan),

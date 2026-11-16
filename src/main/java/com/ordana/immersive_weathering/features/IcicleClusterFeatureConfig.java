@@ -1,15 +1,16 @@
 package com.ordana.immersive_weathering.features;
 
+import com.mojang.serialization.MapCodec;
+
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.util.valueproviders.FloatProvider;
 import net.minecraft.util.valueproviders.IntProvider;
 import net.minecraft.util.valueproviders.IntProviders;
 import net.minecraft.util.valueproviders.FloatProviders;
-import net.minecraft.world.level.levelgen.feature.configurations.FeatureConfiguration;
 
-public class IcicleClusterFeatureConfig implements FeatureConfiguration {
-    public static final Codec<IcicleClusterFeatureConfig> CODEC = RecordCodecBuilder.create((instance) -> {
+public class IcicleClusterFeatureConfig {
+    public static final MapCodec<IcicleClusterFeatureConfig> CODEC = RecordCodecBuilder.mapCodec((instance) -> {
         return instance.group(Codec.intRange(1, 512).fieldOf("floor_to_ceiling_search_range").forGetter((icicleClusterFeatureConfig) -> {
             return icicleClusterFeatureConfig.floorToCeilingSearchRange;
         }), IntProviders.codec(1, 128).fieldOf("height").forGetter((icicleClusterFeatureConfig) -> {

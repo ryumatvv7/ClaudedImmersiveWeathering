@@ -12,8 +12,10 @@
   },
   "position_predicates": [
     {
-      "biomes": ["minecraft:bamboo_jungle"],
-     "type": "biome_match"
+      "biomes": [
+        "minecraft:bamboo_jungle"
+      ],
+      "type": "biome_match"
     }
   ],
   "growth_chance": 0.001,
@@ -24,7 +26,7 @@
         {
           "data": {
             "block": {
-              "Name": "minecraft:bamboo_sapling"
+              "id": "minecraft:bamboo_sapling"
             }
           },
           "weight": 1
@@ -32,7 +34,7 @@
         {
           "data": {
             "block": {
-              "Name": "minecraft:fern"
+              "id": "minecraft:fern"
             }
           },
           "weight": 5
@@ -40,7 +42,7 @@
         {
           "data": {
             "block": {
-              "Name": "minecraft:melon"
+              "id": "minecraft:melon"
             }
           },
           "weight": 1
@@ -48,7 +50,7 @@
         {
           "data": {
             "block": {
-              "Name": "minecraft:short_grass"
+              "id": "minecraft:short_grass"
             }
           },
           "weight": 10

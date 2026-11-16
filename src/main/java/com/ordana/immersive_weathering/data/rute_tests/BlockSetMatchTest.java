@@ -5,7 +5,7 @@ import com.mojang.serialization.codecs.RecordCodecBuilder;
 import com.ordana.immersive_weathering.reg.ModRuleTests;
 import com.ordana.immersive_weathering.util.StrOpt;
 import net.minecraft.core.HolderSet;
-import net.minecraft.core.RegistryCodecs;
+import net.minecraft.core.registries.codec.RegistryCodecs;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.block.Block;
@@ -16,7 +16,7 @@ import net.minecraft.world.level.levelgen.structure.templatesystem.RuleTestType;
 public class BlockSetMatchTest extends RuleTest {
 
     public static final Codec<BlockSetMatchTest> CODEC = RecordCodecBuilder.create(instance -> instance.group(
-            RegistryCodecs.homogeneousList(Registries.BLOCK).fieldOf("blocks").forGetter(b -> b.blocks),
+            RegistryCodecs.holderSet(Registries.BLOCK).fieldOf("blocks").forGetter(b -> b.blocks),
             StrOpt.of(Codec.FLOAT, "probability", 1f).forGetter(b -> b.probability)
     ).apply(instance, BlockSetMatchTest::new));
 
@@ -29,7 +29,7 @@ public class BlockSetMatchTest extends RuleTest {
     }
 
     @Override
-    public boolean test(BlockState state, RandomSource random) {
+    public boolean test(BlockState state, net.minecraft.core.BlockPos pos, RandomSource random) {
         return state.is(blocks) && random.nextFloat() < this.probability;
     }
 

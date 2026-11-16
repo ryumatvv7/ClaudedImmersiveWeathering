@@ -63,7 +63,7 @@ public class LightningGrowth extends BuiltinBlockGrowth {
                 onLightningHit(downPos, level, rec);
             }
         }
-        for (BlockPos target : BlockPos.withinManhattan(centerPos, 1, 0, 1)) {
+        for (BlockPos target : BlockPos.withinBoxByManhattanDistance(centerPos, 1, 0, 1)) {
             if (level.getRandom().nextFloat() < 0.3 * p && target != centerPos) {
                 if (isValidTarget(level, target)) {
                     onLightningHit(target, level, rec);

@@ -3,7 +3,7 @@
   "fluid": "minecraft:lava",
   "priority": 1,
   "generate": {
-    "Name": "minecraft:diorite"
+    "id": "minecraft:diorite"
   },
   "adjacent_blocks": {
     "sides": [

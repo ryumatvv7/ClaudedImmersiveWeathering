@@ -87,7 +87,7 @@ public class OtherFluidGenerator implements IFluidGenerator {
         for (Direction d : possibleFlowDir) {
             BlockPos p = pos.relative(d);
             BlockState state = neighborCache.computeIfAbsent(d, c -> level.getBlockState(p));
-            if (target.test(state, level.getRandom())) {
+            if (target.test(state, p, level.getRandom())) {
                 if (extraCheck.isPresent() && !extraCheck.get().test(b, p, level)) continue;
                 level.setBlockAndUpdate(p, this.growth);
                 return Optional.of(p);

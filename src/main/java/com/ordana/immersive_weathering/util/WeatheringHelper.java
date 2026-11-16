@@ -274,8 +274,8 @@ public class WeatheringHelper {
      * @param centerPos center pos
      */
     public static List<BlockPos> grabBlocksAroundRandomly(BlockPos centerPos, int radiusX, int radiusY, int radiusZ) {
-        var list = new ArrayList<>(BlockPos.withinManhattanStream(centerPos, radiusX, radiusY, radiusZ)
-                .map(BlockPos::new)
+        var list = new ArrayList<>(java.util.stream.StreamSupport.stream(BlockPos.withinBoxByManhattanDistance(centerPos, radiusX, radiusY, radiusZ).spliterator(), false)
+                .map(BlockPos::immutable)
                 .toList());
         //shuffling. provides way better result that iterating through it conventionally
         Collections.shuffle(list, new Random(Mth.getSeed(centerPos)));
@@ -360,7 +360,7 @@ public class WeatheringHelper {
             .put(BlockTags.WOODEN_SLABS, ModBlocks.CHARRED_SLAB.get())
             .put(BlockTags.WOODEN_STAIRS, ModBlocks.CHARRED_STAIRS.get())
             .put(BlockTags.PLANKS, ModBlocks.CHARRED_PLANKS.get())
-            .put(BlockTags.LOGS_THAT_BURN, ModBlocks.CHARRED_LOG.get())
+            .put(net.minecraft.tags.BlockItemTags.LOGS_THAT_BURN.block(), ModBlocks.CHARRED_LOG.get())
             .build());
 
     public static Optional<Block> getCharredBlock(TagKey<Block> block) {
@@ -381,7 +381,7 @@ public class WeatheringHelper {
             charred = ModBlocks.CHARRED_STAIRS.get();
         } else if (state.is(BlockTags.PLANKS)) {
             charred = ModBlocks.CHARRED_PLANKS.get();
-        } else if (state.is(BlockTags.LOGS_THAT_BURN)) {
+        } else if (state.is(net.minecraft.tags.BlockItemTags.LOGS_THAT_BURN.block())) {
             charred = ModBlocks.CHARRED_LOG.get();
         }
         if (charred == null) return null;

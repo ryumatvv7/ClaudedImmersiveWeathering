@@ -19,7 +19,6 @@ import net.minecraft.world.level.block.SnowLayerBlock;
 import net.minecraft.world.level.block.SnowyBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
-import net.minecraft.world.level.levelgen.feature.ConfiguredFeature;
 import net.minecraft.world.level.levelgen.placement.PlacedFeature;
 import net.minecraft.world.level.lighting.LightEngine;
 
@@ -45,7 +44,7 @@ public class BaseSoilBlock extends SnowyBlock implements BonemealableBlock {
         } else if (blockstate.getFluidState().getAmount() == 8) {
             return false;
         } else {
-            int i = LightEngine.getLightBlockInto(state, blockstate, Direction.UP, blockstate.getLightDampening());
+            int i = LightEngine.getLightDampeningInto(state, blockstate, Direction.UP, blockstate.getLightDampening());
             return i < 15;
         }
     }
@@ -74,17 +73,17 @@ public class BaseSoilBlock extends SnowyBlock implements BonemealableBlock {
     }
 
     @Override
-    public boolean isValidBonemealTarget(LevelReader level, BlockPos pos, BlockState state) {
+    public boolean isValidBonemealTarget(LevelReader level, BlockPos pos, BlockState state, net.minecraft.world.level.block.BonemealSource source) {
         return level.getBlockState(pos.above()).isAir();
     }
 
     @Override
-    public boolean isBonemealSuccess(Level level, RandomSource randomSource, BlockPos blockPos, BlockState blockState) {
+    public boolean isBonemealSuccess(Level level, RandomSource randomSource, BlockPos blockPos, BlockState blockState, net.minecraft.world.level.block.BonemealSource source) {
         return true;
     }
 
     @Override
-    public void performBonemeal(ServerLevel level, RandomSource random, BlockPos pos, BlockState state) {
+    public void performBonemeal(ServerLevel level, RandomSource random, BlockPos pos, BlockState state, net.minecraft.world.level.block.BonemealSource source) {
         BlockPos blockPos = pos.above();
         BlockState blockState = Blocks.SHORT_GRASS.defaultBlockState();
         Optional<Holder.Reference<PlacedFeature>> optional = level.registryAccess().lookupOrThrow(Registries.PLACED_FEATURE).get(VegetationPlacements.GRASS_BONEMEAL);
@@ -102,12 +101,12 @@ public class BaseSoilBlock extends SnowyBlock implements BonemealableBlock {
 
             BlockState blockState2 = level.getBlockState(blockPos2);
             if (blockState2.is(blockState.getBlock()) && random.nextInt(10) == 0) {
-                ((BonemealableBlock)blockState.getBlock()).performBonemeal(level, random, blockPos2, blockState2);
+                ((BonemealableBlock)blockState.getBlock()).performBonemeal(level, random, blockPos2, blockState2, net.minecraft.world.level.block.BonemealSource.INTERACTION);
             }
 
             if (blockState2.isAir() && !level.isOutsideBuildHeight(blockPos2)) {
                 if (random.nextInt(8) == 0) {
-                    List<ConfiguredFeature<?, ?>> list = level.getBiome(blockPos2).value().getGenerationSettings().getBoneMealFeatures();
+                    List<net.minecraft.world.level.levelgen.feature.Feature> list = level.getBiome(blockPos2).value().getGenerationSettings().getBoneMealFeatures();
                     if (!list.isEmpty()) {
                         Util.getRandom(list, random).place(level, level.getChunkSource().getGenerator(), random, blockPos2);
                     }
