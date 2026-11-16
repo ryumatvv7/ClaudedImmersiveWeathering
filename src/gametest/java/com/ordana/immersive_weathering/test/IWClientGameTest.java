@@ -33,14 +33,13 @@ public class IWClientGameTest implements FabricClientGameTest {
         blocks.sort(String::compareTo);
 
         try (TestSingleplayerContext sp = context.worldBuilder().create()) {
-            sp.getClientLevel().waitForChunksRender();
+            sp.getConnection().waitForChunksRender();
             TestServerContext server = sp.getServer();
             BlockPos p = context.computeOnClient(mc -> mc.player.blockPosition());
             server.runCommand("gamemode spectator @p");
-            context.runOnClient(mc -> mc.options.hideGui = true);
             buildWall(server, blocks, p);
             context.waitTicks(40);
-            sp.getClientLevel().waitForChunksRender();
+            sp.getConnection().waitForChunksRender();
 
             int rows = (blocks.size() + PER_ROW - 1) / PER_ROW;
             int shot = 0;
@@ -51,14 +50,13 @@ public class IWClientGameTest implements FabricClientGameTest {
                     server.runCommand(String.format(java.util.Locale.ROOT,
                             "tp @p %.1f %.1f %.1f 180 0", x, y, (double) p.getZ() + 20 + 8.5));
                     context.waitTicks(30);
-                    sp.getClientLevel().waitForChunksRender();
+                    sp.getConnection().waitForChunksRender();
                     context.takeScreenshot(TestScreenshotOptions.of("iw_blocks_" + (shot++)).withSize(1280, 720));
                 }
             }
 
             // particles, falling layer entity, items in hand
             server.runCommand("gamemode creative @p");
-            context.runOnClient(mc -> mc.options.hideGui = false);
             server.runCommand(String.format("tp @p %d %d %d 180 20", p.getX() + 3, p.getY() + 2, p.getZ() + 29));
             server.runCommand("give @p immersive_weathering:oak_leaf_pile 16");
             server.runCommand(String.format("setblock %d %d %d immersive_weathering:sand_layer_block", p.getX() + 3, p.getY() + 9, p.getZ() + 25));
@@ -73,8 +71,8 @@ public class IWClientGameTest implements FabricClientGameTest {
 
         // real multiplayer: dedicated server + this client
         try (TestDedicatedServerContext server = context.worldBuilder().createServer();
-             TestServerConnection connection = server.connect()) {
-            connection.getClientLevel().waitForChunksRender();
+             net.fabricmc.fabric.api.client.gametest.v1.context.TestDedicatedServerConnection connection = server.connect()) {
+            connection.waitForChunksRender();
             BlockPos p = context.computeOnClient(mc -> mc.player.blockPosition());
             server.runCommand("op @a");
             for (int i = 0; i < 6; i++) {
@@ -85,7 +83,7 @@ public class IWClientGameTest implements FabricClientGameTest {
             }
             server.runCommand(String.format("tp @a %d %d %d 180 10", p.getX(), p.getY(), p.getZ()));
             context.waitTicks(40);
-            connection.getClientLevel().waitForChunksRender();
+            connection.waitForChunksRender();
             context.takeScreenshot(TestScreenshotOptions.of("iw_multiplayer").withSize(1280, 720));
         }
     }
