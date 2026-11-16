@@ -1,6 +1,6 @@
 package com.ordana.immersive_weathering.blocks.cracked;
 
-import net.mehvahdjukaar.moonlight.api.block.ModStairBlock;
+import com.ordana.immersive_weathering.platform.ModStairBlock;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;

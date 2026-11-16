@@ -4,7 +4,6 @@ import com.ordana.immersive_weathering.IWPlatformStuff;
 import com.ordana.immersive_weathering.ImmersiveWeathering;
 import com.ordana.immersive_weathering.features.IcicleClusterFeature;
 import com.ordana.immersive_weathering.features.IcicleClusterFeatureConfig;
-import net.mehvahdjukaar.moonlight.api.platform.RegHelper;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.tags.BiomeTags;
@@ -16,7 +15,7 @@ import java.util.function.Supplier;
 
 public class ModFeatures {
 
-    public static final Supplier<Feature<IcicleClusterFeatureConfig>> ICICLE_FEATURE = RegHelper.registerFeature(
+    public static final Supplier<Feature<IcicleClusterFeatureConfig>> ICICLE_FEATURE = com.ordana.immersive_weathering.platform.Reg.feature(
             ImmersiveWeathering.res("icicle_cluster"), () ->
                     new IcicleClusterFeature(IcicleClusterFeatureConfig.CODEC));
 

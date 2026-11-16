@@ -3,7 +3,7 @@ package com.ordana.immersive_weathering.blocks.charred;
 import com.ordana.immersive_weathering.blocks.ModBlockProperties;
 import com.ordana.immersive_weathering.reg.ModParticles;
 import com.ordana.immersive_weathering.reg.ModTags;
-import net.mehvahdjukaar.moonlight.api.block.ILightable;
+import com.ordana.immersive_weathering.platform.ILightable;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.particles.BlockParticleOption;

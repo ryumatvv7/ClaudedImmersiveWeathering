@@ -1,8 +1,8 @@
 package com.ordana.immersive_weathering.data.block_growths.growths.builtin;
 
+import com.ordana.immersive_weathering.platform.IWUtils;
 import com.ordana.immersive_weathering.data.block_growths.TickSource;
 import com.ordana.immersive_weathering.util.WeatheringHelper;
-import net.mehvahdjukaar.moonlight.api.platform.PlatHelper;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
 import net.minecraft.core.HolderSet;
@@ -45,7 +45,7 @@ public class GrassGrowth extends BuiltinBlockGrowth {
 
         //TODO: this can be added and converted to data. ALso add this to fire growth instead
         if (level.getRandom().nextFloat() < 0.1f) {
-            if (!PlatHelper.isAreaLoaded(level,pos, 1)) return;
+            if (!IWUtils.isAreaLoaded(level,pos, 1)) return;
             if (WeatheringHelper.hasEnoughBlocksFacingMe(pos, level, b -> b.is(BlockTags.FIRE), 1)) {
                 level.setBlockAndUpdate(pos, Blocks.DIRT.defaultBlockState());
             }

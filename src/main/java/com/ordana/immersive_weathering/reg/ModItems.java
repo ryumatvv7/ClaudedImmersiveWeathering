@@ -1,16 +1,12 @@
 package com.ordana.immersive_weathering.reg;
 
+import com.ordana.immersive_weathering.platform.Reg;
+import com.ordana.immersive_weathering.util.VanillaTypes;
+
+import com.ordana.immersive_weathering.platform.IWUtils;
 import com.ordana.immersive_weathering.ImmersiveWeathering;
 import com.ordana.immersive_weathering.blocks.LeafPileBlock;
 import com.ordana.immersive_weathering.items.*;
-import net.mehvahdjukaar.moonlight.api.item.WoodBasedItem;
-import net.mehvahdjukaar.moonlight.api.misc.Registrator;
-import net.mehvahdjukaar.moonlight.api.platform.RegHelper;
-import net.mehvahdjukaar.moonlight.api.set.BlockSetAPI;
-import net.mehvahdjukaar.moonlight.api.set.leaves.LeavesType;
-import net.mehvahdjukaar.moonlight.api.set.wood.WoodType;
-import net.mehvahdjukaar.moonlight.api.set.wood.WoodTypeRegistry;
-import net.mehvahdjukaar.moonlight.api.util.Utils;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.Identifier;
@@ -35,12 +31,29 @@ import java.util.function.Supplier;
 public class ModItems {
 
     public static void init() {
-        BlockSetAPI.addDynamicRegistration(ImmersiveWeathering.MOD_ID, ModItems::registerLeafPilesItems, BuiltInRegistries.ITEM);
-        BlockSetAPI.addDynamicRegistration(ImmersiveWeathering.MOD_ID, ModItems::registerBark, BuiltInRegistries.ITEM);
+        for (VanillaTypes.Leaves type : VanillaTypes.LEAVES) {
+            var block = ModBlocks.LEAF_PILE_SUPPLIERS.get(type);
+            LEAF_PILE_SUPPLIERS.put(type, Reg.item(ImmersiveWeathering.res(type.leafPileName()),
+                    p -> new LeafPileBlockItem(block.get(), p.useBlockDescriptionPrefix()), new Item.Properties()));
+        }
+        for (VanillaTypes.Wood type : VanillaTypes.WOODS) {
+            var item = Reg.item(ImmersiveWeathering.res(type.barkName()), Item::new, new Item.Properties());
+            BARK_SUPPLIERS.put(type, item);
+            if (type.canBurn) ModBlocks.FUELS.put(item, 200);
+        }
     }
 
+    /** Called after registration: fills the maps below. */
+    public static void afterRegistration() {
+        LEAF_PILE_SUPPLIERS.forEach((t, s) -> LEAF_PILES.put(t, s.get()));
+        BARK_SUPPLIERS.forEach((t, s) -> BARK.put(t, s.get()));
+    }
+
+    private static final Map<VanillaTypes.Leaves, Supplier<BlockItem>> LEAF_PILE_SUPPLIERS = new LinkedHashMap<>();
+    private static final Map<VanillaTypes.Wood, Supplier<Item>> BARK_SUPPLIERS = new LinkedHashMap<>();
+
     public static <T extends Item> Supplier<T> regItem(String name, Function<Item.Properties, T> factory, Supplier<Item.Properties> properties) {
-        return RegHelper.registerItem(ImmersiveWeathering.res(name), factory, properties.get());
+        return Reg.item(ImmersiveWeathering.res(name), factory, properties.get());
     }
 
     private static ResourceKey<Item> key(String name) {
@@ -76,7 +89,7 @@ public class ModItems {
             ModBlocks.ASH_LAYER_BLOCK.get(), p), Item.Properties::new);
 
     //leaf pile
-    public static final Map<LeavesType, BlockItem> LEAF_PILES = new LinkedHashMap<>();
+    public static final Map<VanillaTypes.Leaves, BlockItem> LEAF_PILES = new LinkedHashMap<>();
     public static final Supplier<BlockItem> AZALEA_FLOWER_PILE = regLeafPile("azalea_flower_pile", ModBlocks.AZALEA_FLOWER_PILE);
 
     //bricks
@@ -110,7 +123,7 @@ public class ModItems {
 
     //bark
 
-    public static final Map<WoodType, Item> BARK = new LinkedHashMap<>();
+    public static final Map<VanillaTypes.Wood, Item> BARK = new LinkedHashMap<>();
 
     public static final Supplier<Item> TALLOW = regItem("tallow", HoneycombItem::new, Item.Properties::new);
 
@@ -133,27 +146,4 @@ public class ModItems {
             new BlockItem(Blocks.SOUL_FIRE, p), () -> new Item.Properties().stacksTo(1));
 
 
-    private static void registerBark(Registrator<Item> event) {
-        for (WoodType type : WoodTypeRegistry.INSTANCE.getValues()) {
-            String name = !type.canBurn() ? type.getVariantId("scales", false) : type.getVariantId("bark", false);
-
-            Item item = new WoodBasedItem(new Item.Properties().setId(key(name)), type);
-            event.register(ImmersiveWeathering.res(name), item);
-            BARK.put(type, item);
-            type.addChild("immersive_weathering:bark", item);
-            if (type.canBurn()) ModBlocks.FUELS.put(() -> item, 200);
-        }
-    }
-
-    private static void registerLeafPilesItems(Registrator<Item> event) {
-        for (var e : ModBlocks.LEAF_PILES.entrySet()) {
-            LeavesType type = e.getKey();
-            LeafPileBlock b = e.getValue();
-            Identifier id = Utils.getID(b);
-            BlockItem i = new LeafPileBlockItem(b, new Item.Properties()
-                    .setId(ResourceKey.create(Registries.ITEM, id)).useBlockDescriptionPrefix());
-            event.register(id, i);
-            LEAF_PILES.put(type, i);
-        }
-    }
 }

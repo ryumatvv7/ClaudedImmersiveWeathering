@@ -1,8 +1,6 @@
 package com.ordana.immersive_weathering.reg;
 
 import com.ordana.immersive_weathering.ImmersiveWeathering;
-import net.mehvahdjukaar.moonlight.api.misc.RegSupplier;
-import net.mehvahdjukaar.moonlight.api.platform.RegHelper;
 import net.minecraft.resources.Identifier;
 import net.minecraft.sounds.SoundEvent;
 import org.jetbrains.annotations.NotNull;
@@ -16,8 +14,8 @@ public class ModSoundEvents {
     public static Supplier<SoundEvent> ICICLE_CRACK = registerSoundEvent("icicle_crack");
 
     @NotNull
-    private static RegSupplier<SoundEvent> registerSoundEvent(@NotNull String name) {
+    private static Supplier<SoundEvent> registerSoundEvent(@NotNull String name) {
         Identifier id = ImmersiveWeathering.res(name);
-        return RegHelper.registerSound(id);
+        return com.ordana.immersive_weathering.platform.Reg.sound(id);
     }
 }

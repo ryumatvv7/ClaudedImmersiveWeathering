@@ -49,14 +49,11 @@ dependencies {
 	implementation "net.fabricmc:fabric-loader:${project.loader_version}"
 	implementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_api_version}"
 
-	// Moonlight Lib: used strictly as a binary dependency (public API only), never copied.
-	implementation "maven.modrinth:moonlight:${project.moonlight_modrinth_id}"
 }
 
 processResources {
 	def props = [
 			version          : project.version,
-			moonlight_version: project.moonlight_version,
 			minecraft_version: project.minecraft_version,
 			loader_version   : project.loader_version
 	]

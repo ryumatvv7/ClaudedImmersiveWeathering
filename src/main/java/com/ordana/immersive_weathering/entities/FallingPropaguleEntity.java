@@ -1,20 +1,18 @@
 package com.ordana.immersive_weathering.entities;
 
 import com.ordana.immersive_weathering.reg.ModEntities;
-import net.mehvahdjukaar.moonlight.api.entity.ImprovedFallingBlockEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.NbtUtils;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.item.FallingBlockEntity;
-import net.mehvahdjukaar.moonlight.api.entity.ImprovedFallingBlockEntity;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 
-public class FallingPropaguleEntity extends ImprovedFallingBlockEntity {
+public class FallingPropaguleEntity extends IWFallingBlockEntity {
     public FallingPropaguleEntity(EntityType<? extends FallingBlockEntity> type, Level level) {
         super(type, level);
     }

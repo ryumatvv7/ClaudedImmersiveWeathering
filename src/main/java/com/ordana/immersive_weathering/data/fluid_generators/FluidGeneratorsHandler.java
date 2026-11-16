@@ -1,5 +1,6 @@
 package com.ordana.immersive_weathering.data.fluid_generators;
 
+import com.ordana.immersive_weathering.platform.IWUtils;
 import net.minecraft.core.HolderLookup;
 import com.google.common.collect.ImmutableList;
 import com.google.gson.Gson;
@@ -12,7 +13,6 @@ import com.mojang.serialization.JsonOps;
 import com.ordana.immersive_weathering.ImmersiveWeathering;
 import it.unimi.dsi.fastutil.objects.Object2ObjectOpenHashMap;
 import com.ordana.immersive_weathering.util.RegistryJsonReloadListener;
-import net.mehvahdjukaar.moonlight.api.platform.PlatHelper;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.RegistryAccess;
@@ -43,8 +43,8 @@ public class FluidGeneratorsHandler extends RegistryJsonReloadListener {
     private static final Map<Fluid, ImmutableList<IFluidGenerator>> FLOWING_GENERATORS = new Object2ObjectOpenHashMap<>();
     private static final Set<Fluid> HAS_GENERATOR = new HashSet<>();
 
-    public FluidGeneratorsHandler(HolderLookup.Provider registries) {
-        super(registries, "fluid_generators");
+    public FluidGeneratorsHandler() {
+        super("fluid_generators");
     }
 
     @Override
@@ -106,7 +106,7 @@ public class FluidGeneratorsHandler extends RegistryJsonReloadListener {
     }
 
     private static Optional<Pair<BlockPos, @Nullable SoundEvent>> generate(List<Direction> possibleFlowDir, BlockPos pos, Level level, ImmutableList<IFluidGenerator> list) {
-        if (list != null && !list.isEmpty() && PlatHelper.isAreaLoaded(level, pos,3)) {
+        if (list != null && !list.isEmpty() && IWUtils.isAreaLoaded(level, pos,3)) {
             Map<Direction, BlockState> neighborCache = new EnumMap<>(Direction.class);
             for (var generator : list) {
                 var res = generator.tryGenerating(possibleFlowDir, pos, level, neighborCache);
@@ -121,7 +121,7 @@ public class FluidGeneratorsHandler extends RegistryJsonReloadListener {
 
     public void saveGeneartor(IFluidGenerator song) {
 
-        File folder = PlatHelper.getGamePath().resolve("test").toFile();
+        File folder = net.fabricmc.loader.api.FabricLoader.getInstance().getGameDir().resolve("test").toFile();
 
         if (!folder.exists()) {
             folder.mkdir();

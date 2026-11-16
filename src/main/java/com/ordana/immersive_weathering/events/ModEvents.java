@@ -15,10 +15,6 @@ import com.ordana.immersive_weathering.data.block_growths.TickSource;
 import com.ordana.immersive_weathering.reg.*;
 import com.ordana.immersive_weathering.util.Weatherable;
 import com.ordana.immersive_weathering.util.WeatheringHelper;
-import net.mehvahdjukaar.moonlight.api.events.IFireConsumeBlockEvent;
-import net.mehvahdjukaar.moonlight.api.events.ILightningStruckBlockEvent;
-import net.mehvahdjukaar.moonlight.api.misc.EventCalled;
-import net.mehvahdjukaar.moonlight.api.platform.PlatHelper;
 import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.BlockParticleOption;
@@ -419,35 +415,29 @@ public class ModEvents {
         return InteractionResult.PASS;
     }
 
-    @EventCalled
-    public static void onLightningHit(ILightningStruckBlockEvent event) {
-        BlockPos blockPos = event.getPos();
-        LevelAccessor level = event.getLevel();
+    public static void onLightningHit(ServerLevel level, BlockPos blockPos) {
         BlockState blockState = level.getBlockState(blockPos);
-        BlockGrowthHandler.tickBlock(TickSource.LIGHTNING, blockState, (ServerLevel) level, blockPos);
+        BlockGrowthHandler.tickBlock(TickSource.LIGHTNING, blockState, level, blockPos);
     }
 
-    @EventCalled
-    public static void onFireConsume(IFireConsumeBlockEvent event) {
-        var level = event.getLevel();
-        if (level instanceof ServerLevel serverLevel) {
-
-            var state = event.getState();
-            double charChance = CommonConfigs.FIRE_CHARS_WOOD_CHANCE.get();
-            BlockState charred = WeatheringHelper.getCharredState(state);
-            if (charChance > 0 && charred != null && serverLevel.getRandom().nextFloat() < charChance) {
-                event.setFinalState(charred.setValue(CharredBlock.SMOLDERING, serverLevel.getRandom().nextBoolean()));
-                return;
-            }
-            //port addition: burned blocks can leave ash (only when fire does not take their place)
-            if (!event.wasReplacedByFire() && CommonConfigs.ASH_ENABLED.get()
-                    && serverLevel.getRandom().nextFloat() < CommonConfigs.ASH_FROM_BURNED_BLOCK.get()) {
-                int layers = 1 + serverLevel.getRandom().nextInt(CommonConfigs.ASH_MAX_LAYERS.get());
-                event.setFinalState(ModBlocks.ASH_LAYER_BLOCK.get().defaultBlockState()
-                        .setValue(com.ordana.immersive_weathering.blocks.LayerBlock.LAYERS_8, layers));
-            }
-
+    /**
+     * A block was burned by fire. {@code replacedByFire}: fire took its place instead of air.
+     */
+    public static void onFireConsume(Level level, BlockPos pos, BlockState state, boolean replacedByFire) {
+        if (state == null || !(level instanceof ServerLevel serverLevel)) return;
+        double charChance = CommonConfigs.FIRE_CHARS_WOOD_CHANCE.get();
+        BlockState charred = WeatheringHelper.getCharredState(state);
+        if (charChance > 0 && charred != null && serverLevel.getRandom().nextFloat() < charChance) {
+            level.setBlockAndUpdate(pos, charred.setValue(CharredBlock.SMOLDERING, serverLevel.getRandom().nextBoolean()));
+            return;
+        }
+        //port addition: burned blocks can leave ash (only when fire does not take their place)
+        if (!replacedByFire && CommonConfigs.ASH_ENABLED.get()
+                && serverLevel.getRandom().nextFloat() < CommonConfigs.ASH_FROM_BURNED_BLOCK.get()) {
+            int layers = 1 + serverLevel.getRandom().nextInt(CommonConfigs.ASH_MAX_LAYERS.get());
+            BlockState ash = ModBlocks.ASH_LAYER_BLOCK.get().defaultBlockState()
+                    .setValue(com.ordana.immersive_weathering.blocks.LayerBlock.LAYERS_8, layers);
+            if (ash.canSurvive(level, pos)) level.setBlockAndUpdate(pos, ash);
         }
     }
-
 }

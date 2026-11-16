@@ -1,9 +1,9 @@
 package com.ordana.immersive_weathering.reg;
 
+import net.minecraft.core.registries.Registries;
+
 import com.ordana.immersive_weathering.ImmersiveWeathering;
 import com.ordana.immersive_weathering.configs.CommonConfigs;
-import net.mehvahdjukaar.moonlight.api.misc.RegSupplier;
-import net.mehvahdjukaar.moonlight.api.platform.RegHelper;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.item.*;
@@ -15,16 +15,48 @@ import java.util.function.Supplier;
 
 public class ModCreativeTab {
 
-    public static final RegSupplier<CreativeModeTab> MOD_TAB = !CommonConfigs.CREATIVE_TAB.get() ? null :
-        RegHelper.registerCreativeModeTab(ImmersiveWeathering.res("immersive_weathering"),
-            (c) -> c.title(Component.translatable("itemGroup.immersive_weathering.immersive_weathering"))
-                .icon(() -> ModBlocks.IVY.get().asItem().getDefaultInstance()));
+    private static final ResourceKey<CreativeModeTab> MOD_TAB_KEY =
+        ResourceKey.create(Registries.CREATIVE_MODE_TAB, ImmersiveWeathering.res("immersive_weathering"));
+    //optional own tab; when present every item goes there instead of the vanilla tabs
+    private static final java.util.List<ItemLike> MOD_TAB_ITEMS = new java.util.ArrayList<>();
+    public static final Supplier<CreativeModeTab> MOD_TAB = !CommonConfigs.CREATIVE_TAB.get() ? null :
+        com.ordana.immersive_weathering.platform.Reg.creativeTab(MOD_TAB_KEY.identifier(), () ->
+            net.fabricmc.fabric.api.creativetab.v1.FabricCreativeModeTab.builder()
+                .title(Component.translatable("itemGroup.immersive_weathering.immersive_weathering"))
+                .icon(() -> ModBlocks.IVY.get().asItem().getDefaultInstance())
+                .displayItems((params, output) -> MOD_TAB_ITEMS.forEach(output::accept))
+                .build());
 
-    public static void init(){
-        RegHelper.addItemsToTabsRegistration(ModCreativeTab::addItems);
+    /** Tiny stand-in for the old Moonlight event object. */
+    public static final class ItemToTabEvent {
+        void addAfter(ResourceKey<CreativeModeTab> tab, Predicate<ItemStack> target, ItemLike... items) {
+            add(tab, target, true, items);
+        }
+
+        void addBefore(ResourceKey<CreativeModeTab> tab, Predicate<ItemStack> target, ItemLike... items) {
+            add(tab, target, false, items);
+        }
+
+        private void add(ResourceKey<CreativeModeTab> tab, Predicate<ItemStack> target, boolean after, ItemLike... items) {
+            if (MOD_TAB != null) {
+                MOD_TAB_ITEMS.addAll(Arrays.asList(items));
+                return;
+            }
+            java.util.List<ItemStack> stacks = Arrays.stream(items).map(ItemStack::new).toList();
+            net.fabricmc.fabric.api.creativetab.v1.CreativeModeTabEvents.modifyOutputEvent(tab).register(out -> {
+                if (after) out.insertAfter(target, stacks, CreativeModeTab.TabVisibility.PARENT_AND_SEARCH_TABS);
+                else out.insertBefore(target, stacks, CreativeModeTab.TabVisibility.PARENT_AND_SEARCH_TABS);
+            });
+        }
     }
 
-    public static void addItems(RegHelper.ItemToTabEvent e) {
+    //called after all items are registered
+    public static void init(){
+        if (MOD_TAB != null) MOD_TAB.get();
+        addItems(new ItemToTabEvent());
+    }
+
+    public static void addItems(ItemToTabEvent e) {
 
         //BUILDING BLOCKS
         after(e, Items.BAMBOO_BUTTON, CreativeModeTabs.BUILDING_BLOCKS,
@@ -256,33 +288,27 @@ public class ModCreativeTab {
 
     }
 
-    private static void after(RegHelper.ItemToTabEvent event, Item target,
+    private static void after(ItemToTabEvent event, Item target,
                               ResourceKey<CreativeModeTab> tab, Supplier<?>... items) {
         after(event, i -> i.is(target), tab, items);
     }
 
-    private static void after(RegHelper.ItemToTabEvent event, Predicate<ItemStack> targetPred,
+    private static void after(ItemToTabEvent event, Predicate<ItemStack> targetPred,
                               ResourceKey<CreativeModeTab> tab, Supplier<?>... items) {
         //if (CommonConfigs.isEnabled(key)) {
         ItemLike[] entries = Arrays.stream(items).map((s -> (ItemLike) (s.get()))).toArray(ItemLike[]::new);
-        if(MOD_TAB != null){
-            tab = MOD_TAB.getKey();
-        }
         event.addAfter(tab, targetPred, entries);
     }
 
-    private static void before(RegHelper.ItemToTabEvent event, Item target,
+    private static void before(ItemToTabEvent event, Item target,
                                ResourceKey<CreativeModeTab> tab, Supplier<?>... items) {
         before(event, i -> i.is(target), tab, items);
     }
 
-    private static void before(RegHelper.ItemToTabEvent event, Predicate<ItemStack> targetPred,
+    private static void before(ItemToTabEvent event, Predicate<ItemStack> targetPred,
                                ResourceKey<CreativeModeTab> tab, Supplier<?>... items) {
         //if (CommonConfigs.isEnabled(key)) {
         ItemLike[] entries = Arrays.stream(items).map(s -> (ItemLike) s.get()).toArray(ItemLike[]::new);
-        if(MOD_TAB != null){
-            tab = MOD_TAB.getKey();
-        }
         event.addBefore(tab, targetPred, entries);
         //}
     }

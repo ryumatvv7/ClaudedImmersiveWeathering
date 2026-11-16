@@ -19,20 +19,13 @@ import com.ordana.immersive_weathering.blocks.snowy.SnowySlabBlock;
 import com.ordana.immersive_weathering.blocks.snowy.SnowyStairsBlock;
 import com.ordana.immersive_weathering.blocks.snowy.SnowyWallBlock;
 import com.ordana.immersive_weathering.blocks.soil_types.*;
-import net.mehvahdjukaar.moonlight.api.block.ModStairBlock;
-import net.mehvahdjukaar.moonlight.api.misc.Registrator;
-import net.mehvahdjukaar.moonlight.api.platform.PlatHelper;
-import net.mehvahdjukaar.moonlight.api.platform.RegHelper;
-import net.mehvahdjukaar.moonlight.api.set.BlockSetAPI;
-import net.mehvahdjukaar.moonlight.api.set.leaves.LeavesType;
-import net.mehvahdjukaar.moonlight.api.set.leaves.LeavesTypeRegistry;
+import com.ordana.immersive_weathering.platform.ModStairBlock;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.level.ItemLike;
 import java.util.function.Function;
-import net.mehvahdjukaar.moonlight.api.set.leaves.VanillaLeavesTypes;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
@@ -44,6 +37,9 @@ import net.minecraft.world.level.block.state.BlockBehaviour.Properties;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockSetType;
 import net.minecraft.world.level.block.state.properties.WoodType;
+import com.ordana.immersive_weathering.platform.ModStairBlock;
+import com.ordana.immersive_weathering.platform.Reg;
+import com.ordana.immersive_weathering.util.VanillaTypes;
 
 import java.util.Collection;
 import java.util.LinkedHashMap;
@@ -56,7 +52,6 @@ import java.util.function.ToIntFunction;
 public class ModBlocks {
 
     public static void init() {
-        BlockSetAPI.addDynamicRegistration(ImmersiveWeathering.MOD_ID, ModBlocks::registerLeafPiles, BuiltInRegistries.BLOCK);
     }
 
     //item -> burn time, applied through the Fabric fuel registry in the main class
@@ -67,7 +62,7 @@ public class ModBlocks {
     }
 
     public static <T extends Block> Supplier<T> regBlock(String name, Function<Properties, T> factory, Supplier<Properties> properties) {
-        return RegHelper.registerBlock(ImmersiveWeathering.res(name), factory, properties);
+        return Reg.block(ImmersiveWeathering.res(name), factory, properties);
     }
 
     public static <T extends Block> Supplier<T> regWithItem(String name, Function<Properties, T> factory, Supplier<Properties> properties) {
@@ -83,7 +78,7 @@ public class ModBlocks {
     }
 
     public static Supplier<BlockItem> regBlockItem(String name, Supplier<? extends Block> blockSup, Item.Properties properties) {
-        return RegHelper.registerBlockItem(ImmersiveWeathering.res(name), blockSup, properties);
+        return Reg.blockItem(ImmersiveWeathering.res(name), blockSup, properties);
     }
 
     //predicates
@@ -110,10 +105,19 @@ public class ModBlocks {
     }
 
 
-    public static final Map<LeavesType, LeafPileBlock> LEAF_PILES = new LinkedHashMap<>();
+    public static final Map<VanillaTypes.Leaves, Supplier<LeafPileBlock>> LEAF_PILE_SUPPLIERS = new LinkedHashMap<>();
+    //filled once blocks are registered
+    public static final Map<VanillaTypes.Leaves, LeafPileBlock> LEAF_PILES = new LinkedHashMap<>();
+
+    static {
+        for (VanillaTypes.Leaves type : VanillaTypes.LEAVES) {
+            LEAF_PILE_SUPPLIERS.put(type, regBlock(type.leafPileName(), p -> new LeafPileBlock(p, type),
+                    ModBlocks::leafPileProperties));
+        }
+    }
 
     public static final Supplier<LeafPileBlock> AZALEA_FLOWER_PILE = regBlock("azalea_flower_pile", p ->
-        new LeafPileBlock(p, VanillaLeavesTypes.OAK), () -> leafPileProperties().sound(SoundType.AZALEA));
+        new LeafPileBlock(p, VanillaTypes.OAK_LEAVES), () -> leafPileProperties().sound(SoundType.AZALEA));
 
     //layer stuff
 
@@ -610,16 +614,9 @@ public class ModBlocks {
         new TintedGlassPane(p), () -> Properties.of().strength(0.3F).sound(SoundType.GLASS).noOcclusion().isRedstoneConductor(NEVER).isSuffocating(NEVER).isViewBlocking(NEVER));
 
 
-    private static void registerLeafPiles(Registrator<Block> event) {
-        for (LeavesType type : LeavesTypeRegistry.INSTANCE.getValues()) {
-            String name = type.getVariantId("leaf_pile", false);
-
-            LeafPileBlock block = new LeafPileBlock(leafPileProperties().setId(ResourceKey.create(Registries.BLOCK, ImmersiveWeathering.res(name))), type);
-            event.register(ImmersiveWeathering.res(name), block);
-
-            LEAF_PILES.put(type, block);
-            type.addChild("immersive_weathering:leaf_pile", block);
-        }
+    /** Called after registration: fills {@link #LEAF_PILES}. */
+    public static void afterRegistration() {
+        LEAF_PILE_SUPPLIERS.forEach((t, s) -> LEAF_PILES.put(t, s.get()));
     }
 
     private static BlockBehaviour.Properties noTick(Block copyFrom){

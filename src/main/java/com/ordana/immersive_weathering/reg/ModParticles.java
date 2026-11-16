@@ -1,7 +1,6 @@
 package com.ordana.immersive_weathering.reg;
 
 import com.ordana.immersive_weathering.ImmersiveWeathering;
-import net.mehvahdjukaar.moonlight.api.platform.RegHelper;
 import net.minecraft.core.particles.SimpleParticleType;
 
 import java.util.function.Supplier;
@@ -15,7 +14,7 @@ public class ModParticles {
     public static final java.util.List<Supplier<SimpleParticleType>> ALL = new java.util.ArrayList<>();
 
     public static Supplier<SimpleParticleType> registerParticle(String name) {
-        Supplier<SimpleParticleType> p = RegHelper.registerParticle(ImmersiveWeathering.res(name));
+        Supplier<SimpleParticleType> p = com.ordana.immersive_weathering.platform.Reg.particle(ImmersiveWeathering.res(name));
         ALL.add(p);
         return p;
     }

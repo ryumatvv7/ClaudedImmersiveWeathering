@@ -13,10 +13,7 @@ import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
 import net.fabricmc.fabric.api.client.particle.v1.ParticleProviderRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.BlockColorRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry;
-import net.mehvahdjukaar.moonlight.api.client.renderer.FallingBlockRendererGeneric;
-import net.mehvahdjukaar.moonlight.api.platform.ClientHelper;
-import net.mehvahdjukaar.moonlight.api.set.leaves.LeavesType;
-import net.mehvahdjukaar.moonlight.api.util.math.colors.RGBColor;
+import com.ordana.immersive_weathering.util.VanillaTypes;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.color.block.BlockTintSource;
 import net.minecraft.client.color.block.BlockTintSources;
@@ -46,26 +43,33 @@ import java.util.function.Supplier;
 public class ImmersiveWeatheringClient implements ClientModInitializer {
 
     @Override
+    @SuppressWarnings({"unchecked", "rawtypes"})
     public void onInitializeClient() {
         //per player visual options
         ClientConfigs.init();
 
-        //generated assets for leaf piles and bark of modded wood types
-        ClientDynamicResourcesHandler.init();
-
         //optional built-in resource pack (off by default)
-        ClientHelper.registerOptionalTexturePack(ImmersiveWeathering.res("visual_waxed_iron_items"), false);
+        net.fabricmc.fabric.api.resource.v1.ResourceLoader.registerBuiltinPack(ImmersiveWeathering.res("visual_waxed_iron_items"),
+                net.fabricmc.loader.api.FabricLoader.getInstance().getModContainer(ImmersiveWeathering.MOD_ID).orElseThrow(),
+                net.fabricmc.fabric.api.resource.v1.pack.PackActivationType.NORMAL);
 
-        EntityRendererRegistry.register(ModEntities.FALLING_ICICLE.get(), FallingBlockRendererGeneric::new);
-        EntityRendererRegistry.register(ModEntities.FALLING_LAYER.get(), FallingBlockRendererGeneric::new);
-        EntityRendererRegistry.register(ModEntities.FALLING_PROPAGULE.get(), FallingBlockRendererGeneric::new);
+        EntityRendererRegistry.register((net.minecraft.world.entity.EntityType) ModEntities.FALLING_ICICLE.get(), net.minecraft.client.renderer.entity.FallingBlockRenderer::new);
+        EntityRendererRegistry.register((net.minecraft.world.entity.EntityType) ModEntities.FALLING_LAYER.get(), net.minecraft.client.renderer.entity.FallingBlockRenderer::new);
+        EntityRendererRegistry.register((net.minecraft.world.entity.EntityType) ModEntities.FALLING_PROPAGULE.get(), net.minecraft.client.renderer.entity.FallingBlockRenderer::new);
 
         registerParticles();
 
-        //leaf piles are registered late (after every mod's leaves), so colors wait for client setup
-        ClientHelper.addClientSetup(ImmersiveWeatheringClient::registerBlockColors);
+        registerBlockColors();
 
         //server tells us leaves decayed somewhere nearby: purely visual, runs on the client thread
+        //server config values replace the local ones while connected
+        ClientPlayNetworking.registerGlobalReceiver(com.ordana.immersive_weathering.network.ConfigSyncPayload.TYPE, (payload, context) ->
+                com.ordana.immersive_weathering.platform.config.ModConfigHolder.syncedConfigs().stream()
+                        .filter(c -> c.getId().equals(payload.config())).forEach(c -> c.acceptSynced(payload.json())));
+        net.fabricmc.fabric.api.client.networking.v1.ClientPlayConnectionEvents.DISCONNECT.register((handler, client) ->
+                com.ordana.immersive_weathering.platform.config.ModConfigHolder.syncedConfigs()
+                        .forEach(com.ordana.immersive_weathering.platform.config.ModConfigHolder::forceLoad));
+
         ClientPlayNetworking.registerGlobalReceiver(LeafDecayPayload.TYPE, (payload, context) -> {
             ClientLevel level = context.client().level;
             if (level != null) spawnLeafDecayEffects(level, payload.pos(), payload.state());
@@ -106,7 +110,7 @@ public class ImmersiveWeatheringClient implements ClientModInitializer {
     /**
      * Leaf piles take the color of their leaves and turn brown with age.
      */
-    private record LeafPileTint(LeavesType type) implements BlockTintSource {
+    private record LeafPileTint(VanillaTypes.Leaves type) implements BlockTintSource {
         private static final int BROWN = 0x7D5212;
 
         private BlockTintSource leaves() {
@@ -116,7 +120,7 @@ public class ImmersiveWeatheringClient implements ClientModInitializer {
         private static int age(BlockState state, int original) {
             float percentage = state.getValue(LeafPileBlock.AGE) / 10f;
             if (percentage == 0) return original;
-            return 0xFF000000 | new RGBColor(original).asLAB().mixWith(new RGBColor(BROWN).asLAB(), percentage).asRGB().toInt();
+            return 0xFF000000 | (net.minecraft.util.ARGB.srgbLerp(percentage, original, BROWN) & 0xFFFFFF);
         }
 
         @Override

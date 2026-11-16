@@ -16,10 +16,6 @@ import com.ordana.immersive_weathering.configs.CommonConfigs;
 import com.ordana.immersive_weathering.reg.ModBlocks;
 import com.ordana.immersive_weathering.reg.ModItems;
 import com.ordana.immersive_weathering.reg.ModTags;
-import net.mehvahdjukaar.moonlight.api.set.BlockSetAPI;
-import net.mehvahdjukaar.moonlight.api.set.leaves.LeavesTypeRegistry;
-import net.mehvahdjukaar.moonlight.api.set.wood.WoodType;
-import net.mehvahdjukaar.moonlight.api.set.wood.WoodTypeRegistry;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.Holder;
@@ -77,8 +73,8 @@ public class WeatheringHelper {
         var builder = ImmutableBiMap.<Block, Block>builder()
                 .put(Blocks.FLOWERING_AZALEA, Blocks.AZALEA)
                 .put(Blocks.FLOWERING_AZALEA_LEAVES, Blocks.AZALEA_LEAVES)
-                .put(ModBlocks.LEAF_PILES.get(LeavesTypeRegistry.INSTANCE.get(Identifier.parse("flowering_azalea"))),
-                        ModBlocks.LEAF_PILES.get(LeavesTypeRegistry.INSTANCE.get(Identifier.parse("azalea"))));
+                .put(ModBlocks.LEAF_PILES.get(VanillaTypes.FLOWERING_AZALEA_LEAVES),
+                        ModBlocks.LEAF_PILES.get(VanillaTypes.AZALEA_LEAVES));
         addOptional(builder, "quark:flowering_azalea_hedge", "quark:azalea_hedge");
         addOptional(builder, "quark:flowering_azalea_leaf_carpet", "quark:azalea_leaf_carpet");
         return builder.build();
@@ -156,76 +152,44 @@ public class WeatheringHelper {
     }
 
     @Nullable
-    public static Item getBarkToStrip(BlockState normalLog) {
-        WoodType woodType = BlockSetAPI.getBlockTypeOf(normalLog.getBlock(), WoodType.class);
-        if (woodType != null) {
-            boolean log = false;
+    private static Item genericBark() {
+        String s = CommonConfigs.GENERIC_BARK.get();
+        if (s.isEmpty()) return null;
+        return BuiltInRegistries.ITEM.getOptional(Identifier.parse(s)).orElse(null);
+    }
 
-            String childKey = woodType.getChildKey(normalLog.getBlock());
-            if (("log".equals(childKey) && woodType.getChild("stripped_log") != null)
-                || ("wood".equals(childKey)  && woodType.getChild("stripped_wood") != null)) {
-                log = true;
-            }
-            if (log) {
-                String s = CommonConfigs.GENERIC_BARK.get();
-                if (!s.isEmpty()) {
-                    var bark = BuiltInRegistries.ITEM.getOptional(Identifier.parse(s));
-                    if (bark.isPresent()) {
-                        return bark.get();
-                    }
-                }
-                return woodType.getItemOfThis("immersive_weathering:bark");
-            }
-        }
-        return null;
+    @Nullable
+    private static Item barkOf(VanillaTypes.Wood type) {
+        Item g = genericBark();
+        return g != null ? g : ModItems.BARK.get(type);
+    }
+
+    @Nullable
+    public static Item getBarkToStrip(BlockState normalLog) {
+        Block b = normalLog.getBlock();
+        VanillaTypes.Wood type = VanillaTypes.woodOf(b);
+        if (type == null) return null;
+        boolean strippable = (b == type.log && type.strippedLog != null) || (b == type.wood && type.strippedWood != null);
+        return strippable ? barkOf(type) : null;
     }
 
     public static Optional<Pair<Item, Block>> getBarkForStrippedLog(BlockState stripped) {
-        WoodType woodType = BlockSetAPI.getBlockTypeOf(stripped.getBlock(), WoodType.class);
-        if (woodType != null) {
-            Object log = null;
-            if (woodType.getChild("stripped_log") == stripped.getBlock()) {
-                log = woodType.getChild("log");
-            } else if (woodType.getChild("stripped_wood") == stripped.getBlock()) {
-                log = woodType.getChild("wood");
-            }
-            if (log instanceof Block unStripped) {
-                String s = CommonConfigs.GENERIC_BARK.get();
-                if (!s.isEmpty()) {
-                    var bark = BuiltInRegistries.ITEM.getOptional(Identifier.parse(s));
-                    if (bark.isPresent()) {
-                        return Optional.of(Pair.of(bark.get(), unStripped));
-                    }
-                } else {
-                    Item bark = woodType.getItemOfThis("immersive_weathering:bark");
-                    if (bark != null) return Optional.of(Pair.of(bark, unStripped));
-                }
-            }
-        }
-        return Optional.empty();
+        Block b = stripped.getBlock();
+        VanillaTypes.Wood type = VanillaTypes.woodOf(b);
+        if (type == null) return Optional.empty();
+        Block unStripped = null;
+        if (b == type.strippedLog) unStripped = type.log;
+        else if (b == type.strippedWood) unStripped = type.wood;
+        Item bark = unStripped == null ? null : barkOf(type);
+        return bark == null ? Optional.empty() : Optional.of(Pair.of(bark, unStripped));
     }
 
     public static Optional<Pair<Item, Block>> getWoodFromLog(BlockState sourceLog) {
-        WoodType woodType = BlockSetAPI.getBlockTypeOf(sourceLog.getBlock(), WoodType.class);
-        if (woodType != null) {
-            Object log = null;
-            if (woodType.getChild("log") == sourceLog.getBlock()) {
-                log = woodType.getChild("wood");
-            }
-            if (log instanceof Block unStripped) {
-                String s = CommonConfigs.GENERIC_BARK.get();
-                if (!s.isEmpty()) {
-                    var bark = BuiltInRegistries.ITEM.getOptional(Identifier.parse(s));
-                    if (bark.isPresent()) {
-                        return Optional.of(Pair.of(bark.get(), unStripped));
-                    }
-                } else {
-                    Item bark = woodType.getItemOfThis("immersive_weathering:bark");
-                    if (bark != null) return Optional.of(Pair.of(bark, unStripped));
-                }
-            }
-        }
-        return Optional.empty();
+        Block b = sourceLog.getBlock();
+        VanillaTypes.Wood type = VanillaTypes.woodOf(b);
+        if (type == null || b != type.log || type.wood == type.log) return Optional.empty();
+        Item bark = barkOf(type);
+        return bark == null ? Optional.empty() : Optional.of(Pair.of(bark, type.wood));
     }
 
     public static final Supplier<Map<Block, Block>> SOIL_TO_GRASSY = Suppliers.memoize(() ->
@@ -276,27 +240,27 @@ public class WeatheringHelper {
 
     public static final Supplier<BiMap<Block, Item>> WOOD_TO_BARK = Suppliers.memoize(() -> {
         var builder = ImmutableBiMap.<Block, Item>builder()
-            .put(Blocks.OAK_LOG,       ModItems.BARK.get(WoodTypeRegistry.INSTANCE.get(Identifier.parse("oak"))))
-            .put(Blocks.BIRCH_LOG,     ModItems.BARK.get(WoodTypeRegistry.INSTANCE.get(Identifier.parse("birch"))))
-            .put(Blocks.JUNGLE_LOG,    ModItems.BARK.get(WoodTypeRegistry.INSTANCE.get(Identifier.parse("jungle"))))
-            .put(Blocks.SPRUCE_LOG,    ModItems.BARK.get(WoodTypeRegistry.INSTANCE.get(Identifier.parse("spruce"))))
-            .put(Blocks.ACACIA_LOG,    ModItems.BARK.get(WoodTypeRegistry.INSTANCE.get(Identifier.parse("acacia"))))
-            .put(Blocks.DARK_OAK_LOG,  ModItems.BARK.get(WoodTypeRegistry.INSTANCE.get(Identifier.parse("dark_oak"))))
-            .put(Blocks.MANGROVE_LOG,  ModItems.BARK.get(WoodTypeRegistry.INSTANCE.get(Identifier.parse("mangrove"))))
-            .put(Blocks.CHERRY_LOG,    ModItems.BARK.get(WoodTypeRegistry.INSTANCE.get(Identifier.parse("cherry"))))
-            .put(Blocks.BAMBOO_BLOCK,  ModItems.BARK.get(WoodTypeRegistry.INSTANCE.get(Identifier.parse("bamboo"))))
-            .put(Blocks.CRIMSON_STEM,  ModItems.BARK.get(WoodTypeRegistry.INSTANCE.get(Identifier.parse("crimson"))))
-            .put(Blocks.WARPED_STEM,   ModItems.BARK.get(WoodTypeRegistry.INSTANCE.get(Identifier.parse("warped"))))
-            .put(Blocks.OAK_WOOD,      ModItems.BARK.get(WoodTypeRegistry.INSTANCE.get(Identifier.parse("oak"))))
-            .put(Blocks.BIRCH_WOOD,    ModItems.BARK.get(WoodTypeRegistry.INSTANCE.get(Identifier.parse("birch"))))
-            .put(Blocks.JUNGLE_WOOD,   ModItems.BARK.get(WoodTypeRegistry.INSTANCE.get(Identifier.parse("jungle"))))
-            .put(Blocks.SPRUCE_WOOD,   ModItems.BARK.get(WoodTypeRegistry.INSTANCE.get(Identifier.parse("spruce"))))
-            .put(Blocks.ACACIA_WOOD,   ModItems.BARK.get(WoodTypeRegistry.INSTANCE.get(Identifier.parse("acacia"))))
-            .put(Blocks.DARK_OAK_WOOD, ModItems.BARK.get(WoodTypeRegistry.INSTANCE.get(Identifier.parse("dark_oak"))))
-            .put(Blocks.MANGROVE_WOOD, ModItems.BARK.get(WoodTypeRegistry.INSTANCE.get(Identifier.parse("mangrove"))))
-            .put(Blocks.CHERRY_WOOD,   ModItems.BARK.get(WoodTypeRegistry.INSTANCE.get(Identifier.parse("cherry"))))
-            .put(Blocks.CRIMSON_HYPHAE,ModItems.BARK.get(WoodTypeRegistry.INSTANCE.get(Identifier.parse("crimson"))))
-            .put(Blocks.WARPED_HYPHAE, ModItems.BARK.get(WoodTypeRegistry.INSTANCE.get(Identifier.parse("warped"))));
+            .put(Blocks.OAK_LOG,       ModItems.BARK.get(VanillaTypes.OAK))
+            .put(Blocks.BIRCH_LOG,     ModItems.BARK.get(VanillaTypes.BIRCH))
+            .put(Blocks.JUNGLE_LOG,    ModItems.BARK.get(VanillaTypes.JUNGLE))
+            .put(Blocks.SPRUCE_LOG,    ModItems.BARK.get(VanillaTypes.SPRUCE))
+            .put(Blocks.ACACIA_LOG,    ModItems.BARK.get(VanillaTypes.ACACIA))
+            .put(Blocks.DARK_OAK_LOG,  ModItems.BARK.get(VanillaTypes.DARK_OAK))
+            .put(Blocks.MANGROVE_LOG,  ModItems.BARK.get(VanillaTypes.MANGROVE))
+            .put(Blocks.CHERRY_LOG,    ModItems.BARK.get(VanillaTypes.CHERRY))
+            .put(Blocks.BAMBOO_BLOCK,  ModItems.BARK.get(VanillaTypes.BAMBOO))
+            .put(Blocks.CRIMSON_STEM,  ModItems.BARK.get(VanillaTypes.CRIMSON))
+            .put(Blocks.WARPED_STEM,   ModItems.BARK.get(VanillaTypes.WARPED))
+            .put(Blocks.OAK_WOOD,      ModItems.BARK.get(VanillaTypes.OAK))
+            .put(Blocks.BIRCH_WOOD,    ModItems.BARK.get(VanillaTypes.BIRCH))
+            .put(Blocks.JUNGLE_WOOD,   ModItems.BARK.get(VanillaTypes.JUNGLE))
+            .put(Blocks.SPRUCE_WOOD,   ModItems.BARK.get(VanillaTypes.SPRUCE))
+            .put(Blocks.ACACIA_WOOD,   ModItems.BARK.get(VanillaTypes.ACACIA))
+            .put(Blocks.DARK_OAK_WOOD, ModItems.BARK.get(VanillaTypes.DARK_OAK))
+            .put(Blocks.MANGROVE_WOOD, ModItems.BARK.get(VanillaTypes.MANGROVE))
+            .put(Blocks.CHERRY_WOOD,   ModItems.BARK.get(VanillaTypes.CHERRY))
+            .put(Blocks.CRIMSON_HYPHAE,ModItems.BARK.get(VanillaTypes.CRIMSON))
+            .put(Blocks.WARPED_HYPHAE, ModItems.BARK.get(VanillaTypes.WARPED));
         return builder.build();
     });
 

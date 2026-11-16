@@ -1,5 +1,6 @@
 package com.ordana.immersive_weathering.data.block_growths.growths.builtin;
 
+import com.ordana.immersive_weathering.platform.IWUtils;
 import com.ordana.immersive_weathering.ImmersiveWeathering;
 import com.ordana.immersive_weathering.blocks.LeafPileBlock;
 import com.ordana.immersive_weathering.configs.CommonConfigs;
@@ -7,7 +8,6 @@ import com.ordana.immersive_weathering.data.block_growths.TickSource;
 import com.ordana.immersive_weathering.network.LeafDecayPayload;
 import com.ordana.immersive_weathering.reg.ModBlocks;
 import com.ordana.immersive_weathering.util.WeatheringHelper;
-import net.mehvahdjukaar.moonlight.api.platform.PlatHelper;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.Holder;
@@ -55,7 +55,7 @@ public class LeavesGrowth extends BuiltinBlockGrowth {
                             .setValue(PointedDripstoneBlock.TIP_DIRECTION, Direction.DOWN), 2);
                 }
 
-                if (!PlatHelper.isAreaLoaded(level, pos, 2)) return;
+                if (!IWUtils.isAreaLoaded(level, pos, 2)) return;
                 BlockPos targetPos = level.getHeightmapPos(Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, pos);
                 int maxFallenLeavesReach = CommonConfigs.LEAF_PILES_REACH.get();
                 int maxPileHeight = CommonConfigs.LEAF_PILE_MAX_HEIGHT.get();

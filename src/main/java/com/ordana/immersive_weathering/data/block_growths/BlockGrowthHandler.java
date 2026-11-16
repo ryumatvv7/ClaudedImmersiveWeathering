@@ -44,8 +44,8 @@ public class BlockGrowthHandler extends RegistryJsonReloadListener {
     //set or universal ones
     private static final Map<TickSource, Set<IBlockGrowth>> UNIVERSAL_GROWTHS = new EnumMap<>(TickSource.class);
 
-    public BlockGrowthHandler(HolderLookup.Provider registries) {
-        super(registries, "block_growths");
+    public BlockGrowthHandler() {
+        super("block_growths");
     }
 
     public static Optional<Set<IBlockGrowth>> getBlockGrowths(TickSource source, Block block) {

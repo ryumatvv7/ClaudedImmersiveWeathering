@@ -3,7 +3,6 @@ package com.ordana.immersive_weathering.blocks;
 import net.minecraft.world.entity.InsideBlockEffectApplier;
 import com.ordana.immersive_weathering.configs.CommonConfigs;
 import com.ordana.immersive_weathering.reg.ModTags;
-import net.mehvahdjukaar.moonlight.api.platform.RegHelper;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.particles.ParticleTypes;
@@ -27,7 +26,7 @@ public class WeedsBlock extends CropBlock {
 
     public WeedsBlock(Properties settings) {
         super(settings);
-        RegHelper.registerBlockFlammability(this, FIRE_SPREAD, FLAMMABILITY);
+        net.fabricmc.fabric.api.registry.FlammableBlockRegistry.getDefaultInstance().add(this, FLAMMABILITY, FIRE_SPREAD);
     }
 
 

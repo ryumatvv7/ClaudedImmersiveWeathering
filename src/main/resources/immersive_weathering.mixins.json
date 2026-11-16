@@ -13,6 +13,7 @@
     "IceMixin",
     "ItemsMixin",
     "LeavesMixin",
+    "LightningBoltMixin",
     "LiquidBlockMixin",
     "MudBlockHitboxMixin",
     "RabbitEatGoalMixin",

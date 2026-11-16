@@ -1,10 +1,9 @@
 package com.ordana.immersive_weathering.configs;
 
 import com.ordana.immersive_weathering.ImmersiveWeathering;
-import net.mehvahdjukaar.moonlight.api.platform.PlatHelper;
-import net.mehvahdjukaar.moonlight.api.platform.configs.ConfigBuilder;
-import net.mehvahdjukaar.moonlight.api.platform.configs.ModConfigHolder;
-import net.mehvahdjukaar.moonlight.api.platform.configs.ConfigType;
+import com.ordana.immersive_weathering.platform.config.ConfigBuilder;
+import com.ordana.immersive_weathering.platform.config.ModConfigHolder;
+import com.ordana.immersive_weathering.platform.config.ConfigType;
 
 import java.util.ArrayList;
 import java.util.List;

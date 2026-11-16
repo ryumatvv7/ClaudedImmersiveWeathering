@@ -4,3 +4,6 @@ accessible	field	net/minecraft/world/level/block/state/BlockBehaviour$Properties
 accessible	method	net/minecraft/world/level/biome/Biome	getTemperature	(Lnet/minecraft/core/BlockPos;I)F
 accessible	method	net/minecraft/world/level/block/SpreadingSnowyBlock	canStayAlive	(Lnet/minecraft/world/level/block/state/BlockState;Lnet/minecraft/world/level/LevelReader;Lnet/minecraft/core/BlockPos;)Z
 accessible	method	net/minecraft/world/level/block/SpreadingSnowyBlock	canPropagate	(Lnet/minecraft/world/level/block/state/BlockState;Lnet/minecraft/world/level/LevelReader;Lnet/minecraft/core/BlockPos;)Z
+accessible	field	net/minecraft/world/entity/item/FallingBlockEntity	blockState	Lnet/minecraft/world/level/block/state/BlockState;
+mutable	field	net/minecraft/world/entity/item/FallingBlockEntity	blockState	Lnet/minecraft/world/level/block/state/BlockState;
+accessible	field	net/minecraft/world/entity/item/FallingBlockEntity	cancelDrop	Z

@@ -7,6 +7,8 @@ import net.minecraft.core.HolderLookup;
 import net.minecraft.resources.FileToIdConverter;
 import net.minecraft.resources.Identifier;
 import net.minecraft.server.packs.resources.ResourceManager;
+import net.minecraft.server.packs.resources.PreparableReloadListener;
+import net.fabricmc.fabric.api.resource.v1.ResourceLoader;
 import net.minecraft.server.packs.resources.SimpleJsonResourceReloadListener;
 import net.minecraft.util.ExtraCodecs;
 import net.minecraft.util.profiling.ProfilerFiller;
@@ -21,11 +23,16 @@ import java.util.Map;
  */
 public abstract class RegistryJsonReloadListener extends SimpleJsonResourceReloadListener<JsonElement> {
 
-    private final HolderLookup.Provider registries;
+    private HolderLookup.Provider registries;
 
-    protected RegistryJsonReloadListener(HolderLookup.Provider registries, String directory) {
+    protected RegistryJsonReloadListener(String directory) {
         super(ExtraCodecs.JSON, FileToIdConverter.json(directory));
-        this.registries = registries;
+    }
+
+    @Override
+    public void prepareSharedState(PreparableReloadListener.SharedState state) {
+        super.prepareSharedState(state);
+        this.registries = state.get(ResourceLoader.REGISTRY_LOOKUP_KEY);
     }
 
     @Override

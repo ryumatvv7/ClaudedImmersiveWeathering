@@ -3,7 +3,7 @@
   "id": "immersive_weathering",
   "version": "${version}",
   "name": "Immersive Weathering",
-  "description": "An abundance of new natural systems to make your world feel more alive than ever.\nUnofficial private Fabric 26.1.2 port of the original mod.",
+  "description": "An abundance of new natural systems to make your world feel more alive than ever.\nUnofficial private Fabric 26.3 port of the original mod.",
   "authors": [
     "Ordana",
     "MehVahdjukaar",
@@ -11,7 +11,7 @@
     "kayla_the_bee"
   ],
   "contributors": [
-    "Unofficial 26.1.2 Fabric port (private use)"
+    "Unofficial 26.3 Fabric port (private use)"
   ],
   "contact": {
     "homepage": "https://discord.gg/MTUHt3r",
@@ -40,7 +40,6 @@
     "fabricloader": ">=${loader_version}",
     "minecraft": "${minecraft_version}",
     "java": ">=25",
-    "fabric-api": "*",
-    "moonlight": ">=${moonlight_version}"
+    "fabric-api": "*"
   }
 }

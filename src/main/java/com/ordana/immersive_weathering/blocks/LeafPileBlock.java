@@ -1,5 +1,6 @@
 package com.ordana.immersive_weathering.blocks;
 
+import com.ordana.immersive_weathering.util.VanillaTypes;
 import net.minecraft.world.level.ScheduledTickAccess;
 import net.minecraft.world.entity.InsideBlockEffectApplier;
 import com.ordana.immersive_weathering.configs.CommonConfigs;
@@ -7,8 +8,6 @@ import com.ordana.immersive_weathering.entities.FallingLayerEntity;
 import com.ordana.immersive_weathering.reg.ModBlocks;
 import com.ordana.immersive_weathering.reg.ModTags;
 import com.ordana.immersive_weathering.util.WeatheringHelper;
-import net.mehvahdjukaar.moonlight.api.platform.RegHelper;
-import net.mehvahdjukaar.moonlight.api.set.leaves.LeavesType;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerLevel;
@@ -65,16 +64,16 @@ public class LeafPileBlock extends LayerBlock implements BonemealableBlock {
     private final boolean hasThorns; //if it can hurt
     //private final List<Supplier<SimpleParticleType>> particles;
 
-    private final LeavesType leafType;
+    private final VanillaTypes.Leaves leafType;
 
-    public LeafPileBlock(Properties settings, LeavesType leafType) {
+    public LeafPileBlock(Properties settings, VanillaTypes.Leaves leafType) {
         super(settings);
         this.leafType = leafType;
         this.registerDefaultState(this.stateDefinition.any().setValue(LAYERS, 1).setValue(AGE, 0));
         String name = leafType.id.getPath();
         this.canBeBonemealed = name.contains("flower");
         this.hasThorns = name.equals("spruce");
-        RegHelper.registerBlockFlammability(this, FIRE_SPREAD, FLAMMABILITY);
+        net.fabricmc.fabric.api.registry.FlammableBlockRegistry.getDefaultInstance().add(this, FLAMMABILITY, FIRE_SPREAD);
     }
 
     @Override
@@ -83,7 +82,7 @@ public class LeafPileBlock extends LayerBlock implements BonemealableBlock {
         builder.add(AGE);
     }
 
-    public LeavesType getLeafType() {
+    public VanillaTypes.Leaves getLeafType() {
         return leafType;
     }
 

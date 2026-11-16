@@ -1,5 +1,6 @@
 package com.ordana.immersive_weathering.data.block_growths.growths;
 
+import com.ordana.immersive_weathering.platform.IWUtils;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableSet;
 import com.mojang.serialization.Codec;
@@ -10,7 +11,6 @@ import com.ordana.immersive_weathering.data.block_growths.area_condition.AreaCon
 import com.ordana.immersive_weathering.data.position_tests.IPositionRuleTest;
 import com.ordana.immersive_weathering.mixins.accessors.RandomBlockMatchTestAccessor;
 import com.ordana.immersive_weathering.util.StrOpt;
-import net.mehvahdjukaar.moonlight.api.platform.PlatHelper;
 import net.minecraft.core.*;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.server.level.ServerLevel;
@@ -183,7 +183,7 @@ public class ConfigurableBlockGrowth implements IBlockGrowth {
                 //they all need to be true
                 if (!positionTest.test(biome, pos, level)) return false;
             }
-            return PlatHelper.isAreaLoaded(level, pos, maxRange);
+            return IWUtils.isAreaLoaded(level, pos, maxRange);
         }
         return false;
     }

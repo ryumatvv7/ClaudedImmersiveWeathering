@@ -1,6 +1,6 @@
 package com.ordana.immersive_weathering.blocks.mossy;
 
-import net.mehvahdjukaar.moonlight.api.block.ModStairBlock;
+import com.ordana.immersive_weathering.platform.ModStairBlock;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.RandomSource;

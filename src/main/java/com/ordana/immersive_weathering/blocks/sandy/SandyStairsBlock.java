@@ -4,7 +4,7 @@ import net.minecraft.world.level.redstone.Orientation;
 import org.jetbrains.annotations.Nullable;
 import net.minecraft.world.item.ItemStack;
 import com.ordana.immersive_weathering.blocks.ModBlockProperties;
-import net.mehvahdjukaar.moonlight.api.block.ModStairBlock;
+import com.ordana.immersive_weathering.platform.ModStairBlock;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.RandomSource;

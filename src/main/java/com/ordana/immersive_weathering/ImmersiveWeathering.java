@@ -14,11 +14,6 @@ import net.fabricmc.fabric.api.event.player.UseBlockCallback;
 import net.fabricmc.fabric.api.registry.FlammableBlockRegistry;
 import net.fabricmc.fabric.api.registry.FuelValueEvents;
 import net.fabricmc.fabric.api.registry.OxidizableBlocksRegistry;
-import net.mehvahdjukaar.moonlight.api.events.IFireConsumeBlockEvent;
-import net.mehvahdjukaar.moonlight.api.events.ILightningStruckBlockEvent;
-import net.mehvahdjukaar.moonlight.api.events.MoonlightEventsHelper;
-import net.mehvahdjukaar.moonlight.api.platform.PlatHelper;
-import net.mehvahdjukaar.moonlight.api.platform.RegHelper;
 import net.minecraft.resources.Identifier;
 import net.minecraft.world.level.block.Blocks;
 import org.slf4j.Logger;
@@ -47,10 +42,8 @@ public class ImmersiveWeathering implements ModInitializer {
     }
 
     public static void commonInit() {
-        //server (synced) config. Values are sent from the server to every client by Moonlight
+        //server (synced) config. Values are sent to every client when it joins (ConfigSyncPayload)
         CommonConfigs.init();
-
-        ModCreativeTab.init();
 
         ModBlocks.init();
         ModItems.init();
@@ -60,25 +53,28 @@ public class ImmersiveWeathering implements ModInitializer {
         ModFeatures.init();
         ModSoundEvents.init();
 
-        //generated tags, loot tables and recipes for leaf piles / bark of other mods' wood types
-        com.ordana.immersive_weathering.dynamicpack.ServerDynamicResourcesHandler.init();
-
         //network: payload types have to be known on both sides
         LeafDecayPayload.register();
+        com.ordana.immersive_weathering.network.ConfigSyncPayload.register();
 
         //events
-        MoonlightEventsHelper.addListener(ModEvents::onFireConsume, IFireConsumeBlockEvent.class);
-        MoonlightEventsHelper.addListener(ModEvents::onLightningHit, ILightningStruckBlockEvent.class);
+        //fire and lightning events come from FireMixin / LightningBoltMixin
         UseBlockCallback.EVENT.register((player, level, hand, hitResult) ->
                 ModEvents.onBlockCLicked(player.getItemInHand(hand), player, level, hand, hitResult));
 
-        RegHelper.addLootTableInjects(ModLootInjects::onLootInject);
+        ModLootInjects.register();
 
         //data driven systems, reloaded with datapacks on the server
-        PlatHelper.addServerReloadListener(BlockGrowthHandler::new, res("block_growths"));
-        PlatHelper.addServerReloadListener(FluidGeneratorsHandler::new, res("fluid_generators"));
+        var serverData = net.fabricmc.fabric.api.resource.v1.ResourceLoader.get(net.minecraft.server.packs.PackType.SERVER_DATA);
+        serverData.registerReloadListener(res("block_growths"), new BlockGrowthHandler());
+        serverData.registerReloadListener(res("fluid_generators"), new FluidGeneratorsHandler());
 
-        PlatHelper.addCommonSetup(ImmersiveWeathering::setup);
+        //everything is queued above: register it now, then do what needs registered objects
+        com.ordana.immersive_weathering.platform.Reg.flush();
+        ModBlocks.afterRegistration();
+        ModItems.afterRegistration();
+        ModCreativeTab.init();
+        setup();
 
         //dev only smoke test, does nothing unless -Diw.selfTest=true
         com.ordana.immersive_weathering.util.DevSelfTest.register();

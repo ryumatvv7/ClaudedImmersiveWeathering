@@ -52,4 +52,28 @@ public abstract class FireMixin extends BaseFireBlock{
     }
 
 
+
+    //fire burning a block away (replaces Moonlight's IFireConsumeBlockEvent)
+    @org.spongepowered.asm.mixin.Unique
+    private static final ThreadLocal<BlockState> IW_BURNING = new ThreadLocal<>();
+
+    @Inject(method = "checkBurnOut", at = @At("HEAD"))
+    private void iw$rememberBurning(net.minecraft.world.level.Level level, BlockPos pos, int chance, RandomSource random, int age, CallbackInfo ci) {
+        IW_BURNING.set(level.getBlockState(pos));
+    }
+
+    @Inject(method = "checkBurnOut", at = @At(value = "INVOKE",
+            target = "Lnet/minecraft/world/level/Level;setBlockAndUpdate(Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/level/block/state/BlockState;)Z",
+            shift = At.Shift.AFTER))
+    private void iw$replacedByFire(net.minecraft.world.level.Level level, BlockPos pos, int chance, RandomSource random, int age, CallbackInfo ci) {
+        com.ordana.immersive_weathering.events.ModEvents.onFireConsume(level, pos, IW_BURNING.get(), true);
+    }
+
+    @Inject(method = "checkBurnOut", at = @At(value = "INVOKE",
+            target = "Lnet/minecraft/world/level/Level;removeBlock(Lnet/minecraft/core/BlockPos;Z)Z",
+            shift = At.Shift.AFTER))
+    private void iw$burnedAway(net.minecraft.world.level.Level level, BlockPos pos, int chance, RandomSource random, int age, CallbackInfo ci) {
+        com.ordana.immersive_weathering.events.ModEvents.onFireConsume(level, pos, IW_BURNING.get(), false);
+    }
+
 }
