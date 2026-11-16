@@ -1,0 +1,11 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "group": "log_unstrip",
+  "ingredients": [
+    "immersive_weathering:poplar_bark",
+    "minecraft:stripped_poplar_log"
+  ],
+  "result": {
+    "id": "minecraft:poplar_log"
+  }
+}

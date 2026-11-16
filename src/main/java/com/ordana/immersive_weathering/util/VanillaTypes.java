@@ -68,11 +68,12 @@ public final class VanillaTypes {
     public static final Wood MANGROVE = new Wood("mangrove", Blocks.MANGROVE_LOG, Blocks.MANGROVE_WOOD, Blocks.STRIPPED_MANGROVE_LOG, Blocks.STRIPPED_MANGROVE_WOOD, true);
     public static final Wood CHERRY = new Wood("cherry", Blocks.CHERRY_LOG, Blocks.CHERRY_WOOD, Blocks.STRIPPED_CHERRY_LOG, Blocks.STRIPPED_CHERRY_WOOD, true);
     public static final Wood PALE_OAK = new Wood("pale_oak", Blocks.PALE_OAK_LOG, Blocks.PALE_OAK_WOOD, Blocks.STRIPPED_PALE_OAK_LOG, Blocks.STRIPPED_PALE_OAK_WOOD, true);
+    public static final Wood POPLAR = new Wood("poplar", Blocks.POPLAR_LOG, Blocks.POPLAR_WOOD, Blocks.STRIPPED_POPLAR_LOG, Blocks.STRIPPED_POPLAR_WOOD, true);
     public static final Wood BAMBOO = new Wood("bamboo", Blocks.BAMBOO_BLOCK, Blocks.BAMBOO_BLOCK, Blocks.STRIPPED_BAMBOO_BLOCK, null, true);
     public static final Wood CRIMSON = new Wood("crimson", Blocks.CRIMSON_STEM, Blocks.CRIMSON_HYPHAE, Blocks.STRIPPED_CRIMSON_STEM, Blocks.STRIPPED_CRIMSON_HYPHAE, false);
     public static final Wood WARPED = new Wood("warped", Blocks.WARPED_STEM, Blocks.WARPED_HYPHAE, Blocks.STRIPPED_WARPED_STEM, Blocks.STRIPPED_WARPED_HYPHAE, false);
 
-    public static final List<Wood> WOODS = List.of(OAK, SPRUCE, BIRCH, JUNGLE, ACACIA, DARK_OAK, MANGROVE, CHERRY, PALE_OAK, BAMBOO, CRIMSON, WARPED);
+    public static final List<Wood> WOODS = List.of(OAK, SPRUCE, BIRCH, JUNGLE, ACACIA, DARK_OAK, MANGROVE, CHERRY, PALE_OAK, POPLAR, BAMBOO, CRIMSON, WARPED);
 
     public static final Leaves OAK_LEAVES = new Leaves("oak", Blocks.OAK_LEAVES);
     public static final Leaves SPRUCE_LEAVES = new Leaves("spruce", Blocks.SPRUCE_LEAVES);
@@ -83,11 +84,14 @@ public final class VanillaTypes {
     public static final Leaves MANGROVE_LEAVES = new Leaves("mangrove", Blocks.MANGROVE_LEAVES);
     public static final Leaves CHERRY_LEAVES = new Leaves("cherry", Blocks.CHERRY_LEAVES);
     public static final Leaves PALE_OAK_LEAVES = new Leaves("pale_oak", Blocks.PALE_OAK_LEAVES);
+    public static final Leaves RED_POPLAR_LEAVES = new Leaves("red_poplar", Blocks.RED_POPLAR_LEAVES);
+    public static final Leaves ORANGE_POPLAR_LEAVES = new Leaves("orange_poplar", Blocks.ORANGE_POPLAR_LEAVES);
+    public static final Leaves YELLOW_POPLAR_LEAVES = new Leaves("yellow_poplar", Blocks.YELLOW_POPLAR_LEAVES);
     public static final Leaves AZALEA_LEAVES = new Leaves("azalea", Blocks.AZALEA_LEAVES);
     public static final Leaves FLOWERING_AZALEA_LEAVES = new Leaves("flowering_azalea", Blocks.FLOWERING_AZALEA_LEAVES);
 
     public static final List<Leaves> LEAVES = List.of(OAK_LEAVES, SPRUCE_LEAVES, BIRCH_LEAVES, JUNGLE_LEAVES, ACACIA_LEAVES,
-            DARK_OAK_LEAVES, MANGROVE_LEAVES, CHERRY_LEAVES, PALE_OAK_LEAVES, AZALEA_LEAVES, FLOWERING_AZALEA_LEAVES);
+            DARK_OAK_LEAVES, MANGROVE_LEAVES, CHERRY_LEAVES, PALE_OAK_LEAVES, RED_POPLAR_LEAVES, ORANGE_POPLAR_LEAVES, YELLOW_POPLAR_LEAVES, AZALEA_LEAVES, FLOWERING_AZALEA_LEAVES);
 
     @Nullable
     public static Wood woodOf(Block block) {

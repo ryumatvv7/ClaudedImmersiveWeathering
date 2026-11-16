@@ -34,7 +34,32 @@ public final class ConfigValue<T> implements Supplier<T> {
         return value;
     }
 
-    String name() {
+    /** Sets a number value (clamped to its range). @return false if this is not a number value. */
+    @SuppressWarnings("unchecked")
+    public boolean setNumber(double v) {
+        if (kind == Kind.DOUBLE) value = (T) (Double) Math.max(min, Math.min(max, v));
+        else if (kind == Kind.INT) value = (T) (Integer) (int) Math.max(min, Math.min(max, Math.round(v)));
+        else return false;
+        return true;
+    }
+
+    public boolean isNumber() {
+        return kind == Kind.DOUBLE || kind == Kind.INT;
+    }
+
+    public java.util.List<String> path() {
+        return path;
+    }
+
+    public double min() {
+        return min;
+    }
+
+    public double max() {
+        return max;
+    }
+
+    public String name() {
         return path.get(path.size() - 1);
     }
 

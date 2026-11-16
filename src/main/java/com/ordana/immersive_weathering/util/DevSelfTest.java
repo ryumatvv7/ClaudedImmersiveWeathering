@@ -137,6 +137,8 @@ public class DevSelfTest {
         //the handler only drops the bark and lets vanilla do the stripping
         check("oak log gives bark", WeatheringHelper.getBarkToStrip(Blocks.OAK_LOG.defaultBlockState()) != null);
         check("pale oak log gives bark", WeatheringHelper.getBarkToStrip(Blocks.PALE_OAK_LOG.defaultBlockState()) != null);
+        check("poplar log gives bark", WeatheringHelper.getBarkToStrip(Blocks.POPLAR_LOG.defaultBlockState()) != null);
+        check("poplar leaves drop piles", WeatheringHelper.getFallenLeafPile(Blocks.RED_POPLAR_LEAVES.defaultBlockState()).isPresent());
         check("bark repairs stripped log", WeatheringHelper.getBarkForStrippedLog(Blocks.STRIPPED_OAK_LOG.defaultBlockState()).isPresent());
         interact(level, player, p, Blocks.OAK_LOG.defaultBlockState(), new ItemStack(Items.IRON_AXE),
                 "axe on log drops bark", () -> !level.getEntitiesOfClass(net.minecraft.world.entity.item.ItemEntity.class, new net.minecraft.world.phys.AABB(p).inflate(3)).isEmpty());

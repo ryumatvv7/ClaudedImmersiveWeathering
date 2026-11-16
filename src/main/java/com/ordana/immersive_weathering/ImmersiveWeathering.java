@@ -55,6 +55,7 @@ public class ImmersiveWeathering implements ModInitializer {
         //network: payload types have to be known on both sides
         LeafDecayPayload.register();
         com.ordana.immersive_weathering.network.ConfigSyncPayload.register();
+        com.ordana.immersive_weathering.commands.IWCommand.register();
 
         //events
         //fire and lightning events come from FireMixin / LightningBoltMixin

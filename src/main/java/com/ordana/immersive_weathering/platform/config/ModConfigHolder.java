@@ -36,6 +36,10 @@ public class ModConfigHolder {
         if (type == ConfigType.COMMON_SYNCED) SYNCED.add(this);
     }
 
+    public List<ConfigValue<?>> getValues() {
+        return values;
+    }
+
     public Identifier getId() {
         return id;
     }

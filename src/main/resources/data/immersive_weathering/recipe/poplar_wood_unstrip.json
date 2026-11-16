@@ -1,0 +1,11 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "group": "wood_unstrip",
+  "ingredients": [
+    "immersive_weathering:poplar_bark",
+    "minecraft:stripped_poplar_wood"
+  ],
+  "result": {
+    "id": "minecraft:poplar_wood"
+  }
+}

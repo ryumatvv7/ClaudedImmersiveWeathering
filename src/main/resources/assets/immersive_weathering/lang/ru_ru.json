@@ -394,5 +394,9 @@
   "block.immersive_weathering.cherry_leaf_pile": "Куча вишнёвых листьев",
   "block.immersive_weathering.mangrove_leaf_pile": "Куча мангровых листьев",
   "item.immersive_weathering.fire": "Огонь",
-  "item.immersive_weathering.soul_fire": "Огонь душ"
+  "item.immersive_weathering.soul_fire": "Огонь душ",
+  "block.immersive_weathering.red_poplar_leaf_pile": "Куча красных листьев тополя",
+  "block.immersive_weathering.orange_poplar_leaf_pile": "Куча оранжевых листьев тополя",
+  "block.immersive_weathering.yellow_poplar_leaf_pile": "Куча жёлтых листьев тополя",
+  "item.immersive_weathering.poplar_bark": "Кора тополя"
 }

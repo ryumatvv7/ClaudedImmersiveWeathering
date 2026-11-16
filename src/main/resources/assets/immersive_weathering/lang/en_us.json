@@ -510,5 +510,9 @@
   "block.immersive_weathering.cherry_leaf_pile": "Cherry Leaf Pile",
   "block.immersive_weathering.mangrove_leaf_pile": "Mangrove Leaf Pile",
   "item.immersive_weathering.fire": "Fire",
-  "item.immersive_weathering.soul_fire": "Soul Fire"
+  "item.immersive_weathering.soul_fire": "Soul Fire",
+  "block.immersive_weathering.red_poplar_leaf_pile": "Red Poplar Leaf Pile",
+  "block.immersive_weathering.orange_poplar_leaf_pile": "Orange Poplar Leaf Pile",
+  "block.immersive_weathering.yellow_poplar_leaf_pile": "Yellow Poplar Leaf Pile",
+  "item.immersive_weathering.poplar_bark": "Poplar Bark"
 }
