@@ -207,6 +207,24 @@ public class DevSelfTest {
         level.setBlock(p.above(), Blocks.AIR.defaultBlockState(), 3);
         level.setBlock(p, Blocks.AIR.defaultBlockState(), 3);
 
+        // --- abandonment (port addition): a small stone brick hut decays
+        guarded("abandonment", () -> {
+            for (int x = 0; x < 5; x++) for (int z = 0; z < 5; z++) for (int y = 0; y < 4; y++)
+                level.setBlock(p.offset(x, y, z), (x == 0 || x == 4 || z == 0 || z == 4 || y == 0 || y == 3)
+                        ? Blocks.STONE_BRICKS.defaultBlockState() : Blocks.AIR.defaultBlockState(), 3);
+            int n = com.ordana.immersive_weathering.util.Abandonment.age(level, p, 30);
+            int old = 0;
+            for (int x = 0; x < 5; x++) for (int z = 0; z < 5; z++) for (int y = 0; y < 4; y++) {
+                BlockState s = level.getBlockState(p.offset(x, y, z));
+                if (s.is(Blocks.MOSSY_STONE_BRICKS) || s.is(Blocks.CRACKED_STONE_BRICKS) || s.is(Blocks.COBWEB)
+                        || s.is(ModBlocks.MOSS.get()) || s.is(ModBlocks.IVY.get())) old++;
+            }
+            ImmersiveWeathering.LOGGER.info("Self test: abandonment changed {} blocks in the chunk, {} in the hut", n, old);
+            check("abandoned hut decays", old > 0);
+            for (int x = 0; x < 5; x++) for (int z = 0; z < 5; z++) for (int y = 0; y < 4; y++)
+                level.setBlock(p.offset(x, y, z), Blocks.AIR.defaultBlockState(), 3);
+        });
+
         // --- rust progression
         guarded("rusting ticks", () -> {
             level.setBlock(p, ModBlocks.CUT_IRON.get().defaultBlockState(), 3);

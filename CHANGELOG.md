@@ -1,5 +1,27 @@
 # Changelog
 
+## 🏚️ v26.3-port.6 — "Abandoned"
+
+> Leave a place alone long enough and nature takes it back.
+
+### ✨ New
+- **🏚️ Abandonment.** Every chunk remembers when players were last nearby. Come back after **7+ in-game days** and the chunk catches up on everything it missed:
+  - 🧱 bricks, cobblestone and other stone blocks turn **mossy and cracked**;
+  - 🌿 **ivy** climbs sunlit walls, **moss** creeps over floors and walls;
+  - 🕸️ **cobwebs** fill dark corners indoors;
+  - 🪵 exposed wood **rots**.
+- The longer you stay away, the worse it gets (capped per chunk).
+- Only built blocks decay. Natural stone, dirt and grass are left alone.
+- 🛡️ **Varnished** blocks stay protected.
+
+### ⚙️ Config
+- `abandonment.enabled`: turn the feature on or off.
+- `abandonment.days`: in-game days without players before decay starts (default `7`).
+- `abandonment.max_steps`: max blocks changed in one chunk at once (default `600`).
+- `/iw abandon <days>` (op): age the chunk you're standing in, to try it out.
+
+---
+
 ## 🪵 v26.3-port.5 — "Damp & Decay"
 
 > Wood isn't forever anymore. Docks, bridges and shacks by the water now age on their own.

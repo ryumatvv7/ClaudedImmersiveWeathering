@@ -57,6 +57,7 @@ public class ImmersiveWeathering implements ModInitializer {
         com.ordana.immersive_weathering.network.ConfigSyncPayload.register();
         com.ordana.immersive_weathering.commands.IWCommand.register();
         com.ordana.immersive_weathering.util.Varnish.init();
+        com.ordana.immersive_weathering.util.Abandonment.init();
 
         //events
         //fire and lightning events come from FireMixin / LightningBoltMixin

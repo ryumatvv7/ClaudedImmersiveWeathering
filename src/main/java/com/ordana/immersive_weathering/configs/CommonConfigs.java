@@ -79,6 +79,9 @@ public class CommonConfigs {
     public static final Supplier<Boolean> PUDDLES;
     public static final Supplier<Boolean> WOOD_ROT;
     public static final Supplier<Boolean> WOOD_MOSS;
+    public static final Supplier<Boolean> ABANDONMENT;
+    public static final Supplier<Integer> ABANDONMENT_DAYS;
+    public static final Supplier<Integer> ABANDONMENT_MAX;
     public static final Supplier<Double> WOOD_SPEED;
 
     public static final Supplier<Boolean> VITRIFIED_LIGHTNING;
@@ -208,6 +211,12 @@ public class CommonConfigs {
         builder.push("wood");
         WOOD_ROT = builder.comment("wood in or next to water rots; rotten wood under water falls apart").define("rot", true);
         WOOD_MOSS = builder.comment("moss grows on damp wood").define("moss", true);
+        builder.pop();
+
+        builder.push("abandonment");
+        ABANDONMENT = builder.comment("chunks nobody has visited for a while decay when players come back (moss, cracks, ivy, cobwebs, rot)").define("enabled", true);
+        ABANDONMENT_DAYS = builder.comment("in-game days without players before a chunk starts to decay").define("days", 7, 1, 1000);
+        ABANDONMENT_MAX = builder.comment("max decay steps applied to one chunk at once").define("max_steps", 600, 0, 5000);
         builder.pop();
 
         builder.push("puddles");

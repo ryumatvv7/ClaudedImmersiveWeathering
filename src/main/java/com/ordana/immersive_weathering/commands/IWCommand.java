@@ -20,6 +20,7 @@ import java.util.Optional;
  * /iw speed                      - list the speed multipliers
  * /iw speed &lt;name&gt; &lt;value&gt;       - change one (saved to the config file and sent to every player)
  * /iw reload                     - re-read the config file
+ * /iw abandon &lt;days&gt;             - age the current chunk as if nobody came here for that many days
  * Needs operator permission.
  */
 public final class IWCommand {
@@ -37,7 +38,16 @@ public final class IWCommand {
                                         .then(Commands.argument("value", DoubleArgumentType.doubleArg(0, 100))
                                                 .executes(c -> set(c, StringArgumentType.getString(c, "name"),
                                                         DoubleArgumentType.getDouble(c, "value"))))))
-                        .then(Commands.literal("reload").executes(IWCommand::reload))));
+                        .then(Commands.literal("reload").executes(IWCommand::reload))
+                        .then(Commands.literal("abandon")
+                                .then(Commands.argument("days", com.mojang.brigadier.arguments.IntegerArgumentType.integer(1, 1000))
+                                        .executes(c -> {
+                                            int days = com.mojang.brigadier.arguments.IntegerArgumentType.getInteger(c, "days");
+                                            int n = com.ordana.immersive_weathering.util.Abandonment.age(c.getSource().getLevel(),
+                                                    net.minecraft.core.BlockPos.containing(c.getSource().getPosition()), days);
+                                            c.getSource().sendSuccess(() -> Component.literal("Aged this chunk by " + days + " days: " + n + " blocks changed"), true);
+                                            return 1;
+                                        })))));
     }
 
     private static boolean isSpeed(ConfigValue<?> v) {
