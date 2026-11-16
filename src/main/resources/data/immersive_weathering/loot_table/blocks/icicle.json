@@ -10,23 +10,22 @@
           "name": "immersive_weathering:icicle"
         }
       ],
-      "conditions": [
-        {
-          "condition": "minecraft:match_tool",
-          "predicate": {
-            "predicates": {
-              "minecraft:enchantments": [
-                {
-                  "enchantments": "minecraft:silk_touch",
-                  "levels": {
-                    "min": 1
-                  }
+      "condition": {
+        "type": "minecraft:match_tool",
+        "predicate": {
+          "predicates": {
+            "minecraft:enchantments": [
+              {
+                "enchantments": "minecraft:silk_touch",
+                "levels": {
+                  "type": "minecraft:uniform",
+                  "min": 1
                 }
-              ]
-            }
+              }
+            ]
           }
         }
-      ]
+      }
     }
   ]
 }

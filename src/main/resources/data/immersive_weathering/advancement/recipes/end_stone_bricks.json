@@ -28,7 +28,7 @@
     "has_the_recipe": {
       "trigger": "minecraft:recipe_unlocked",
       "conditions": {
-        "recipe": "immersive_weathering:end_stone_brick_from_stonecutting"
+        "recipes": "immersive_weathering:end_stone_brick_from_stonecutting"
       }
     }
   },

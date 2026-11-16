@@ -28,7 +28,7 @@
     "has_the_recipe": {
       "trigger": "minecraft:recipe_unlocked",
       "conditions": {
-        "recipe": "immersive_weathering:deepslate_brick_from_stonecutting"
+        "recipes": "immersive_weathering:deepslate_brick_from_stonecutting"
       }
     }
   },

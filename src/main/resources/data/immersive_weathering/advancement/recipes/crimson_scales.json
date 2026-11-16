@@ -5,8 +5,7 @@
       "immersive_weathering:crimson_stem_unstrip",
       "immersive_weathering:crimson_hyphae_unstrip",
       "immersive_weathering:crimson_hyphae_from_scales",
-      "immersive_weathering:nulch_block",
-      "immersvie_weathering:nulch"
+      "immersive_weathering:nulch_block"
     ]
   },
   "criteria": {
@@ -25,7 +24,7 @@
     "has_the_recipe": {
       "trigger": "minecraft:recipe_unlocked",
       "conditions": {
-        "recipe": "immersive_weathering:crimson_hyphae_from_scales"
+        "recipes": "immersive_weathering:crimson_hyphae_from_scales"
       }
     }
   },

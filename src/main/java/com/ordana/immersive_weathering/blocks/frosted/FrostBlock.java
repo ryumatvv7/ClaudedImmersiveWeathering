@@ -16,7 +16,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.phys.BlockHitResult;
 
-public class FrostBlock extends MultifaceBlock implements Frosty {
+public class FrostBlock extends net.minecraft.world.level.block.MultifaceSpreadeableBlock implements Frosty {
     private final MultifaceSpreader spreader = new MultifaceSpreader(this);
 
     public FrostBlock(Properties settings) {

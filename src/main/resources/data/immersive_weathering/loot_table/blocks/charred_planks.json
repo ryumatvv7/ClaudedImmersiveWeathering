@@ -7,34 +7,37 @@
         {
           "type": "minecraft:item",
           "name": "minecraft:fire_charge",
-          "conditions": [
-            {
-              "condition": "minecraft:block_state_property",
-              "block": "immersive_weathering:charred_planks",
-              "properties": {
-                "smoldering": "true"
-              }
-            },
-            {
-              "condition": "minecraft:random_chance",
-              "chance": 0.5
-            },
-            {
-              "condition": "minecraft:inverted",
-              "term": {
-                "condition": "minecraft:match_tool",
-                "predicate": {
-                  "predicates": {
-                    "minecraft:enchantments": [
-                      {
-                        "enchantments": "minecraft:silk_touch"
-                      }
-                    ]
+          "condition": {
+            "type": "minecraft:all_of",
+            "terms": [
+              {
+                "type": "minecraft:match_block",
+                "blocks": "immersive_weathering:charred_planks",
+                "state": {
+                  "smoldering": "true"
+                }
+              },
+              {
+                "type": "minecraft:random_chance",
+                "chance": 0.5
+              },
+              {
+                "type": "minecraft:inverted",
+                "term": {
+                  "type": "minecraft:match_tool",
+                  "predicate": {
+                    "predicates": {
+                      "minecraft:enchantments": [
+                        {
+                          "enchantments": "minecraft:silk_touch"
+                        }
+                      ]
+                    }
                   }
                 }
               }
-            }
-          ]
+            ]
+          }
         }
       ]
     },
@@ -48,46 +51,44 @@
             {
               "type": "minecraft:item",
               "name": "immersive_weathering:charred_planks",
-              "conditions": [
-                {
-                  "condition": "minecraft:match_tool",
-                  "predicate": {
-                    "predicates": {
-                      "minecraft:enchantments": [
-                        {
-                          "enchantments": "minecraft:silk_touch",
-                          "levels": {
-                            "min": 1
-                          }
+              "condition": {
+                "type": "minecraft:match_tool",
+                "predicate": {
+                  "predicates": {
+                    "minecraft:enchantments": [
+                      {
+                        "enchantments": "minecraft:silk_touch",
+                        "levels": {
+                          "type": "minecraft:uniform",
+                          "min": 1
                         }
-                      ]
-                    }
+                      }
+                    ]
                   }
                 }
-              ]
+              }
             },
             {
               "type": "minecraft:item",
               "name": "minecraft:charcoal",
-              "functions": [
+              "modifier": [
                 {
-                  "function": "minecraft:apply_bonus",
+                  "type": "minecraft:apply_bonus",
                   "enchantment": "minecraft:fortune",
                   "formula": "minecraft:ore_drops"
                 },
                 {
-                  "function": "minecraft:set_count",
+                  "type": "minecraft:set_count",
                   "count": {
+                    "type": "minecraft:uniform",
                     "min": 0,
                     "max": 2
                   }
                 }
               ],
-              "conditions": [
-                {
-                  "condition": "minecraft:survives_explosion"
-                }
-              ]
+              "condition": {
+                "type": "minecraft:survives_explosion"
+              }
             }
           ]
         }

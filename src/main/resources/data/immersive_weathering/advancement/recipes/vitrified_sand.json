@@ -21,7 +21,7 @@
     "has_the_recipe": {
       "trigger": "minecraft:recipe_unlocked",
       "conditions": {
-        "recipe": "immersive_weathering:glass_from_vitrified_sand_smelting"
+        "recipes": "immersive_weathering:glass_from_vitrified_sand_smelting"
       }
     }
   },

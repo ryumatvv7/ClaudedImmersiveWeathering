@@ -6,8 +6,7 @@
       "immersive_weathering:birch_wood_unstrip",
       "immersive_weathering:birch_wood_from_bark",
       "immersive_weathering:mulch_block",
-      "immersive_weathering:paper_from_birch_bark",
-      "immersvie_weathering:mulch"
+      "immersive_weathering:paper_from_birch_bark"
     ]
   },
   "criteria": {
@@ -26,7 +25,7 @@
     "has_the_recipe": {
       "trigger": "minecraft:recipe_unlocked",
       "conditions": {
-        "recipe": "immersive_weathering:birch_wood_from_bark"
+        "recipes": "immersive_weathering:birch_wood_from_bark"
       }
     }
   },

@@ -22,7 +22,7 @@
     "has_the_recipe": {
       "trigger": "minecraft:recipe_unlocked",
       "conditions": {
-        "recipe": "immersive_weathering:mossy_bricks_from_vine"
+        "recipes": "immersive_weathering:mossy_bricks_from_vine"
       }
     }
   },

@@ -18,16 +18,17 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 public abstract class ItemsMixin {
 
     @Shadow
-    private static Item registerBlock(Block block, BiFunction<Block, Item.Properties, Item> itemFactory) {
+    private static Item registerBlock(net.minecraft.references.BlockItemId id, Block block,
+                                      BiFunction<Block, Item.Properties, Item> itemFactory, Item.Properties properties) {
         return null;
     }
 
-    @SuppressWarnings({"Convert2MethodRef", "FunctionalExpressionCanBeFolded"})
-    @Inject(method = "registerBlock(Lnet/minecraft/world/level/block/Block;)Lnet/minecraft/world/item/Item;",
+    //hanging roots can also be placed on walls
+    @Inject(method = "registerBlock(Lnet/minecraft/references/BlockItemId;Lnet/minecraft/world/level/block/Block;Lnet/minecraft/world/item/Item$Properties;)Lnet/minecraft/world/item/Item;",
             at = @At("HEAD"), cancellable = true)
-    private static void addRoot(Block block, CallbackInfoReturnable<Item> cir) {
+    private static void addRoot(net.minecraft.references.BlockItemId id, Block block, Item.Properties properties, CallbackInfoReturnable<Item> cir) {
         if (block == Blocks.HANGING_ROOTS) {
-            cir.setReturnValue(registerBlock(block, (b, p) -> new CeilingAndWallBlockItem(b, () -> ModBlocks.HANGING_ROOTS_WALL.get(), p)));
+            cir.setReturnValue(registerBlock(id, block, (b, p) -> new CeilingAndWallBlockItem(b, () -> ModBlocks.HANGING_ROOTS_WALL.get(), p), properties));
         }
     }
 }

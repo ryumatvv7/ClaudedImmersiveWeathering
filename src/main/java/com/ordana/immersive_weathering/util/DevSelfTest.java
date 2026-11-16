@@ -244,8 +244,10 @@ public class DevSelfTest {
         for (BlockPos q : BlockPos.betweenClosed(base.offset(-2, 0, -2), base.offset(2, 5, 2))) {
             level.setBlock(q, Blocks.AIR.defaultBlockState(), 2);
         }
+        var toRemove = new java.util.ArrayList<net.minecraft.world.entity.Entity>();
         for (var e : level.getAllEntities()) {
-            if (!(e instanceof net.minecraft.world.entity.player.Player) && e.blockPosition().closerThan(base, 16)) e.discard();
+            if (e != null && !(e instanceof net.minecraft.world.entity.player.Player) && e.blockPosition().closerThan(base, 16)) toRemove.add(e);
         }
+        toRemove.forEach(net.minecraft.world.entity.Entity::discard);
     }
 }

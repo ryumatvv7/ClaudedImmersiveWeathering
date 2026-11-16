@@ -24,7 +24,7 @@
     "has_the_recipe": {
       "trigger": "minecraft:recipe_unlocked",
       "conditions": {
-        "recipe": "immersive_weathering:cut_iron_slab"
+        "recipes": "immersive_weathering:cut_iron_slab"
       }
     }
   },

@@ -10,29 +10,33 @@
           "name": "minecraft:snowball"
         }
       ],
-      "conditions": [
-        {
-          "condition": "minecraft:inverted",
-          "term": {
-            "condition": "minecraft:match_tool",
-            "predicate": {
-              "predicates": {
-                "minecraft:enchantments": [
-                  {
-                    "enchantments": "minecraft:silk_touch",
-                    "levels": {
-                      "min": 1
+      "condition": {
+        "type": "minecraft:all_of",
+        "terms": [
+          {
+            "type": "minecraft:inverted",
+            "term": {
+              "type": "minecraft:match_tool",
+              "predicate": {
+                "predicates": {
+                  "minecraft:enchantments": [
+                    {
+                      "enchantments": "minecraft:silk_touch",
+                      "levels": {
+                        "type": "minecraft:uniform",
+                        "min": 1
+                      }
                     }
-                  }
-                ]
+                  ]
+                }
               }
             }
+          },
+          {
+            "type": "minecraft:survives_explosion"
           }
-        },
-        {
-          "condition": "minecraft:survives_explosion"
-        }
-      ]
+        ]
+      }
     },
     {
       "rolls": 1,
@@ -44,64 +48,53 @@
             {
               "type": "minecraft:item",
               "name": "immersive_weathering:snowy_cobblestone_slab",
-              "functions": [
-                {
-                  "function": "minecraft:set_count",
-                  "count": 2,
-                  "add": false,
-                  "conditions": [
-                    {
-                      "condition": "minecraft:block_state_property",
-                      "block": "immersive_weathering:snowy_cobblestone_slab",
-                      "properties": {
-                        "type": "double"
-                      }
-                    }
-                  ]
-                }
-              ],
-              "conditions": [
-                {
-                  "condition": "minecraft:match_tool",
-                  "predicate": {
-                    "predicates": {
-                      "minecraft:enchantments": [
-                        {
-                          "enchantments": "minecraft:silk_touch",
-                          "levels": {
-                            "min": 1
-                          }
-                        }
-                      ]
-                    }
+              "modifier": {
+                "type": "minecraft:set_count",
+                "count": 2,
+                "add": false,
+                "condition": {
+                  "type": "minecraft:match_block",
+                  "blocks": "immersive_weathering:snowy_cobblestone_slab",
+                  "state": {
+                    "type": "double"
                   }
                 }
-              ]
+              },
+              "condition": {
+                "type": "minecraft:match_tool",
+                "predicate": {
+                  "predicates": {
+                    "minecraft:enchantments": [
+                      {
+                        "enchantments": "minecraft:silk_touch",
+                        "levels": {
+                          "type": "minecraft:uniform",
+                          "min": 1
+                        }
+                      }
+                    ]
+                  }
+                }
+              }
             },
             {
               "type": "minecraft:item",
               "name": "minecraft:cobblestone_slab",
-              "functions": [
-                {
-                  "function": "minecraft:set_count",
-                  "count": 2,
-                  "add": false,
-                  "conditions": [
-                    {
-                      "condition": "minecraft:block_state_property",
-                      "block": "immersive_weathering:snowy_cobblestone_slab",
-                      "properties": {
-                        "type": "double"
-                      }
-                    }
-                  ]
+              "modifier": {
+                "type": "minecraft:set_count",
+                "count": 2,
+                "add": false,
+                "condition": {
+                  "type": "minecraft:match_block",
+                  "blocks": "immersive_weathering:snowy_cobblestone_slab",
+                  "state": {
+                    "type": "double"
+                  }
                 }
-              ],
-              "conditions": [
-                {
-                  "condition": "minecraft:survives_explosion"
-                }
-              ]
+              },
+              "condition": {
+                "type": "minecraft:survives_explosion"
+              }
             }
           ]
         }

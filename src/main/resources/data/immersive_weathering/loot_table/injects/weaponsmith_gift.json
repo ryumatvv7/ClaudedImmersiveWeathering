@@ -7,12 +7,10 @@
         {
           "type": "minecraft:item",
           "name": "immersive_weathering:ice_sickle",
-          "conditions": [
-            {
-              "condition": "minecraft:random_chance",
-              "chance": 0.25
-            }
-          ]
+          "condition": {
+            "type": "minecraft:random_chance",
+            "chance": 0.25
+          }
         }
       ]
     }

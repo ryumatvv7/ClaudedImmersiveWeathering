@@ -24,18 +24,11 @@
           }
         ]
       }
-    },
-    "has_the_recipe": {
-      "trigger": "minecraft:recipe_unlocked",
-      "conditions": {
-        "recipe": "immersive_weathering:blackstone_bricks_repair"
-      }
     }
   },
   "requirements": [
     [
-      "has_copper_block",
-      "has_the_recipe"
+      "has_copper_block"
     ]
   ]
 }

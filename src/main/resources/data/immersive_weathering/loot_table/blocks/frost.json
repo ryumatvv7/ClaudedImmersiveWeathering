@@ -8,113 +8,99 @@
         {
           "type": "minecraft:item",
           "name": "immersive_weathering:frost",
-          "functions": [
+          "modifier": [
             {
-              "function": "minecraft:set_count",
+              "type": "minecraft:set_count",
               "count": 1,
               "add": true,
-              "conditions": [
-                {
-                  "condition": "minecraft:block_state_property",
-                  "block": "immersive_weathering:frost",
-                  "properties": {
-                    "east": "true"
-                  }
+              "condition": {
+                "type": "minecraft:match_block",
+                "blocks": "immersive_weathering:frost",
+                "state": {
+                  "east": "true"
                 }
-              ]
+              }
             },
             {
-              "function": "minecraft:set_count",
+              "type": "minecraft:set_count",
               "count": 1,
               "add": true,
-              "conditions": [
-                {
-                  "condition": "minecraft:block_state_property",
-                  "block": "immersive_weathering:frost",
-                  "properties": {
-                    "west": "true"
-                  }
+              "condition": {
+                "type": "minecraft:match_block",
+                "blocks": "immersive_weathering:frost",
+                "state": {
+                  "west": "true"
                 }
-              ]
+              }
             },
             {
-              "function": "minecraft:set_count",
+              "type": "minecraft:set_count",
               "count": 1,
               "add": true,
-              "conditions": [
-                {
-                  "condition": "minecraft:block_state_property",
-                  "block": "immersive_weathering:frost",
-                  "properties": {
-                    "north": "true"
-                  }
+              "condition": {
+                "type": "minecraft:match_block",
+                "blocks": "immersive_weathering:frost",
+                "state": {
+                  "north": "true"
                 }
-              ]
+              }
             },
             {
-              "function": "minecraft:set_count",
+              "type": "minecraft:set_count",
               "count": 1,
               "add": true,
-              "conditions": [
-                {
-                  "condition": "minecraft:block_state_property",
-                  "block": "immersive_weathering:frost",
-                  "properties": {
-                    "south": "true"
-                  }
+              "condition": {
+                "type": "minecraft:match_block",
+                "blocks": "immersive_weathering:frost",
+                "state": {
+                  "south": "true"
                 }
-              ]
+              }
             },
             {
-              "function": "minecraft:set_count",
+              "type": "minecraft:set_count",
               "count": 1,
               "add": true,
-              "conditions": [
-                {
-                  "condition": "minecraft:block_state_property",
-                  "block": "immersive_weathering:frost",
-                  "properties": {
-                    "up": "true"
-                  }
+              "condition": {
+                "type": "minecraft:match_block",
+                "blocks": "immersive_weathering:frost",
+                "state": {
+                  "up": "true"
                 }
-              ]
+              }
             },
             {
-              "function": "minecraft:set_count",
+              "type": "minecraft:set_count",
               "count": 1,
               "add": true,
-              "conditions": [
-                {
-                  "condition": "minecraft:block_state_property",
-                  "block": "immersive_weathering:frost",
-                  "properties": {
-                    "down": "true"
-                  }
+              "condition": {
+                "type": "minecraft:match_block",
+                "blocks": "immersive_weathering:frost",
+                "state": {
+                  "down": "true"
                 }
-              ]
+              }
             },
             {
-              "function": "minecraft:set_count",
+              "type": "minecraft:set_count",
               "count": -1,
               "add": true
             }
           ]
         }
       ],
-      "conditions": [
-        {
-          "condition": "minecraft:match_tool",
-          "predicate": {
-            "predicates": {
-              "minecraft:enchantments": [
-                {
-                  "enchantments": "minecraft:silk_touch"
-                }
-              ]
-            }
+      "condition": {
+        "type": "minecraft:match_tool",
+        "predicate": {
+          "predicates": {
+            "minecraft:enchantments": [
+              {
+                "enchantments": "minecraft:silk_touch"
+              }
+            ]
           }
         }
-      ]
+      }
     }
   ]
 }

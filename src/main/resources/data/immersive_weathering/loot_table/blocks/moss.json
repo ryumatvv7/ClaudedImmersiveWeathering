@@ -8,110 +8,96 @@
         {
           "type": "minecraft:item",
           "name": "immersive_weathering:moss_clump",
-          "functions": [
+          "modifier": [
             {
-              "function": "minecraft:set_count",
+              "type": "minecraft:set_count",
               "count": 1,
               "add": true,
-              "conditions": [
-                {
-                  "condition": "minecraft:block_state_property",
-                  "block": "immersive_weathering:moss",
-                  "properties": {
-                    "east": "true"
-                  }
+              "condition": {
+                "type": "minecraft:match_block",
+                "blocks": "immersive_weathering:moss",
+                "state": {
+                  "east": "true"
                 }
-              ]
+              }
             },
             {
-              "function": "minecraft:set_count",
+              "type": "minecraft:set_count",
               "count": 1,
               "add": true,
-              "conditions": [
-                {
-                  "condition": "minecraft:block_state_property",
-                  "block": "immersive_weathering:moss",
-                  "properties": {
-                    "west": "true"
-                  }
+              "condition": {
+                "type": "minecraft:match_block",
+                "blocks": "immersive_weathering:moss",
+                "state": {
+                  "west": "true"
                 }
-              ]
+              }
             },
             {
-              "function": "minecraft:set_count",
+              "type": "minecraft:set_count",
               "count": 1,
               "add": true,
-              "conditions": [
-                {
-                  "condition": "minecraft:block_state_property",
-                  "block": "immersive_weathering:moss",
-                  "properties": {
-                    "north": "true"
-                  }
+              "condition": {
+                "type": "minecraft:match_block",
+                "blocks": "immersive_weathering:moss",
+                "state": {
+                  "north": "true"
                 }
-              ]
+              }
             },
             {
-              "function": "minecraft:set_count",
+              "type": "minecraft:set_count",
               "count": 1,
               "add": true,
-              "conditions": [
-                {
-                  "condition": "minecraft:block_state_property",
-                  "block": "immersive_weathering:moss",
-                  "properties": {
-                    "south": "true"
-                  }
+              "condition": {
+                "type": "minecraft:match_block",
+                "blocks": "immersive_weathering:moss",
+                "state": {
+                  "south": "true"
                 }
-              ]
+              }
             },
             {
-              "function": "minecraft:set_count",
+              "type": "minecraft:set_count",
               "count": 1,
               "add": true,
-              "conditions": [
-                {
-                  "condition": "minecraft:block_state_property",
-                  "block": "immersive_weathering:moss",
-                  "properties": {
-                    "up": "true"
-                  }
+              "condition": {
+                "type": "minecraft:match_block",
+                "blocks": "immersive_weathering:moss",
+                "state": {
+                  "up": "true"
                 }
-              ]
+              }
             },
             {
-              "function": "minecraft:set_count",
+              "type": "minecraft:set_count",
               "count": 1,
               "add": true,
-              "conditions": [
-                {
-                  "condition": "minecraft:block_state_property",
-                  "block": "immersive_weathering:moss",
-                  "properties": {
-                    "down": "true"
-                  }
+              "condition": {
+                "type": "minecraft:match_block",
+                "blocks": "immersive_weathering:moss",
+                "state": {
+                  "down": "true"
                 }
-              ]
+              }
             },
             {
-              "function": "minecraft:set_count",
+              "type": "minecraft:set_count",
               "count": -1,
               "add": true
             },
             {
-              "function": "minecraft:explosion_decay"
+              "type": "minecraft:explosion_decay"
             }
           ],
-          "conditions": [
-            {
-              "condition": "minecraft:match_tool",
-              "predicate": {
-                "items": [
-                  "minecraft:shears"
-                ]
-              }
+          "condition": {
+            "type": "minecraft:match_tool",
+            "predicate": {
+              "items": [
+                "minecraft:shears"
+              ]
             }
-          ]
+          }
         }
       ]
     }

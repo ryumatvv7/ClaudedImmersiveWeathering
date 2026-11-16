@@ -1,9 +1,96 @@
-{ "type": "minecraft:block", "pools": [ { "rolls": 1, "entries": [ { "type": "minecraft:item", "name": "immersive_weathering:ash", "functions": [
-  { "function": "minecraft:set_count", "count": 2, "conditions": [ { "condition": "minecraft:block_state_property", "block": "immersive_weathering:ash_layer_block", "properties": { "layers": "2" } } ] },
-  { "function": "minecraft:set_count", "count": 3, "conditions": [ { "condition": "minecraft:block_state_property", "block": "immersive_weathering:ash_layer_block", "properties": { "layers": "3" } } ] },
-  { "function": "minecraft:set_count", "count": 4, "conditions": [ { "condition": "minecraft:block_state_property", "block": "immersive_weathering:ash_layer_block", "properties": { "layers": "4" } } ] },
-  { "function": "minecraft:set_count", "count": 5, "conditions": [ { "condition": "minecraft:block_state_property", "block": "immersive_weathering:ash_layer_block", "properties": { "layers": "5" } } ] },
-  { "function": "minecraft:set_count", "count": 6, "conditions": [ { "condition": "minecraft:block_state_property", "block": "immersive_weathering:ash_layer_block", "properties": { "layers": "6" } } ] },
-  { "function": "minecraft:set_count", "count": 7, "conditions": [ { "condition": "minecraft:block_state_property", "block": "immersive_weathering:ash_layer_block", "properties": { "layers": "7" } } ] },
-  { "function": "minecraft:set_count", "count": 8, "conditions": [ { "condition": "minecraft:block_state_property", "block": "immersive_weathering:ash_layer_block", "properties": { "layers": "8" } } ] },
-  { "function": "minecraft:explosion_decay" } ] } ] } ] }
+{
+  "type": "minecraft:block",
+  "pools": [
+    {
+      "rolls": 1,
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "immersive_weathering:ash",
+          "modifier": [
+            {
+              "type": "minecraft:set_count",
+              "count": 2,
+              "condition": {
+                "type": "minecraft:match_block",
+                "blocks": "immersive_weathering:ash_layer_block",
+                "state": {
+                  "layers": "2"
+                }
+              }
+            },
+            {
+              "type": "minecraft:set_count",
+              "count": 3,
+              "condition": {
+                "type": "minecraft:match_block",
+                "blocks": "immersive_weathering:ash_layer_block",
+                "state": {
+                  "layers": "3"
+                }
+              }
+            },
+            {
+              "type": "minecraft:set_count",
+              "count": 4,
+              "condition": {
+                "type": "minecraft:match_block",
+                "blocks": "immersive_weathering:ash_layer_block",
+                "state": {
+                  "layers": "4"
+                }
+              }
+            },
+            {
+              "type": "minecraft:set_count",
+              "count": 5,
+              "condition": {
+                "type": "minecraft:match_block",
+                "blocks": "immersive_weathering:ash_layer_block",
+                "state": {
+                  "layers": "5"
+                }
+              }
+            },
+            {
+              "type": "minecraft:set_count",
+              "count": 6,
+              "condition": {
+                "type": "minecraft:match_block",
+                "blocks": "immersive_weathering:ash_layer_block",
+                "state": {
+                  "layers": "6"
+                }
+              }
+            },
+            {
+              "type": "minecraft:set_count",
+              "count": 7,
+              "condition": {
+                "type": "minecraft:match_block",
+                "blocks": "immersive_weathering:ash_layer_block",
+                "state": {
+                  "layers": "7"
+                }
+              }
+            },
+            {
+              "type": "minecraft:set_count",
+              "count": 8,
+              "condition": {
+                "type": "minecraft:match_block",
+                "blocks": "immersive_weathering:ash_layer_block",
+                "state": {
+                  "layers": "8"
+                }
+              }
+            },
+            {
+              "type": "minecraft:explosion_decay"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

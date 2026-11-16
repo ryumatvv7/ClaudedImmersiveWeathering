@@ -27,7 +27,7 @@
     "has_the_recipe": {
       "trigger": "minecraft:recipe_unlocked",
       "conditions": {
-        "recipe": "immersive_weathering:nether_brick_from_stonecutting"
+        "recipes": "immersive_weathering:nether_brick_from_stonecutting"
       }
     }
   },

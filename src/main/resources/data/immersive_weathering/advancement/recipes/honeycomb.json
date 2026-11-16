@@ -27,17 +27,9 @@
       "immersive_weathering:waxed_rusted_cut_iron_stairs_from_honeycomb",
       "immersive_weathering:waxed_rusted_cut_iron_slab_from_honeycomb",
       "immersive_weathering:waxed_iron_door_from_honeycomb",
-      "immersive_weathering:waxed_iron_trapdoor_honeycomb",
-      "immersive_weathering:waxed_iron_bars_honeycomb",
       "immersive_weathering:waxed_exposed_iron_door_from_honeycomb",
-      "immersive_weathering:waxed_exposed_iron_trapdoor_honeycomb",
-      "immersive_weathering:waxed_exposed_iron_bars_honeycomb",
       "immersive_weathering:waxed_weathered_iron_door_from_honeycomb",
-      "immersive_weathering:waxed_weathered_iron_trapdoor_honeycomb",
-      "immersive_weathering:waxed_weathered_iron_bars_honeycomb",
-      "immersive_weathering:waxed_rusted_iron_door_from_honeycomb",
-      "immersive_weathering:waxed_rusted_iron_trapdoor_honeycomb",
-      "immersive_weathering:waxed_rusted_iron_bars_honeycomb"
+      "immersive_weathering:waxed_rusted_iron_door_from_honeycomb"
     ]
   },
   "criteria": {
@@ -56,7 +48,7 @@
     "has_the_recipe": {
       "trigger": "minecraft:recipe_unlocked",
       "conditions": {
-        "recipe": "minecraft:cut_copper"
+        "recipes": "minecraft:cut_copper"
       }
     }
   },

@@ -3,7 +3,6 @@
   "rewards": {
     "recipes": [
       "immersive_weathering:waxed_rusted_cut_iron",
-      "immersive_weathering:waxed_rusted_cut_iron_from_rusted_plate_iron_stonecutting",
       "immersive_weathering:waxed_rusted_cut_iron_slab_from_waxed_rusted_plate_iron_stonecutting",
       "immersive_weathering:waxed_rusted_cut_iron_stairs_from_waxed_rusted_plate_iron_stonecutting",
       "immersive_weathering:waxed_rusted_plate_iron_slab",
@@ -28,7 +27,7 @@
     "has_the_recipe": {
       "trigger": "minecraft:recipe_unlocked",
       "conditions": {
-        "recipe": "immersive_weathering:waxed_rusted_cut_iron"
+        "recipes": "immersive_weathering:waxed_rusted_cut_iron"
       }
     }
   },

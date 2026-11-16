@@ -39,7 +39,7 @@ import java.util.stream.Stream;
 //not touching this
 
 //TODO: This stuff should now use the new multiface spreader mechanic when doing whatever it is that it does
-public class IvyBlock extends MultifaceBlock implements BonemealableBlock {
+public class IvyBlock extends net.minecraft.world.level.block.MultifaceSpreadeableBlock implements BonemealableBlock {
 	public static final IntegerProperty AGE = ModBlockProperties.AGE;
 	public static final int MAX_AGE = 10;
 	private final MultifaceSpreader spreader = new MultifaceSpreader(this);

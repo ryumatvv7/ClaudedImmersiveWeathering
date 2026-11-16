@@ -21,7 +21,7 @@
     "has_the_recipe": {
       "trigger": "minecraft:recipe_unlocked",
       "conditions": {
-        "recipe": "immersive_weathering:black_dye_from_soot"
+        "recipes": "immersive_weathering:black_dye_from_soot"
       }
     }
   },

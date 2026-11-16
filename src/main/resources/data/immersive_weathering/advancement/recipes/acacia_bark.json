@@ -5,8 +5,7 @@
       "immersive_weathering:acacia_log_unstrip",
       "immersive_weathering:acacia_wood_unstrip",
       "immersive_weathering:acacia_wood_from_bark",
-      "immersive_weathering:mulch_block",
-      "immersvie_weathering:mulch"
+      "immersive_weathering:mulch_block"
     ]
   },
   "criteria": {
@@ -25,7 +24,7 @@
     "has_the_recipe": {
       "trigger": "minecraft:recipe_unlocked",
       "conditions": {
-        "recipe": "immersive_weathering:acacia_wood_from_bark"
+        "recipes": "immersive_weathering:acacia_wood_from_bark"
       }
     }
   },

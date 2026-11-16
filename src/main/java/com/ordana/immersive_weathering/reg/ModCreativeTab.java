@@ -42,8 +42,9 @@ public class ModCreativeTab {
                 MOD_TAB_ITEMS.addAll(Arrays.asList(items));
                 return;
             }
-            java.util.List<ItemStack> stacks = Arrays.stream(items).map(ItemStack::new).toList();
             net.fabricmc.fabric.api.creativetab.v1.CreativeModeTabEvents.modifyOutputEvent(tab).register(out -> {
+                //stacks can only be made once item components are bound
+                java.util.List<ItemStack> stacks = Arrays.stream(items).map(ItemStack::new).toList();
                 if (after) out.insertAfter(target, stacks, CreativeModeTab.TabVisibility.PARENT_AND_SEARCH_TABS);
                 else out.insertBefore(target, stacks, CreativeModeTab.TabVisibility.PARENT_AND_SEARCH_TABS);
             });

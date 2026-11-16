@@ -7,9 +7,9 @@
         {
           "type": "minecraft:item",
           "name": "immersive_weathering:ash",
-          "functions": [
+          "modifier": [
             {
-              "function": "minecraft:set_count",
+              "type": "minecraft:set_count",
               "count": {
                 "type": "minecraft:uniform",
                 "min": 1,
@@ -18,7 +18,7 @@
               "add": false
             },
             {
-              "function": "minecraft:enchanted_count_increase",
+              "type": "minecraft:enchanted_count_increase",
               "enchantment": "minecraft:looting",
               "count": {
                 "type": "minecraft:uniform",
@@ -27,12 +27,10 @@
               }
             }
           ],
-          "conditions": [
-            {
-              "condition": "minecraft:random_chance",
-              "chance": 0.75
-            }
-          ]
+          "condition": {
+            "type": "minecraft:random_chance",
+            "chance": 0.75
+          }
         }
       ]
     }

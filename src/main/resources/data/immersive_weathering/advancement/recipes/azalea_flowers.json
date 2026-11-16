@@ -25,7 +25,7 @@
     "has_the_recipe": {
       "trigger": "minecraft:recipe_unlocked",
       "conditions": {
-        "recipe": "immersive_weathering:flowering_azalea"
+        "recipes": "immersive_weathering:flowering_azalea"
       }
     }
   },

@@ -21,7 +21,7 @@
     "has_the_recipe": {
       "trigger": "minecraft:recipe_unlocked",
       "conditions": {
-        "recipe": "immersive_weathering:birch_leaf_pile"
+        "recipes": "immersive_weathering:birch_leaf_pile"
       }
     }
   },

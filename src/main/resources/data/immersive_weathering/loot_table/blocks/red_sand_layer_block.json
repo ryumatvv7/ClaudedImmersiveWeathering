@@ -14,135 +14,109 @@
                 {
                   "type": "minecraft:item",
                   "name": "immersive_weathering:red_sand_layer_block",
-                  "conditions": [
-                    {
-                      "condition": "minecraft:block_state_property",
-                      "block": "immersive_weathering:red_sand_layer_block",
-                      "properties": {
-                        "layers": "1"
-                      }
+                  "condition": {
+                    "type": "minecraft:match_block",
+                    "blocks": "immersive_weathering:red_sand_layer_block",
+                    "state": {
+                      "layers": "1"
                     }
-                  ]
+                  }
                 },
                 {
                   "type": "minecraft:item",
                   "name": "immersive_weathering:red_sand_layer_block",
-                  "functions": [
-                    {
-                      "function": "minecraft:set_count",
-                      "count": 2,
-                      "add": false
+                  "modifier": {
+                    "type": "minecraft:set_count",
+                    "count": 2,
+                    "add": false
+                  },
+                  "condition": {
+                    "type": "minecraft:match_block",
+                    "blocks": "immersive_weathering:red_sand_layer_block",
+                    "state": {
+                      "layers": "2"
                     }
-                  ],
-                  "conditions": [
-                    {
-                      "condition": "minecraft:block_state_property",
-                      "block": "immersive_weathering:red_sand_layer_block",
-                      "properties": {
-                        "layers": "2"
-                      }
-                    }
-                  ]
+                  }
                 },
                 {
                   "type": "minecraft:item",
                   "name": "immersive_weathering:red_sand_layer_block",
-                  "functions": [
-                    {
-                      "function": "minecraft:set_count",
-                      "count": 3,
-                      "add": false
+                  "modifier": {
+                    "type": "minecraft:set_count",
+                    "count": 3,
+                    "add": false
+                  },
+                  "condition": {
+                    "type": "minecraft:match_block",
+                    "blocks": "immersive_weathering:red_sand_layer_block",
+                    "state": {
+                      "layers": "3"
                     }
-                  ],
-                  "conditions": [
-                    {
-                      "condition": "minecraft:block_state_property",
-                      "block": "immersive_weathering:red_sand_layer_block",
-                      "properties": {
-                        "layers": "3"
-                      }
-                    }
-                  ]
+                  }
                 },
                 {
                   "type": "minecraft:item",
                   "name": "immersive_weathering:red_sand_layer_block",
-                  "functions": [
-                    {
-                      "function": "minecraft:set_count",
-                      "count": 4,
-                      "add": false
+                  "modifier": {
+                    "type": "minecraft:set_count",
+                    "count": 4,
+                    "add": false
+                  },
+                  "condition": {
+                    "type": "minecraft:match_block",
+                    "blocks": "immersive_weathering:red_sand_layer_block",
+                    "state": {
+                      "layers": "4"
                     }
-                  ],
-                  "conditions": [
-                    {
-                      "condition": "minecraft:block_state_property",
-                      "block": "immersive_weathering:red_sand_layer_block",
-                      "properties": {
-                        "layers": "4"
-                      }
-                    }
-                  ]
+                  }
                 },
                 {
                   "type": "minecraft:item",
                   "name": "immersive_weathering:red_sand_layer_block",
-                  "functions": [
-                    {
-                      "function": "minecraft:set_count",
-                      "count": 5,
-                      "add": false
+                  "modifier": {
+                    "type": "minecraft:set_count",
+                    "count": 5,
+                    "add": false
+                  },
+                  "condition": {
+                    "type": "minecraft:match_block",
+                    "blocks": "immersive_weathering:red_sand_layer_block",
+                    "state": {
+                      "layers": "5"
                     }
-                  ],
-                  "conditions": [
-                    {
-                      "condition": "minecraft:block_state_property",
-                      "block": "immersive_weathering:red_sand_layer_block",
-                      "properties": {
-                        "layers": "5"
-                      }
-                    }
-                  ]
+                  }
                 },
                 {
                   "type": "minecraft:item",
                   "name": "immersive_weathering:red_sand_layer_block",
-                  "functions": [
-                    {
-                      "function": "minecraft:set_count",
-                      "count": 6,
-                      "add": false
+                  "modifier": {
+                    "type": "minecraft:set_count",
+                    "count": 6,
+                    "add": false
+                  },
+                  "condition": {
+                    "type": "minecraft:match_block",
+                    "blocks": "immersive_weathering:red_sand_layer_block",
+                    "state": {
+                      "layers": "6"
                     }
-                  ],
-                  "conditions": [
-                    {
-                      "condition": "minecraft:block_state_property",
-                      "block": "immersive_weathering:red_sand_layer_block",
-                      "properties": {
-                        "layers": "6"
-                      }
-                    }
-                  ]
+                  }
                 },
                 {
                   "type": "minecraft:item",
                   "name": "immersive_weathering:red_sand_layer_block",
-                  "functions": [
-                    {
-                      "function": "minecraft:set_count",
-                      "count": 7,
-                      "add": false
+                  "modifier": {
+                    "type": "minecraft:set_count",
+                    "count": 7,
+                    "add": false
+                  },
+                  "condition": {
+                    "type": "minecraft:match_block",
+                    "blocks": "immersive_weathering:red_sand_layer_block",
+                    "state": {
+                      "layers": "7"
                     }
-                  ],
-                  "conditions": [
-                    {
-                      "condition": "minecraft:block_state_property",
-                      "block": "immersive_weathering:red_sand_layer_block",
-                      "properties": {
-                        "layers": "7"
-                      }
-                    }
-                  ]
+                  }
                 },
                 {
                   "type": "minecraft:item",

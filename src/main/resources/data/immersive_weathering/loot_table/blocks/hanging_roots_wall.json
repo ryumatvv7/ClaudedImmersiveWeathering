@@ -10,16 +10,14 @@
           "name": "minecraft:hanging_roots"
         }
       ],
-      "conditions": [
-        {
-          "condition": "minecraft:match_tool",
-          "predicate": {
-            "items": [
-              "minecraft:shears"
-            ]
-          }
+      "condition": {
+        "type": "minecraft:match_tool",
+        "predicate": {
+          "items": [
+            "minecraft:shears"
+          ]
         }
-      ]
+      }
     }
   ],
   "random_sequence": "minecraft:blocks/hanging_roots"

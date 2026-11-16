@@ -2,7 +2,6 @@
   "parent": "minecraft:recipes/root",
   "rewards": {
     "recipes": [
-      "immersive_weathering:deepslate_tile_repair",
       "immersive_weathering:deepslate_tiles_from_tile"
     ]
   },
@@ -18,18 +17,11 @@
           }
         ]
       }
-    },
-    "has_the_recipe": {
-      "trigger": "minecraft:recipe_unlocked",
-      "conditions": {
-        "recipe": "immersive_weathering:deepslate_tile_repair"
-      }
     }
   },
   "requirements": [
     [
-      "has_copper_block",
-      "has_the_recipe"
+      "has_copper_block"
     ]
   ]
 }

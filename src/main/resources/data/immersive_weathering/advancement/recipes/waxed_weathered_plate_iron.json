@@ -28,7 +28,7 @@
     "has_the_recipe": {
       "trigger": "minecraft:recipe_unlocked",
       "conditions": {
-        "recipe": "immersive_weathering:waxed_weathered_cut_iron"
+        "recipes": "immersive_weathering:waxed_weathered_cut_iron"
       }
     }
   },

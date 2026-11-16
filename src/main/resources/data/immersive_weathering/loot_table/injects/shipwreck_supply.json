@@ -10,15 +10,14 @@
             {
               "type": "minecraft:item",
               "name": "immersive_weathering:moss_clump",
-              "functions": [
-                {
-                  "function": "minecraft:set_count",
-                  "count": {
-                    "min": 5,
-                    "max": 11
-                  }
+              "modifier": {
+                "type": "minecraft:set_count",
+                "count": {
+                  "type": "minecraft:uniform",
+                  "min": 5,
+                  "max": 11
                 }
-              ]
+              }
             }
           ]
         }
