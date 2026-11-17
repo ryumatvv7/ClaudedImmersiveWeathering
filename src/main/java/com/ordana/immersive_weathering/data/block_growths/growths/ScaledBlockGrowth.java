@@ -51,7 +51,7 @@ public record ScaledBlockGrowth(IBlockGrowth inner, Supplier<Double> category) i
 
     @Override
     public void tryGrowing(BlockPos pos, BlockState state, ServerLevel level, Supplier<Holder<Biome>> biome) {
-        double m = CommonConfigs.GROWTH_SPEED.get() * com.ordana.immersive_weathering.util.Seasons.speed(category);
+        double m = CommonConfigs.GROWTH_SPEED.get() * category.get();
         if (m == 1) {
             inner.tryGrowing(pos, state, level, biome);
             return;

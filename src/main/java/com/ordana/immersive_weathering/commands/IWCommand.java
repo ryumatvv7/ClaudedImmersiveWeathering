@@ -21,13 +21,6 @@ import java.util.Optional;
  * /iw speed &lt;name&gt; &lt;value&gt;       - change one (saved to the config file and sent to every player)
  * /iw reload                     - re-read the config file
  * /iw abandon &lt;days&gt;             - age the current chunk as if nobody came here for that many days
- * /iw season                     - show the current season and month
- * /iw season on|off              - turn seasons on or off
- * /iw season set &lt;season&gt;       - jump to the start of spring/summer/autumn/winter
- * /iw season month &lt;1-12&gt;        - jump to a month (1 = early spring ... 12 = late winter)
- * /iw season skip &lt;months&gt;       - move forward (or back, negative) by whole months
- * /iw season pause|resume        - stop or restart the season clock
- * /iw season length &lt;days&gt;       - in-game days per month
  * Needs operator permission.
  */
 public final class IWCommand {
@@ -54,8 +47,7 @@ public final class IWCommand {
                                                     net.minecraft.core.BlockPos.containing(c.getSource().getPosition()), days);
                                             c.getSource().sendSuccess(() -> Component.literal("Aged this chunk by " + days + " days: " + n + " blocks changed"), true);
                                             return 1;
-                                        })))
-                        .then(SeasonCommand.build())));
+                                        })))));
     }
 
     private static boolean isSpeed(ConfigValue<?> v) {

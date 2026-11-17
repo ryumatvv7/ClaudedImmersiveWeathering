@@ -43,14 +43,6 @@ public final class ConfigValue<T> implements Supplier<T> {
         return true;
     }
 
-    /** Sets a boolean value. @return false if this is not a boolean value. */
-    @SuppressWarnings("unchecked")
-    public boolean setBool(boolean v) {
-        if (kind != Kind.BOOL) return false;
-        value = (T) (Boolean) v;
-        return true;
-    }
-
     public boolean isNumber() {
         return kind == Kind.DOUBLE || kind == Kind.INT;
     }

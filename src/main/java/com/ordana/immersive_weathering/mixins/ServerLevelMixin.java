@@ -38,7 +38,6 @@ public abstract class ServerLevelMixin {
         ProfilerFiller p = Profiler.get();
         p.push("ImmWeatheringExtraRandomTicks");
         BlockGrowthHandler.performSkyAccessTick((ServerLevel) (Object) this, chunk, tickSpeed);
-        com.ordana.immersive_weathering.util.Seasons.chunkTick((ServerLevel) (Object) this, chunk);
         p.pop();
     }
 }

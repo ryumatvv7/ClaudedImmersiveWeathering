@@ -58,8 +58,6 @@ public class ImmersiveWeathering implements ModInitializer {
         com.ordana.immersive_weathering.commands.IWCommand.register();
         com.ordana.immersive_weathering.util.Varnish.init();
         com.ordana.immersive_weathering.util.Abandonment.init();
-        net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents.START_SERVER_TICK.register(
-                s -> com.ordana.immersive_weathering.util.Seasons.update(s.overworld()));
 
         //events
         //fire and lightning events come from FireMixin / LightningBoltMixin

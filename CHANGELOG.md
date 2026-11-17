@@ -1,36 +1,5 @@
 # Changelog
 
-## ❄️ v26.3-port.10 — "Four Seasons"
-
-> The year now has seasons: winter comes to plains and forests, spring melts it away.
-
-### ✨ New
-- **📅 12 months, 4 seasons.** A month is 8 in-game days by default, so a year is 96 days.
-- **❄️ Winter:** temperate biomes (plains, forests, rivers) get snow instead of rain, snow piles up and water freezes. Deserts, savannas, badlands and the Nether stay hot.
-- **🌱 Spring:** snow and ice melt in biomes that are normally warm. Grass, moss and weeds grow faster.
-- **🍂 Autumn:** leaf piles fall three times as often, wood rots faster.
-- **🌾 Crops:** outdoor crops grow slower in autumn and barely in winter. Under a roof (a greenhouse) they grow normally.
-
-### ⌨️ Commands (operators)
-- `/iw season` — current season, month and day
-- `/iw season on` / `off` — turn seasons on or off completely
-- `/iw season set <spring|summer|autumn|winter>` — jump to the start of a season
-- `/iw season month <1-12>` — jump to a month (1 = early spring … 12 = late winter)
-- `/iw season skip <months>` — move forward, or back with a negative number
-- `/iw season pause` / `resume` — stop or restart the calendar
-- `/iw season length <days>` — in-game days per month
-
-Settings live in the `seasons` section of the config and are synced to every player.
-
-### ⚠️ Notes
-- Ice in warm biomes melts in spring and summer, including ice you placed outdoors in the open.
-- `/time set` also moves the calendar, since seasons follow the world day.
-- Grass and leaf colours don't change with the seasons yet.
-
-### ✅ Checked
-- Dev server self test: 43,900 checks passed, including the season commands and winter snow in plains.
-- Client reaches the title screen without mod errors.
-
 ## 🏡 v26.3-port.9 — "Your Own Clock"
 
 > Abandonment now tracks each player separately.
