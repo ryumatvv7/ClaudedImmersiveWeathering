@@ -79,6 +79,10 @@ public class CommonConfigs {
     public static final Supplier<Boolean> PUDDLES;
     public static final Supplier<Boolean> WOOD_ROT;
     public static final Supplier<Boolean> WOOD_MOSS;
+    public static final Supplier<Boolean> SEASONS;
+    public static final Supplier<Integer> SEASON_MONTH_DAYS;
+    public static final Supplier<Integer> SEASON_OFFSET;
+    public static final Supplier<Integer> SEASON_FROZEN_DAY;
     public static final Supplier<Boolean> ABANDONMENT;
     public static final Supplier<Integer> ABANDONMENT_DAYS;
     public static final Supplier<Integer> ABANDONMENT_MAX;
@@ -211,6 +215,14 @@ public class CommonConfigs {
         builder.push("wood");
         WOOD_ROT = builder.comment("wood in or next to water rots; rotten wood under water falls apart").define("rot", true);
         WOOD_MOSS = builder.comment("moss grows on damp wood").define("moss", true);
+        builder.pop();
+
+        builder.comment("Seasons: winter brings snow and ice to temperate biomes, spring melts it, crops barely grow in winter. See /iw season")
+                .push("seasons");
+        SEASONS = builder.define("enabled", true);
+        SEASON_MONTH_DAYS = builder.comment("in-game days per month (12 months a year, 3 per season)").define("month_days", 8, 1, 1000);
+        SEASON_OFFSET = builder.comment("days added to the world day when counting seasons (changed by /iw season commands)").define("offset_days", 0, -10000000, 10000000);
+        SEASON_FROZEN_DAY = builder.comment("-1 = seasons run; otherwise the season day they are paused at").define("paused_at_day", -1, -1, 100000000);
         builder.pop();
 
         builder.push("abandonment");

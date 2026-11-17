@@ -276,6 +276,38 @@ public class DevSelfTest {
         });
         clear(level, base);
 
+        // --- seasons (port addition): commands move the calendar, winter makes plains snowy
+        guarded("seasons", () -> {
+            var src = server.createCommandSourceStack().withSuppressedOutput();
+            java.util.function.Consumer<String> cmd = s -> server.getCommands().performPrefixedCommand(src, s);
+            var plains = level.registryAccess().lookupOrThrow(net.minecraft.core.registries.Registries.BIOME)
+                    .getOrThrow(net.minecraft.world.level.biome.Biomes.PLAINS).value();
+            BlockPos q = new BlockPos(1000, 64, 1000);
+            cmd.accept("iw season on");
+            cmd.accept("iw season set winter");
+            check("set winter -> early winter (" + Seasons.month() + ")", Seasons.month() == 9);
+            cmd.accept("iw season month 11");
+            check("month 11 -> midwinter (" + Seasons.month() + ")", Seasons.month() == 10);
+            check("plains snow in midwinter (" + plains.getTemperature(q, 63) + ")", plains.coldEnoughToSnow(q, 63));
+            cmd.accept("iw season skip -2");
+            check("skip -2 -> late autumn (" + Seasons.month() + ")", Seasons.month() == 8);
+            cmd.accept("iw season skip 5");
+            check("skip 5 wraps to mid spring (" + Seasons.month() + ")", Seasons.month() == 1);
+            cmd.accept("iw season pause");
+            cmd.accept("iw season skip 2");
+            check("skip while paused -> early summer (" + Seasons.month() + ")", Seasons.month() == 3);
+            cmd.accept("iw season resume");
+            check("resume keeps month (" + Seasons.month() + ")", Seasons.month() == 3);
+            cmd.accept("iw season length 3");
+            check("length keeps month (" + Seasons.month() + ")", Seasons.month() == 3);
+            check("plains rain in summer", !plains.coldEnoughToSnow(q, 63));
+            cmd.accept("iw season off");
+            check("off -> no offset", !Seasons.active() && Seasons.temperatureOffset() == 0);
+            cmd.accept("iw season length 8");
+            cmd.accept("iw season on");
+            cmd.accept("iw season set spring");
+        });
+
         if (failures.isEmpty()) {
             ImmersiveWeathering.LOGGER.info("SELF TEST PASSED ({} checks)", checks);
         } else {

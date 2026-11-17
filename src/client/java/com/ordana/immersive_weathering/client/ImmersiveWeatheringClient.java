@@ -45,6 +45,11 @@ public class ImmersiveWeatheringClient implements ClientModInitializer {
     @Override
     @SuppressWarnings({"unchecked", "rawtypes"})
     public void onInitializeClient() {
+        //seasons: the client computes the season itself from the synced day and config
+        net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents.START_CLIENT_TICK.register(mc -> {
+            if (mc.level != null) com.ordana.immersive_weathering.util.Seasons.update(mc.level);
+        });
+
         //per player visual options
         ClientConfigs.init();
 

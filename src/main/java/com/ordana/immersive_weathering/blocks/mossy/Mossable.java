@@ -133,7 +133,7 @@ public interface Mossable extends Weatherable {
 
     @Override
     default void tryWeather(BlockState state, ServerLevel serverLevel, BlockPos pos, RandomSource random) {
-        if (random.nextFloat() < this.getWeatherChanceSpeed() * com.ordana.immersive_weathering.configs.CommonConfigs.MOSS_SPEED.get()) {
+        if (random.nextFloat() < this.getWeatherChanceSpeed() * com.ordana.immersive_weathering.util.Seasons.speed(com.ordana.immersive_weathering.configs.CommonConfigs.MOSS_SPEED)) {
             Optional<BlockState> opt = Optional.empty();
             if (this.getMossSpreader().getWantedWeatheringState(true, pos, serverLevel)) {
                 opt = this.getNextMossy(state);
