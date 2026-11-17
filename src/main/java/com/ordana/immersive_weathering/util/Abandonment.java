@@ -27,6 +27,8 @@ import net.minecraft.world.level.levelgen.Heightmap;
 
 import java.util.ArrayDeque;
 import java.util.Deque;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Port addition: abandonment. Every chunk remembers when players were last nearby. Random ticks don't run
@@ -37,12 +39,16 @@ public final class Abandonment {
 
     private static final AttachmentType<Long> LAST_VISIT = AttachmentRegistry.create(
             ImmersiveWeathering.res("last_visit"), b -> b.persistent(Codec.LONG));
-    //ticks that passed while at least one player was online; stored on the overworld. Absence is measured in
-    //this clock instead of game time, so a dedicated server running empty overnight doesn't age anything
-    private static final AttachmentType<Long> ACTIVE_TIME = AttachmentRegistry.create(
-            ImmersiveWeathering.res("active_time"), b -> b.persistent(Codec.LONG).initializer(() -> 0L));
+    //who stamped the chunk last; absence is measured in that player's own online time
+    private static final AttachmentType<String> LAST_VISITOR = AttachmentRegistry.create(
+            ImmersiveWeathering.res("last_visitor"), b -> b.persistent(Codec.STRING));
+    //per player: ticks spent online, stored on the overworld. An empty server ages nothing, and a friend playing
+    //alone doesn't age your base: a chunk only ages while the player who was there last is online
+    private static final AttachmentType<Map<String, Long>> ONLINE_TIME = AttachmentRegistry.create(
+            ImmersiveWeathering.res("online_time"),
+            b -> b.persistent(Codec.unboundedMap(Codec.STRING, Codec.LONG)).initializer(Map::of));
 
-    private static final int VISIT_RADIUS = 3; //chunks around a player that count as visited
+    private static final int VISIT_INTERVAL = 100; //ticks
     private static final int STEPS_PER_DAY = 40;
     private static final int CHUNKS_PER_TICK = 2;
 
@@ -60,49 +66,55 @@ public final class Abandonment {
         net.fabricmc.fabric.api.event.lifecycle.v1.ServerLifecycleEvents.SERVER_STOPPED.register(s -> QUEUE.clear());
     }
 
-    private static long activeNow(ServerLevel level) {
-        return level.getServer().overworld().getAttachedOrCreate(ACTIVE_TIME);
+    private static long onlineTime(MinecraftServer server, String player) {
+        return server.overworld().getAttachedOrCreate(ONLINE_TIME).getOrDefault(player, 0L);
     }
 
     private static void tick(MinecraftServer server) {
-        if (server.getPlayerList().getPlayerCount() > 0) {
-            ServerLevel ow = server.overworld();
-            ow.setAttached(ACTIVE_TIME, ow.getAttachedOrCreate(ACTIVE_TIME) + 1);
-        }
         for (int i = 0; i < CHUNKS_PER_TICK && !QUEUE.isEmpty(); i++) {
             Pending p = QUEUE.poll();
             LevelChunk c = p.level().getChunkSource().getChunkNow(p.pos().x(), p.pos().z());
             if (c != null) catchUp(p.level(), c);
         }
-        if (server.getTickCount() % 100 != 0) return;
+        if (server.getTickCount() % VISIT_INTERVAL != 0 || server.getPlayerList().getPlayerCount() == 0) return;
+        ServerLevel ow = server.overworld();
+        Map<String, Long> times = new HashMap<>(ow.getAttachedOrCreate(ONLINE_TIME));
+        for (ServerPlayer player : server.getPlayerList().getPlayers())
+            times.merge(player.getStringUUID(), (long) VISIT_INTERVAL, Long::sum);
+        ow.setAttached(ONLINE_TIME, Map.copyOf(times));
+        //everything within view distance counts as visited, so big bases don't age at the far end
+        int radius = server.getPlayerList().getViewDistance();
         for (ServerPlayer player : server.getPlayerList().getPlayers()) {
             if (player.isSpectator()) continue;
             ServerLevel level = player.level();
             ChunkPos cp = player.chunkPosition();
-            long now = activeNow(level);
-            for (int dx = -VISIT_RADIUS; dx <= VISIT_RADIUS; dx++)
-                for (int dz = -VISIT_RADIUS; dz <= VISIT_RADIUS; dz++) {
+            String id = player.getStringUUID();
+            long now = times.get(id);
+            for (int dx = -radius; dx <= radius; dx++)
+                for (int dz = -radius; dz <= radius; dz++) {
                     LevelChunk c = level.getChunkSource().getChunkNow(cp.x() + dx, cp.z() + dz);
-                    if (c != null) markVisited(c, now);
+                    if (c != null) markVisited(c, id, now);
                 }
         }
     }
 
-    private static void markVisited(LevelChunk c, long now) {
+    private static void markVisited(LevelChunk c, String player, long now) {
         Long old = c.getAttached(LAST_VISIT);
-        if (old == null || old != now) {
+        if (old == null || old != now || !player.equals(c.getAttached(LAST_VISITOR))) {
             c.setAttached(LAST_VISIT, now);
+            c.setAttached(LAST_VISITOR, player);
             c.markUnsaved();
         }
     }
 
     private static void catchUp(ServerLevel level, LevelChunk c) {
         Long last = c.getAttached(LAST_VISIT);
-        if (last == null) return;
-        long now = activeNow(level);
-        //chunks stamped with old game-time values look like the future: just re-stamp them
+        String visitor = c.getAttached(LAST_VISITOR);
+        //chunks stamped by older versions have no visitor: their stamp means nothing now, wait for a new one
+        if (last == null || visitor == null) return;
+        long now = onlineTime(level.getServer(), visitor);
         int days = (int) ((now - last) / 24000L);
-        markVisited(c, now); //don't decay twice for the same absence
+        markVisited(c, visitor, now); //don't decay twice for the same absence
         int threshold = CommonConfigs.ABANDONMENT_DAYS.get();
         if (days < threshold) return;
         decay(level, c, days - threshold + 1);
@@ -191,7 +203,6 @@ public final class Abandonment {
     /** For /iw abandon: pretend the chunk was left alone for {@code days} days. */
     public static int age(ServerLevel level, BlockPos pos, int days) {
         LevelChunk c = level.getChunkAt(pos);
-        markVisited(c, activeNow(level));
         return decay(level, c, days);
     }
 

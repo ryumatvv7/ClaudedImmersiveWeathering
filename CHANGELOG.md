@@ -1,5 +1,19 @@
 # Changelog
 
+## 🏡 v26.3-port.9 — "Your Own Clock"
+
+> Abandonment now tracks each player separately.
+
+### 🐛 Fixes
+- **👥 A friend playing alone no longer ages your base.** Every player has their own online-time clock. A chunk only ages while the player who was there last is online.
+- **🗺️ Big bases no longer rot at the far end.** Every loaded chunk within view distance of a player counts as visited, instead of only 3 chunks around them.
+
+### ℹ️ Notes
+- Chunks stamped by older versions don't decay until a player visits them again. Nothing will suddenly rot after updating.
+
+### ✅ Checked
+- Dev server starts without mod errors.
+
 ## 🛌 v26.3-port.8 — "Nobody Home"
 
 > A hotfix for abandonment.
