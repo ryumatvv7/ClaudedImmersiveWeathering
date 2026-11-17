@@ -1,5 +1,16 @@
 # Changelog
 
+## 🛌 v26.3-port.8 — "Nobody Home"
+
+> A hotfix for abandonment.
+
+### 🐛 Fixes
+- **🏚️ An empty server no longer ages chunks.** Absence was measured in game time, which keeps running on a dedicated server with nobody online. One night offline (about 25–30 in-game days) was enough to cover a base in rot and ivy. Absence now counts only time while at least one player is online.
+- Existing worlds are safe: old chunk stamps are refreshed on load without triggering decay.
+
+### ✅ Checked
+- Dev server starts without mod errors.
+
 ## 🩺 v26.3-port.7 — "Health Check"
 
 > No new features. A stability and polish pass over the whole mod.

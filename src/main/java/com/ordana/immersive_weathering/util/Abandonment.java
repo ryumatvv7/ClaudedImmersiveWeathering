@@ -37,6 +37,10 @@ public final class Abandonment {
 
     private static final AttachmentType<Long> LAST_VISIT = AttachmentRegistry.create(
             ImmersiveWeathering.res("last_visit"), b -> b.persistent(Codec.LONG));
+    //ticks that passed while at least one player was online; stored on the overworld. Absence is measured in
+    //this clock instead of game time, so a dedicated server running empty overnight doesn't age anything
+    private static final AttachmentType<Long> ACTIVE_TIME = AttachmentRegistry.create(
+            ImmersiveWeathering.res("active_time"), b -> b.persistent(Codec.LONG).initializer(() -> 0L));
 
     private static final int VISIT_RADIUS = 3; //chunks around a player that count as visited
     private static final int STEPS_PER_DAY = 40;
@@ -56,7 +60,15 @@ public final class Abandonment {
         net.fabricmc.fabric.api.event.lifecycle.v1.ServerLifecycleEvents.SERVER_STOPPED.register(s -> QUEUE.clear());
     }
 
+    private static long activeNow(ServerLevel level) {
+        return level.getServer().overworld().getAttachedOrCreate(ACTIVE_TIME);
+    }
+
     private static void tick(MinecraftServer server) {
+        if (server.getPlayerList().getPlayerCount() > 0) {
+            ServerLevel ow = server.overworld();
+            ow.setAttached(ACTIVE_TIME, ow.getAttachedOrCreate(ACTIVE_TIME) + 1);
+        }
         for (int i = 0; i < CHUNKS_PER_TICK && !QUEUE.isEmpty(); i++) {
             Pending p = QUEUE.poll();
             LevelChunk c = p.level().getChunkSource().getChunkNow(p.pos().x(), p.pos().z());
@@ -67,7 +79,7 @@ public final class Abandonment {
             if (player.isSpectator()) continue;
             ServerLevel level = player.level();
             ChunkPos cp = player.chunkPosition();
-            long now = level.getGameTime();
+            long now = activeNow(level);
             for (int dx = -VISIT_RADIUS; dx <= VISIT_RADIUS; dx++)
                 for (int dz = -VISIT_RADIUS; dz <= VISIT_RADIUS; dz++) {
                     LevelChunk c = level.getChunkSource().getChunkNow(cp.x() + dx, cp.z() + dz);
@@ -87,7 +99,8 @@ public final class Abandonment {
     private static void catchUp(ServerLevel level, LevelChunk c) {
         Long last = c.getAttached(LAST_VISIT);
         if (last == null) return;
-        long now = level.getGameTime();
+        long now = activeNow(level);
+        //chunks stamped with old game-time values look like the future: just re-stamp them
         int days = (int) ((now - last) / 24000L);
         markVisited(c, now); //don't decay twice for the same absence
         int threshold = CommonConfigs.ABANDONMENT_DAYS.get();
@@ -178,7 +191,7 @@ public final class Abandonment {
     /** For /iw abandon: pretend the chunk was left alone for {@code days} days. */
     public static int age(ServerLevel level, BlockPos pos, int days) {
         LevelChunk c = level.getChunkAt(pos);
-        markVisited(c, level.getGameTime());
+        markVisited(c, activeNow(level));
         return decay(level, c, days);
     }
 
